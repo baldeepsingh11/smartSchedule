@@ -128,7 +128,7 @@ public class HomeFragment extends Fragment {
 
         final LinearLayoutManager taskLayout = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL, false);
         taskRecyclerView.setLayoutManager(taskLayout);
-        TaskRecyclerViewAdapter taskAdapter = new TaskRecyclerViewAdapter(mTasks, mTaskImages,mTaskDate,getContext(),tasks);
+        TaskRecyclerViewAdapter taskAdapter = new TaskRecyclerViewAdapter(getContext(),tasks);
         taskRecyclerView.setAdapter(taskAdapter);
 
 

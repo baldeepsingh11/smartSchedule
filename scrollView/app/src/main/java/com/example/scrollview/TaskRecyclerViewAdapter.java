@@ -23,20 +23,19 @@ import com.example.scrollview.model.Tasks;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<String> mTasks = new ArrayList<>();
-    private ArrayList<String> mTaskImages = new ArrayList<>();
-    private ArrayList<String> mTaskDate = new ArrayList<>();
     private List<Tasks> tasks;
     private Context mContext;
     @RequiresApi(api = Build.VERSION_CODES.N)
     private String datetimeString(Tasks tasks)
     {
+
         Date date = tasks.getDate();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE dd MMM", Locale.getDefault());
         String strDate = dateFormat.format(date);
@@ -73,11 +72,9 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     }  //converting to 12 hour format
 
 
-    public TaskRecyclerViewAdapter(ArrayList<String> mTasks, ArrayList<String> mTaskImages, ArrayList<String> mTaskDate, Context mContext, List<Tasks> tasks) {
+    public TaskRecyclerViewAdapter(Context mContext, List<Tasks> tasks) {
         this.tasks =tasks;
-        this.mTasks = mTasks;
-        this.mTaskImages = mTaskImages;
-        this.mTaskDate = mTaskDate;
+
         this.mContext = mContext;
     }
 
@@ -108,7 +105,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
     @Override
     public int getItemCount() {
-        return mTaskImages.size();
+        return tasks.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
 

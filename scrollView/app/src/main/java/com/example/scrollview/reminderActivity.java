@@ -25,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.scrollview.model.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -39,7 +40,7 @@ public class reminderActivity extends AppCompatActivity {
     private boolean nFlag = false;
     private boolean aFlag = false;
     final Calendar myCalendar = Calendar.getInstance();
-    com.example.scrollview.model.Tasks task;
+    Tasks task;
     //notification and alarm onclick listener
     public void notification(View view) {
 
@@ -82,9 +83,10 @@ public class reminderActivity extends AppCompatActivity {
 
     //Onclick for tick:
     public void  submit (View view) {
-        Log.d(TAG, "submit: button clicked");
+
         String text = spin.getSelectedItem().toString();
-        Log.d(TAG, "submit: " + text);
+
+
         startActivity(new Intent(reminderActivity.this,MainActivity.class));
         finish();
 
@@ -101,10 +103,9 @@ public class reminderActivity extends AppCompatActivity {
         spin = (Spinner) findViewById(R.id.spinner);
 
 
-
+        //For type of reminder
         ArrayAdapter aa = new ArrayAdapter(this,R.layout.spinner_row,type);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spin.setAdapter(aa);
 
 
@@ -135,6 +136,8 @@ public class reminderActivity extends AppCompatActivity {
                             .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                             myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                     date.clearFocus();
+                    task.getDate().setMonth(myCalendar.get(Calendar.MONTH));
+
 
                 }
             }
@@ -157,6 +160,8 @@ public class reminderActivity extends AppCompatActivity {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             updateTime(selectedHour,selectedMinute);
+                            task.getDate().setHours(selectedHour);
+                            task.getDate().setHours(selectedHour);
 
                         }
                     }, hour, minute, false);
