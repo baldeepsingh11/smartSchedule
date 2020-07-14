@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/task_bg"
     android:backgroundTintMode="src_over"
-    android:onClick="submit"
     tools:context=".reminderActivity">
 
     <Button
@@ -125,8 +124,26 @@
                 android:hint="Venue"
                 android:imeOptions="actionDone"
                 android:singleLine="true"
-                android:textColor="@android:color/background_dark" />
+                android:textColor="@android:color/background_dark"
+                android:textColorHint="#FFFFFF" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Reminder type"
+            android:textColorHint="#FFFFFF"
+            android:textSize="12sp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/spinner_background" />
 
         <TextView
             android:id="@+id/textView4"
@@ -134,7 +151,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:paddingLeft="5dp"
-            android:text="Remind by" />
+            android:text="Remind by"
+            android:textColorHint="#FFFFFF"
+            android:textSize="12sp" />
 
         <LinearLayout
             android:id="@+id/btn_linLayout"
@@ -166,6 +185,8 @@
                 android:text="Alarm"
                 android:textColor="#D74D64" />
         </LinearLayout>
+
+
 
 
     </LinearLayout>
