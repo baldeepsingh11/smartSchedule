@@ -1,4 +1,4 @@
-package com.example.scrollview.modal;
+package com.example.scrollview.model;
 
 public class Subject {
     private String code;

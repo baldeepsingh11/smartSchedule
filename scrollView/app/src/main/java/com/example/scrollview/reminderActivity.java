@@ -39,7 +39,7 @@ public class reminderActivity extends AppCompatActivity {
     private boolean nFlag = false;
     private boolean aFlag = false;
     final Calendar myCalendar = Calendar.getInstance();
-
+    com.example.scrollview.model.Tasks task;
     //notification and alarm onclick listener
     public void notification(View view) {
 
@@ -188,7 +188,7 @@ public class reminderActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void updateLabel() {
         String myFormat = "E, dd MMM yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
 
         date.setText(sdf.format(myCalendar.getTime()));
     }                    //feeding date to Edit Text
