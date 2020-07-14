@@ -5,7 +5,8 @@
     android:id="@+id/schedule_Layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    android:visibility="visible">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/schedule_card"
@@ -54,12 +55,14 @@
                         android:id="@+id/prof_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+
                         app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
                     <TextView
                         android:id="@+id/prof_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:text="Prof. Indira Gupta" />
 
                 </LinearLayout>
@@ -85,6 +88,7 @@
                         android:id="@+id/type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_gravity="center_vertical"
                         android:text="Tutorial" />
                 </LinearLayout>
@@ -129,11 +133,11 @@
                 android:id="@+id/schedule_subject"
                 android:layout_width="wrap_content"
                 android:layout_height="28dp"
+                android:layout_marginLeft="5dp"
                 android:text="Mathematics"
+                android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#000000"
-                android:layout_marginLeft="5dp"
                 app:layout_constraintStart_toEndOf="@id/design"
                 app:layout_constraintTop_toTopOf="parent" />
 
