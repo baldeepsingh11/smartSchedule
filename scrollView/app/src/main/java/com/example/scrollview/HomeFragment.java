@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
@@ -26,6 +28,7 @@ public class HomeFragment extends Fragment {
 
 
 
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -37,6 +40,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         RecyclerView recyclerView = rootView.findViewById(R.id.events);
+
 
 
         mImageUrls.add("https://www.iitr.ac.in/nss/images/nss_iitr_logo.png");

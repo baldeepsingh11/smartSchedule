@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ public class reminderActivity extends AppCompatActivity {
     //Flag:Notification and Alarm button
     private boolean nFlag = false;
     private boolean aFlag = false;
-
+    final Calendar myCalendar = Calendar.getInstance();
 
     //notification and alarm onclick listener
     public void notification(View view) {
@@ -73,7 +74,14 @@ public class reminderActivity extends AppCompatActivity {
     TextInputEditText date;
     TextInputEditText time;
 
-    final Calendar myCalendar = Calendar.getInstance();
+
+    //Onclick for tick:
+    public void  submit (View view) {
+        Log.d(TAG, "submit: button clicked");
+        startActivity(new Intent(reminderActivity.this,MainActivity.class));
+        finish();
+    }
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
