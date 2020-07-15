@@ -19,41 +19,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="12dp">
 
 
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="96dp"
+                android:text="Attendance - "
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="34dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="313dp"
+                android:layout_marginTop="32dp"
+                android:text="50%"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <me.tankery.lib.circularseekbar.CircularSeekBar
                 android:id="@+id/circularSeekBar"
                 android:layout_width="71dp"
                 android:layout_height="74dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="292dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:cs_circle_color="#0000ff"
-                app:cs_circle_progress_color="#ff0000"
+                app:cs_circle_color="#ffffff"
+                app:cs_circle_progress_color="#f16334"
                 app:cs_circle_stroke_width="4dp"
-                app:cs_pointer_color="#ff0000"
-                app:cs_pointer_stroke_width="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.928"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.666" />
+                app:cs_pointer_color="#ffffff"
 
-            <TextView
-                android:id="@+id/sub_name"
-                style="@style/TextAppearance.AppCompat.Title"
-                android:layout_width="134dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="16dp"
-                android:text="MIN 106"
-                android:textSize="12sp"
+                app:cs_pointer_stroke_width="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,17 +74,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="125dp"
-                app:layout_constraintEnd_toStartOf="@+id/circularSeekBar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/desc" />
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expandableView"
                 android:layout_width="match_parent"
@@ -89,7 +84,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/desc">
+                app:layout_constraintTop_toBottomOf="@+id/textView5" >
 
 
                 <TextView
@@ -98,61 +93,78 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
-                    android:text="Dhananshri M joglekar"
+                    android:text="Status:"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="61dp"
-                    android:layout_height="61dp"
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/ic_call_24px"
+                    android:layout_marginTop="40dp"
+                    android:text="Attend next 16 classes to get back on track"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="61dp"
-                    android:layout_height="61dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/ic_local_post_office_24px"
-                    app:layout_constraintStart_toEndOf="@+id/button2"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="61dp"
-                    android:layout_height="61dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/ic_account_box_24px"
-                    app:layout_constraintStart_toEndOf="@+id/button"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="52dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/circularSeekBar"
+                app:srcCompat="@drawable/tick" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="41dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="22dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/circularSeekBar"
+                app:srcCompat="@drawable/cross1" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:layout_marginTop="21dp"
+                android:text="20/20"
+                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintTop_toBottomOf="@+id/desc" />
 
             <TextView
                 android:id="@+id/desc"
                 style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="97dp"
-                android:layout_height="10dp"
-                android:layout_marginStart="28dp"
+                android:layout_width="156dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
                 android:text="Mechanical Engineering"
                 android:textColor="#8A000000"
-                android:textSize="8sp"
+                android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sub_name" />
 
             <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="50%"
-                tools:layout_editor_absoluteX="314dp"
-                tools:layout_editor_absoluteY="34dp" />
+                android:id="@+id/sub_name"
+                style="@style/Base.Widget.MaterialComponents.TextView"
+                android:layout_width="155dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="20dp"
+                android:text="MIN 106"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

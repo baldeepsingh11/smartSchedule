@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.google.firebase:firebase-firestore:21.4.3'
     implementation 'me.tankery.lib:circularSeekBar:1.1.7'
-    compile 'me.tankery.lib:circularSeekBar:1.1.5'
+    implementation 'me.tankery.lib:circularSeekBar:1.1.5'
     implementation 'com.android.support:multidex:1.0.3'
 
     //calendar

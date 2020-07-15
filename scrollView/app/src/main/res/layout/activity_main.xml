@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="7dp"
         android:paddingBottom="3dp"
+        android:background="#ffffff"
         app:itemBackground="@android:color/white"
         app:itemIconTint="@android:color/tertiary_text_dark"
         app:itemTextColor="#FB3453"
