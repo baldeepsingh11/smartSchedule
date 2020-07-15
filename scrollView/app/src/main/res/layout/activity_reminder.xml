@@ -8,6 +8,18 @@
     android:backgroundTintMode="src_over"
     tools:context=".reminderActivity">
 
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/ic_icons8_checkmark"
+        android:onClick="submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <LinearLayout
         android:id="@+id/blue_linLayout"
         android:layout_width="match_parent"
@@ -15,6 +27,7 @@
         android:orientation="vertical"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -70,9 +83,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -95,8 +105,8 @@
                 android:id="@+id/event_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Time"
                 android:clickable="true"
+                android:hint="Time"
                 android:inputType="none"
                 android:textColor="@android:color/background_dark" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -111,11 +121,29 @@
                 android:id="@+id/venu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
                 android:hint="Venue"
                 android:imeOptions="actionDone"
-                android:textColor="@android:color/background_dark" />
+                android:singleLine="true"
+                android:textColor="@android:color/background_dark"
+                android:textColorHint="#FFFFFF" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Reminder type"
+            android:textColorHint="#FFFFFF"
+            android:textSize="12sp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/spinner_background" />
 
         <TextView
             android:id="@+id/textView4"
@@ -123,7 +151,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:paddingLeft="5dp"
-            android:text="Remind by" />
+            android:text="Remind by"
+            android:textColorHint="#FFFFFF"
+            android:textSize="12sp" />
 
         <LinearLayout
             android:id="@+id/btn_linLayout"
@@ -155,6 +185,7 @@
                 android:text="Alarm"
                 android:textColor="#D74D64" />
         </LinearLayout>
+
 
 
 

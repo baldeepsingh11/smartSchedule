@@ -22,8 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    MenuItem prevMenuItem;
-    ViewPager viewPager;
+
 
     //add button
     FloatingActionButton add ;
@@ -34,34 +33,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewPager = findViewById(R.id.fragment_container);
+        loadFragment(new HomeFragment());
         add = findViewById(R.id.floatingActionButton);
         //bottom navigation
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-
-            }
-
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        setupViewPager(viewPager);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,reminderActivity.class));
+                finish();
             }
         });
 
@@ -71,19 +53,21 @@ public class MainActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment fragment = null;
                     switch (item.getItemId()) {
                         case R.id.action_home:
-                            viewPager.setCurrentItem(0);
+                            fragment = new HomeFragment();
                             break;
                         case R.id.action_schedule:
-                            viewPager.setCurrentItem(1);
+                            fragment = new scheduleFragment();
                             break;
                         case R.id.action_subject:
-                            viewPager.setCurrentItem(2);
+                            fragment = new subjectFragment();
                             break;
                         case R.id.action_profile:
-                            viewPager.setCurrentItem(3);
+                            fragment = new userFragment();
                     }
+                    loadFragment(fragment);
                     return true;
                 }
             };
@@ -98,5 +82,16 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAdapter);
     }
 
+    private boolean loadFragment(Fragment fragment) {
+        //switching fragment
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
 
 }

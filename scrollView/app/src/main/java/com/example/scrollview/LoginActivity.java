@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
-
+        startActivity(new Intent(LoginActivity.this,MainActivity.class));
         phone = findViewById(R.id.phone);
         optEnter = findViewById(R.id.codeEnter);
 

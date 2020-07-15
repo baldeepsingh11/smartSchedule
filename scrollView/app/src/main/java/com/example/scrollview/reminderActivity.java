@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -36,7 +38,7 @@ public class reminderActivity extends AppCompatActivity {
     //Flag:Notification and Alarm button
     private boolean nFlag = false;
     private boolean aFlag = false;
-
+    final Calendar myCalendar = Calendar.getInstance();
 
     //notification and alarm onclick listener
     public void notification(View view) {
@@ -73,7 +75,21 @@ public class reminderActivity extends AppCompatActivity {
     TextInputEditText date;
     TextInputEditText time;
 
-    final Calendar myCalendar = Calendar.getInstance();
+    //spinner (reminder type):
+    Spinner spin;
+    String[] type = {"Academics","Groups","Personal"} ;
+
+
+    //Onclick for tick:
+    public void  submit (View view) {
+        Log.d(TAG, "submit: button clicked");
+        String text = spin.getSelectedItem().toString();
+        Log.d(TAG, "submit: " + text);
+        startActivity(new Intent(reminderActivity.this,MainActivity.class));
+        finish();
+
+    }
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +98,14 @@ public class reminderActivity extends AppCompatActivity {
         venu = findViewById(R.id.venu);
         date = (TextInputEditText) findViewById(R.id.event_date);
         time = (TextInputEditText)findViewById(R.id.event_time);
+        spin = (Spinner) findViewById(R.id.spinner);
+
+
+
+        ArrayAdapter aa = new ArrayAdapter(this,R.layout.spinner_row,type);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spin.setAdapter(aa);
 
 
         //Taking date in Edit Text using DatePicker and on focus change listener
