@@ -49,12 +49,12 @@ public class scheduleAdapter extends RecyclerView.Adapter<scheduleAdapter.ViewHo
         holder.time.setText(schedule.getTime());
         holder.type.setText(schedule.getType());
 
-            /*if (schedule.getType().equals("Tutorial")){
-                holder.type.setBackground(mContext.getDrawable(R.drawable.bg_lecture));}
+            if (schedule.getType().equals("Tutorial")){
+                holder.design.setBackground(mContext.getDrawable(R.drawable.bg_lecture));}
             else if (schedule.getType().equals("Lecture")){
-                holder.type.setBackground(mContext.getDrawable(R.drawable.bg_tutorial));}
+                holder.design.setBackground(mContext.getDrawable(R.drawable.bg_tutorial));}
             else if(schedule.getType().equals("Practical"))
-            {holder.type.setBackground(mContext.getDrawable(R.drawable.bg_practical));}*/
+            {holder.design.setBackground(mContext.getDrawable(R.drawable.bg_practical));}
 
 
 
@@ -106,6 +106,7 @@ public class scheduleAdapter extends RecyclerView.Adapter<scheduleAdapter.ViewHo
         TextView subjectCode;
         TextView profName;
         TextView type;
+        TextView design;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -118,6 +119,7 @@ public class scheduleAdapter extends RecyclerView.Adapter<scheduleAdapter.ViewHo
             subjectCode = itemView.findViewById(R.id.subjectCode);
             profName = itemView.findViewById(R.id.prof_name);
             type = itemView.findViewById(R.id.type);
+            design = itemView.findViewById(R.id.design);
         }
     }
 }
