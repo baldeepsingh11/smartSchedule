@@ -36,12 +36,12 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     private String datetimeString(Tasks tasks)
     {
 
-        Date date = tasks.getDate();
+        Calendar mycalender = tasks.getmCalendar();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE dd MMM", Locale.getDefault());
-        String strDate = dateFormat.format(date);
+        String strDate = dateFormat.format((mycalender.getTime()));
 
 
-        return strDate + " " + changeFormat(date.getHours(),date.getMinutes());
+        return strDate + " " + changeFormat(mycalender.get(Calendar.HOUR_OF_DAY),mycalender.get(Calendar.MINUTE));
     }
     private String changeFormat(int hours, int mins) {
 
@@ -96,9 +96,11 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
 
         Tasks task = tasks.get(position);
+
         holder.image.setImageDrawable(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.calender_icon, null));
         holder.title.setText(task.getTitle());
         holder.date.setText(datetimeString(task));
+        holder.venu.setText(task.getVenu());
         holder.linearLayout.setBackground(mContext.getDrawable(R.color.grey));
 
     }
@@ -113,13 +115,16 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         TextView title;
         TextView date;
         LinearLayout linearLayout;
+        TextView venu;
 
         public ViewHolder(View itemView) {
             super(itemView);
             image = (ImageView)itemView.findViewById(R.id.taskImage);
             title = itemView.findViewById(R.id.title);
             date = itemView.findViewById(R.id.date);
+            venu = itemView.findViewById(R.id.row_venu);
             linearLayout = itemView.findViewById(R.id.taskItemLayout);
+
         }
     }
 }
