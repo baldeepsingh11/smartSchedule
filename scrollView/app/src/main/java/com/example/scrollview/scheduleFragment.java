@@ -18,8 +18,8 @@ import android.widget.TextClock;
 import android.widget.TextView;
 
 
-import com.example.scrollview.modal.Schedule;
-import com.example.scrollview.modal.Subject;
+import com.example.scrollview.model.Schedule;
+import com.example.scrollview.model.Subject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

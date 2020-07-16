@@ -45,17 +45,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/event_name"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="35dp"
             android:textColorHint="@android:color/darker_gray">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/event_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@android:color/background_light"
                 android:hint="Name"
+                android:inputType="text"
+                android:maxLines="1"
+                android:lines="1"
                 android:textColor="@android:color/background_light"
                 android:textColorHint="@android:color/background_light" />
         </com.google.android.material.textfield.TextInputLayout>

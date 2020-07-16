@@ -10,6 +10,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,21 +26,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.scrollview.model.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class reminderActivity extends AppCompatActivity {
-    private TextInputEditText venu;
+
     private static final String TAG = "reminderActivity";
 
     //Flag:Notification and Alarm button
     private boolean nFlag = false;
     private boolean aFlag = false;
     final Calendar myCalendar = Calendar.getInstance();
-
+    Tasks task = new Tasks();
     //notification and alarm onclick listener
     public void notification(View view) {
 
@@ -74,7 +78,8 @@ public class reminderActivity extends AppCompatActivity {
     //date and time:EditText
     TextInputEditText date;
     TextInputEditText time;
-
+    TextInputEditText venu;
+    TextInputEditText name;
     //spinner (reminder type):
     Spinner spin;
     String[] type = {"Academics","Groups","Personal"} ;
@@ -82,10 +87,22 @@ public class reminderActivity extends AppCompatActivity {
 
     //Onclick for tick:
     public void  submit (View view) {
-        Log.d(TAG, "submit: button clicked");
+
         String text = spin.getSelectedItem().toString();
-        Log.d(TAG, "submit: " + text);
-        startActivity(new Intent(reminderActivity.this,MainActivity.class));
+
+        task.setmCalendar(myCalendar);
+        task.setType(text);
+        task.setTitle(name.getText().toString());
+        task.setVenu(venu.getText().toString());
+        HomeFragment.tasks.add(task);
+        HomeFragment.taskAdapter.notifyDataSetChanged();
+        HomeFragment.taskAdapter.notifyDataSetChanged();
+        /*SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(HomeFragment.tasks);
+        prefsEditor.putString("tasks", json);
+        prefsEditor.commit();*/
         finish();
 
     }
@@ -99,12 +116,13 @@ public class reminderActivity extends AppCompatActivity {
         date = (TextInputEditText) findViewById(R.id.event_date);
         time = (TextInputEditText)findViewById(R.id.event_time);
         spin = (Spinner) findViewById(R.id.spinner);
+        name = findViewById(R.id.event_name);
 
 
 
+        //For type of reminder
         ArrayAdapter aa = new ArrayAdapter(this,R.layout.spinner_row,type);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spin.setAdapter(aa);
 
 
@@ -134,7 +152,9 @@ public class reminderActivity extends AppCompatActivity {
                     new DatePickerDialog(reminderActivity.this, datelistener, myCalendar
                             .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                             myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-                    date.clearFocus();
+
+
+
 
                 }
             }
@@ -157,6 +177,7 @@ public class reminderActivity extends AppCompatActivity {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             updateTime(selectedHour,selectedMinute);
+                            myCalendar.set(Calendar.HOUR_OF_DAY,selectedHour);
 
                         }
                     }, hour, minute, false);
@@ -188,11 +209,12 @@ public class reminderActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void updateLabel() {
         String myFormat = "E, dd MMM yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
 
         date.setText(sdf.format(myCalendar.getTime()));
     }                    //feeding date to Edit Text
     private void updateTime(int hours, int mins) {
+
 
         String timeSet = "";
         if (hours > 12) {
@@ -213,10 +235,12 @@ public class reminderActivity extends AppCompatActivity {
         else
             minutes = String.valueOf(mins);
 
-        // Append in a StringBuilder
-        String aTime = new StringBuilder().append(hours).append(':')
-                .append(minutes).append(" ").append(timeSet).toString();
 
+        // Append in a StringBuilder
+        String aTime = String.valueOf(hours) + ':' +
+                minutes + " " + timeSet;
+        myCalendar.set(Calendar.HOUR_OF_DAY,hours);
+        myCalendar.set(Calendar.MINUTE,mins);
         time.setText(aTime);
     }  //converting to 12 hour format and feeding in Edit text
  }
