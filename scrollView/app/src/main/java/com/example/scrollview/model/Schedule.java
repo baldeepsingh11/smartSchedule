@@ -6,6 +6,11 @@ public class Schedule {
     private  String profName;
     private String venue;
     private String time;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
 
     public String getCode() {
         return code;
@@ -33,13 +38,15 @@ public class Schedule {
         profName = "Dhananshri M joglekar";
         venue = "LHC-205";
         time = "1:00-2:00";
+        type = "Lecture";
     }
 
-    public Schedule(String code, String name, String profName, String venue, String time) {
+    public Schedule(String code, String name, String profName, String venue, String time,String type) {
         this.code = code;
         this.name = name;
         this.profName = profName;
         this.venue = venue;
         this.time = time;
+        this.type = type;
     }
 }

@@ -5,7 +5,8 @@
     android:id="@+id/schedule_Layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    android:visibility="visible">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/schedule_card"
@@ -37,30 +38,60 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expandable_schedule"
-                android:layout_width="355dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tilmeLayout">
 
-                <ImageView
-                    android:id="@+id/prof_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+                <LinearLayout
+                    android:id="@+id/profLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/prof_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="1dp"
-                    android:text="Prof. Indira Gupta"
-                    app:layout_constraintStart_toEndOf="@+id/prof_image"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:id="@+id/prof_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        app:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/prof_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="Prof. Indira Gupta" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/typeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/profLayout"
+                    tools:layout_editor_absoluteX="134dp">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        app:srcCompat="@drawable/ic_baseline_subject_24"
+                        tools:srcCompat="@drawable/ic_baseline_subject_24" />
+
+                    <TextView
+                        android:id="@+id/type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_gravity="center_vertical"
+                        android:text="Tutorial" />
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -68,6 +99,7 @@
                 android:id="@+id/subjectCode"
                 android:layout_width="61dp"
                 android:layout_height="16dp"
+                android:layout_marginStart="5dp"
                 android:text="MAN-002"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/venueLayout"
@@ -101,10 +133,12 @@
                 android:id="@+id/schedule_subject"
                 android:layout_width="wrap_content"
                 android:layout_height="28dp"
+                android:layout_marginLeft="5dp"
                 android:text="Mathematics"
+                android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/design"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
@@ -129,6 +163,15 @@
                     android:layout_gravity="center_vertical"
                     android:text="1:00 - 2:00" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/design"
+                android:layout_width="5dp"
+                android:layout_height="29dp"
+                android:background="@drawable/bg_practical"
+                app:layout_constraintRight_toLeftOf="@+id/schedule_subject"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
