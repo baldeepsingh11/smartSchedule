@@ -1,13 +1,41 @@
-package com.example.scrollview.modal;
+package com.example.scrollview.model;
 
 import java.sql.Time;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Tasks {
-    /*private String imageURL;
+    private String imageURL;
     private String title;
-    private Date date;
+    private Calendar mCalendar;
     private Time time;
+    private String venu;
+    private String type;
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Tasks(String imageURL, String title, Calendar mCalendar, Time time, String venu, String type) {
+        this.imageURL = imageURL;
+        this.title = title;
+        this.mCalendar = mCalendar;
+
+        this.venu = venu;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setVenu(String venu) {
+        this.venu = venu;
+    }
+
+    public String getVenu() {
+        return venu;
+    }
 
     public String getImageURL() {
         return imageURL;
@@ -17,9 +45,23 @@ public class Tasks {
         return title;
     }
 
-    public Date getDate() {
-        return date;
+    public Calendar getmCalendar() {
+        return mCalendar;
     }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setmCalendar(Calendar mCalendar) {
+        this.mCalendar = mCalendar ;
+    }
+
+
 
     public Time getTime() {
         return time;
@@ -27,16 +69,13 @@ public class Tasks {
 
     public Tasks() {
         imageURL="";
-        title="";
-        date="";
-        time="";
+        title= "I love India";
+        mCalendar = Calendar.getInstance();
+        time= new Time(0);
 
     }
 
-    public Tasks(String imageURL, String title, Date date, Time time) {
-        this.imageURL = imageURL;
-        this.title = title;
-        this.date = date;
-        this.time = time;
-    }*/
+
+
+
 }

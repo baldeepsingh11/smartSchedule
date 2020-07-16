@@ -16,7 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.scrollview.modal.Schedule;
+import com.example.scrollview.model.Schedule;
 
 import java.util.ArrayList;
 import java.util.List;

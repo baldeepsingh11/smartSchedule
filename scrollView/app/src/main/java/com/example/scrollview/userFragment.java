@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.scrollview.modal.Subject;
+import com.example.scrollview.model.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
