@@ -30,23 +30,30 @@ import com.example.scrollview.model.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import static android.content.ContentValues.TAG;
+
 public class reminderActivity extends AppCompatActivity {
 
     private static final String TAG = "reminderActivity";
-    private List<Tasks> tasks = new ArrayList<>();
+
 
     //Flag:Notification and Alarm button
     private boolean nFlag = false;
     private boolean aFlag = false;
     final Calendar myCalendar = Calendar.getInstance();
+
+
     Tasks task = new Tasks();
+    SharedPreferences mPrefs;
     //notification and alarm onclick listener
     public void notification(View view) {
 
@@ -97,14 +104,19 @@ public class reminderActivity extends AppCompatActivity {
         task.setType(text);
         task.setTitle(name.getText().toString());
         task.setVenu(venu.getText().toString());
-        tasks.add(task);
-        HomeFragment.taskAdapter.notifyDataSetChanged();
-        SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
+
+        mPrefs = getSharedPreferences("com.example.scrollview",MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        /*List<Tasks> tasks = new ArrayList<>();
+        tasks = getList();
+        tasks.add(task);*/
+        HomeFragment.savedTasks.add(task);
+        HomeFragment.taskAdapter.notifyDataSetChanged();
         Gson gson = new Gson();
-        String json = gson.toJson(tasks);
+        String json = gson.toJson(HomeFragment.savedTasks);
         prefsEditor.putString("tasks", json);
-        prefsEditor.commit();
+        Log.i(TAG, "submit: json string after editing"+ json);
+        prefsEditor.apply();
         finish();
 
     }
@@ -245,4 +257,27 @@ public class reminderActivity extends AppCompatActivity {
         myCalendar.set(Calendar.MINUTE,mins);
         time.setText(aTime);
     }  //converting to 12 hour format and feeding in Edit text
+    private List<Tasks> getList() {
+        List<Tasks> arrayItems;
+      //  SharedPreferences sharedPreferences =getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
+        String serializedObject = mPrefs.getString("tasks", null);
+        if (serializedObject != null) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Tasks>>(){}.getType();
+            arrayItems = gson.fromJson(serializedObject, type);
+            Log.i("TAG", serializedObject);
+            Log.i("size", String.valueOf(arrayItems.size()));
+            return arrayItems;
+        }
+        else
+        {
+            List<Tasks> dTasks = new ArrayList<>();
+           // dTasks.add(new Tasks());
+            Log.i(TAG, "serializedObjectNull");
+            return dTasks;
+
+
+        }
+
+    }
  }

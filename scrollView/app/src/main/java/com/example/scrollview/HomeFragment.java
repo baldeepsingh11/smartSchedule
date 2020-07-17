@@ -34,6 +34,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> mTasks = new ArrayList<>();
     private ArrayList<String> mTaskImages = new ArrayList<>();
     private ArrayList<String> mTaskDate = new ArrayList<>();
+     public static List<Tasks> savedTasks;
 
 
 
@@ -120,7 +121,7 @@ public class HomeFragment extends Fragment {
 
 
 
-        List<Tasks> savedTasks= new ArrayList<>();
+        savedTasks= new ArrayList<>();
         savedTasks= getList();
 
 
@@ -146,7 +147,7 @@ public class HomeFragment extends Fragment {
 
     private List<Tasks> getList() {
         List<Tasks> arrayItems;
-        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
         String serializedObject = sharedPreferences.getString("tasks", null);
         if (serializedObject != null) {
             Gson gson = new Gson();
@@ -160,7 +161,7 @@ public class HomeFragment extends Fragment {
         {
             List<Tasks> dTasks = new ArrayList<>();
             dTasks.add(new Tasks());
-            Log.i("abcd", "null");
+            Log.i(TAG, "serializedObjectNull");
             return dTasks;
 
 
@@ -168,5 +169,10 @@ public class HomeFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onResume() {
+        savedTasks = getList();
+        taskAdapter.notifyDataSetChanged();
+        super.onResume();
+    }
 }
