@@ -1,9 +1,13 @@
 package com.example.scrollview;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.scrollview.model.Tasks;
+import com.google.gson.Gson;
 
 import java.text.DateFormat;
 
@@ -32,9 +37,9 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
     private List<Tasks> tasks;
     private Context mContext;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private String datetimeString(Tasks tasks)
-    {
+    private String datetimeString(Tasks tasks) {
 
         Calendar mycalender = tasks.getmCalendar();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEE dd MMM", Locale.getDefault());
@@ -70,14 +75,11 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
         return aTime;
     }  //converting to 12 hour format
-
-
     public TaskRecyclerViewAdapter(Context mContext, List<Tasks> tasks) {
         this.tasks =tasks;
 
         this.mContext = mContext;
     }
-
     @NonNull
     @Override
     public TaskRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -87,7 +89,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onBindViewHolder(@NonNull TaskRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TaskRecyclerViewAdapter.ViewHolder holder, final int position) {
 
        /* Glide.with(mContext)
                 .asBitmap()
@@ -102,8 +104,45 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         holder.date.setText(datetimeString(task));
         holder.venu.setText(task.getVenu());
         holder.linearLayout.setBackground(mContext.getDrawable(R.color.grey));
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(mContext)
+                        .setTitle("Delete Reminder")
+                        .setMessage("Are you sure you want to delete this Reminder?")
+
+
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                HomeFragment.savedTasks.remove(position);
+                                if(HomeFragment.savedTasks.size()==0)
+                                {
+                                    HomeFragment.emptyView.setVisibility(View.VISIBLE);
+                                }
+                                SharedPreferences sharedPreferences = mContext.getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
+                                SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+                                Gson gson = new Gson();
+                                String json = gson.toJson(HomeFragment.savedTasks);
+                                prefsEditor.putString("tasks", json);
+                                //Log.i(TAG,"task size"+ String.valueOf(HomeFragment.savedTasks.size()));
+                                prefsEditor.apply();
+                                HomeFragment.taskAdapter.notifyDataSetChanged();
+
+
+                                // Continue with delete operation
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_menu_delete)
+                        .show();
+                return false;
+            }
+        });
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -127,4 +166,5 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
         }
     }
+
 }

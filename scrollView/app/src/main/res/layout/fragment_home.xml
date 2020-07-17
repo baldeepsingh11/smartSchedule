@@ -74,13 +74,25 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/taskList"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
         </androidx.recyclerview.widget.RecyclerView>
 
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="120dp"
+        android:visibility="gone"
+        android:textAlignment="center"
+        android:text="Click add button to add a new Reminder"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/upcomingTasks" />
 
     <ImageView
         android:id="@+id/TopImage"

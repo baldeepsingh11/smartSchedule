@@ -104,19 +104,19 @@ public class reminderActivity extends AppCompatActivity {
         task.setType(text);
         task.setTitle(name.getText().toString());
         task.setVenu(venu.getText().toString());
-
         mPrefs = getSharedPreferences("com.example.scrollview",MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
-        /*List<Tasks> tasks = new ArrayList<>();
-        tasks = getList();
-        tasks.add(task);*/
+        if(HomeFragment.emptyView.getVisibility()==View.VISIBLE)
+        {
+            HomeFragment.emptyView.setVisibility(View.GONE);
+        }
         HomeFragment.savedTasks.add(task);
-        HomeFragment.taskAdapter.notifyDataSetChanged();
         Gson gson = new Gson();
         String json = gson.toJson(HomeFragment.savedTasks);
         prefsEditor.putString("tasks", json);
-        Log.i(TAG, "submit: json string after editing"+ json);
+        Log.i(TAG,"task size"+ String.valueOf(HomeFragment.savedTasks.size()));
         prefsEditor.apply();
+        HomeFragment.taskAdapter.notifyDataSetChanged();
         finish();
 
     }
