@@ -68,7 +68,7 @@ public class Tasks {
     }
 
     public Tasks() {
-        imageURL="";
+        imageURL="https://img.channeli.in/static/images/imglogo.png";
         title= "I love India";
         mCalendar = Calendar.getInstance();
         time= new Time(0);

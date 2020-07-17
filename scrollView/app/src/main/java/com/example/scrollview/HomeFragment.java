@@ -27,8 +27,6 @@ import static android.content.ContentValues.TAG;
 
 
 public class HomeFragment extends Fragment {
-
-     public static List<Tasks> tasks;
      public static TaskRecyclerViewAdapter taskAdapter;
     //vars
     private ArrayList<String> mNames = new ArrayList<>();
@@ -121,7 +119,11 @@ public class HomeFragment extends Fragment {
         mTaskDate.add("11 Aug 6:00");
 
 
-        tasks = new ArrayList<>();
+
+        List<Tasks> savedTasks= new ArrayList<>();
+        savedTasks= getList();
+
+
         /*SharedPreferences mPrefs = getActivity().getPreferences(Context.MODE_PRIVATE);
         Gson gson = new Gson();
         List<Tasks> dtasks =new ArrayList<>();
@@ -132,17 +134,38 @@ public class HomeFragment extends Fragment {
         tasks.add(gson.fromJson(json, Tasks.class));
         tasks.add(new Tasks());*/
 
-        tasks.add(new Tasks());
         final LinearLayoutManager taskLayout = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL, false);
         taskRecyclerView.setLayoutManager(taskLayout);
-        taskAdapter = new TaskRecyclerViewAdapter(getContext(),tasks);
+        taskAdapter = new TaskRecyclerViewAdapter(getContext(),savedTasks);
         taskRecyclerView.setAdapter(taskAdapter);
 
 
 
-
-
         return rootView;
+    }
+
+    private List<Tasks> getList() {
+        List<Tasks> arrayItems;
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String serializedObject = sharedPreferences.getString("tasks", null);
+        if (serializedObject != null) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Tasks>>(){}.getType();
+            arrayItems = gson.fromJson(serializedObject, type);
+            Log.i("TAG", serializedObject);
+            Log.i("size", String.valueOf(arrayItems.size()));
+            return arrayItems;
+        }
+        else
+        {
+            List<Tasks> dTasks = new ArrayList<>();
+            dTasks.add(new Tasks());
+            Log.i("abcd", "null");
+            return dTasks;
+
+
+        }
+
     }
 
 

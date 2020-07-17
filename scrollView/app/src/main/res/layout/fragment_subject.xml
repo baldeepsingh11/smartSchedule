@@ -26,9 +26,10 @@
                 android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/cardview_light_background"
+                android:background="#F6F6F6"
+                android:cropToPadding="false"
                 android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
                 android:src="@drawable/subject"
                 app:layout_collapseMode="parallax" />
 
@@ -48,8 +49,8 @@
         android:id="@+id/sub_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
         android:background="#F6F6F6"
+        android:clipToPadding="false"
         android:paddingTop="15dp"
         android:paddingBottom="@dimen/activity_margin_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

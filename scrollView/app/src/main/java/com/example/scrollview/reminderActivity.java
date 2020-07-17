@@ -31,13 +31,16 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 public class reminderActivity extends AppCompatActivity {
 
     private static final String TAG = "reminderActivity";
+    private List<Tasks> tasks = new ArrayList<>();
 
     //Flag:Notification and Alarm button
     private boolean nFlag = false;
@@ -94,15 +97,14 @@ public class reminderActivity extends AppCompatActivity {
         task.setType(text);
         task.setTitle(name.getText().toString());
         task.setVenu(venu.getText().toString());
-        HomeFragment.tasks.add(task);
+        tasks.add(task);
         HomeFragment.taskAdapter.notifyDataSetChanged();
-        HomeFragment.taskAdapter.notifyDataSetChanged();
-        /*SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
+        SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(HomeFragment.tasks);
+        String json = gson.toJson(tasks);
         prefsEditor.putString("tasks", json);
-        prefsEditor.commit();*/
+        prefsEditor.commit();
         finish();
 
     }
