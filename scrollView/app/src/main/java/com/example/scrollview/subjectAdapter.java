@@ -83,6 +83,8 @@ class subjectAdapter extends RecyclerView.Adapter<subjectAdapter.ViewHolder> {
         public Button arrowBtn;
 
         public CardView cardView;
+        public Object progressBar;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.sub_name);

@@ -42,24 +42,9 @@
                 android:layout_width="34dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="313dp"
-                android:layout_marginTop="32dp"
-                android:text="50%"
+                android:layout_marginTop="28dp"
+                android:text="0%"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <me.tankery.lib.circularseekbar.CircularSeekBar
-                android:id="@+id/circularSeekBar"
-                android:layout_width="71dp"
-                android:layout_height="74dp"
-                android:layout_marginStart="292dp"
-                android:layout_marginTop="8dp"
-                app:cs_circle_color="#ffffff"
-                app:cs_circle_progress_color="#f16334"
-                app:cs_circle_stroke_width="4dp"
-                app:cs_pointer_color="#ffffff"
-
-                app:cs_pointer_stroke_width="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,6 +59,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="72dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/circle_shape"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/circle_progress_bar"
+                app:layout_constraintBottom_toTopOf="@+id/imageView"
+                app:layout_constraintEnd_toStartOf="@+id/arrowBtn"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expandableView"
                 android:layout_width="match_parent"
@@ -84,7 +84,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" >
+                app:layout_constraintTop_toBottomOf="@+id/textView5">
 
 
                 <TextView
@@ -113,10 +113,10 @@
                 android:id="@+id/imageView"
                 android:layout_width="52dp"
                 android:layout_height="34dp"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="6dp"
                 app:layout_constraintEnd_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/circularSeekBar"
+                app:layout_constraintTop_toBottomOf="@+id/progress"
                 app:srcCompat="@drawable/tick" />
 
             <ImageView
@@ -126,7 +126,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="22dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/circularSeekBar"
+                app:layout_constraintTop_toBottomOf="@+id/progress"
                 app:srcCompat="@drawable/cross1" />
 
             <TextView
@@ -165,6 +165,8 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
