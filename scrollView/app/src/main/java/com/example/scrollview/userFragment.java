@@ -15,8 +15,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import com.example.scrollview.modal.Subject;
+
+
 import com.example.scrollview.model.Attendence;
+
+import com.example.scrollview.model.Subject;
+
 
 import java.util.ArrayList;
 import java.util.List;

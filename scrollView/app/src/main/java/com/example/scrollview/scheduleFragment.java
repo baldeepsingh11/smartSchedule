@@ -18,8 +18,8 @@ import android.widget.TextClock;
 import android.widget.TextView;
 
 
-import com.example.scrollview.modal.Schedule;
-import com.example.scrollview.modal.Subject;
+import com.example.scrollview.model.Schedule;
+import com.example.scrollview.model.Subject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -54,8 +54,13 @@ public class scheduleFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         List<Schedule> schedules = new ArrayList<Schedule>();
-        for(int i= 0 ; i<6;i++)
-        {schedules.add(new Schedule());}
+        schedules.add(new Schedule("MAN-004","Mathematics","Abcd asdf","LHC-304","9:00-10:00","Tutorial"));
+        schedules.add(new Schedule("PHN 004","Modern Physics","Abcd asdf","Physics Department","11:00-13:00","Practical"));
+        schedules.add(new Schedule());
+        schedules.add(new Schedule());
+        schedules.add(new Schedule());
+        schedules.add(new Schedule());
+
 
 
         scheduleAdapter adapter = new scheduleAdapter(getContext(),schedules);

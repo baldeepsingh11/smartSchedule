@@ -19,11 +19,14 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
-        android:paddingTop="7dp"
+        android:background="#FFFFFF"
         android:paddingBottom="3dp"
+<<<<<<< HEAD
         android:background="#ffffff"
 
 
+=======
+>>>>>>> df63ca3a77de4a496450a60df9db4dfe739ca977
         app:itemBackground="@android:color/white"
         app:itemIconTint="@android:color/tertiary_text_dark"
         app:itemTextColor="#FB3453"

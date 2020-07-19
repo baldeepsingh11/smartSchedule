@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFEB3B">
+    android:background="#FFFFFF">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -15,10 +15,10 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/colorAccent"
+            app:contentScrim="#FF4500"
             app:expandedTitleMarginStart="@dimen/activity_margin_content"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
@@ -26,23 +26,13 @@
                 android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/subject_illustration"
+                android:background="#F6F6F6"
+                android:cropToPadding="false"
                 android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
+                android:src="@drawable/subject"
                 app:layout_collapseMode="parallax" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_gravity="top"
-                android:background="@drawable/scrim_topdown"
-                android:fitsSystemWindows="true" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:layout_gravity="bottom"
-                android:background="@drawable/scrim" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/anim_toolbar"
@@ -59,6 +49,7 @@
         android:id="@+id/sub_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#F6F6F6"
         android:clipToPadding="false"
         android:paddingTop="15dp"
         android:paddingBottom="@dimen/activity_margin_content"

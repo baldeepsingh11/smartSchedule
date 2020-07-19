@@ -14,7 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.scrollview.modal.Subject;
+import com.example.scrollview.model.Subject;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
