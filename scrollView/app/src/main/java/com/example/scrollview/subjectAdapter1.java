@@ -1,7 +1,9 @@
 package com.example.scrollview;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.Log;
@@ -26,17 +28,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.scrollview.model.Attendence;
 
 import com.example.scrollview.model.Subject;
+import com.example.scrollview.model.Tasks;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import me.tankery.lib.circularseekbar.CircularSeekBar;
+
+import static android.content.ContentValues.TAG;
+import static com.example.scrollview.HomeFragment.emptyView;
 
 class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
     private Context context;
     private List<Attendence> subjects;
-    final double[] a = {0,0,0,0,0,0};
-    double[] b = {0,0,0,0,0,0};
+    SharedPreferences mPrefs;
+
 
 
     public subjectAdapter1 (Context context, List<Attendence> subjects) {
@@ -49,34 +60,49 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
     @Override
     public subjectAdapter1.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.subject_item1,parent,false);
+       subjects =  getList();
 
         return new subjectAdapter1.ViewHolder(view);
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull final subjectAdapter1.ViewHolder holder, final int position) {
-        Attendence subject = subjects.get(position);
+        final Attendence subject = subjects.get(position);
         holder.name.setText(subject.getName());
         holder.code.setText(subject.getCode());
 
       holder.progressBar.setMax(100);
+      holder.percentage.setText(subject.getPercentage()+"%");
+      holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
+      holder.progressBar.setProgress((int) subject.getPercentage(),true);
 
 
         holder.right.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                a[position]++;
-                b[position]++;
-                Log.i("msg", String.valueOf(a[position]));
-                Log.i("position", String.valueOf(position));
-               double c =(a[position] / b[position]) * 100;
 
-               Log.i("msg", String.valueOf(c));
-                holder.progressBar.setProgress((int) c,true);
-                holder.percentage.setText(String.valueOf((int)c)+"%");
-                holder.percent.setText(a[position]+"/"+b[position]);
+                subject.setPresent(subject.getPresent()+1);
+                subject.setTotal(subject.getTotal()+1);
+
+             //   Log.i("msg", String.valueOf(a[position]));
+           //     Log.i("position", String.valueOf(position));
+
+            //   Log.i("msg", String.valueOf(c));
+                holder.progressBar.setProgress((int) subject.getPercentage(),true);
+                holder.percentage.setText(subject.getPercentage()+"%");
+                holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
+
+                mPrefs =context. getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                 subjects.set(position,subject) ;
+                Gson gson = new Gson();
+                String json = gson.toJson(subjects);
+                prefsEditor.putString("attendence", json);
+                prefsEditor.apply();
+
             }
         });
 
@@ -85,12 +111,22 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                b[position]++;
-                double c =(a[position] / b[position]) * 100;
-                holder.percent.setText(a[position]+"/"+b[position]);
-                Log.i("msg", String.valueOf(c));
-                holder.progressBar.setProgress((int) c,true);
-                holder.percentage.setText(String.valueOf((int)c)+"%");
+                subject.setTotal(subject.getTotal()+1);
+
+                holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
+            //    Log.i("msg", String.valueOf(c));
+                holder.progressBar.setProgress((int) subject.getPercentage(),true);
+                holder.percentage.setText(subject.getPercentage()+"%");
+                subjects.set(position,subject);
+                mPrefs =context. getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = mPrefs.edit();
+
+                Gson gson = new Gson();
+                String json = gson.toJson(subjects);
+                prefsEditor.putString("attendence", json);
+                prefsEditor.apply();
+
+
             }
         });
 
@@ -150,4 +186,28 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
             percent = itemView.findViewById(R.id.textView7);
         }
     }
+
+
+    private List<Attendence> getList() {
+        List<Attendence> arrayItems;
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
+        String serializedObject = sharedPreferences.getString("attendence", null);
+        if (serializedObject != null) {
+
+
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Attendence>>(){}.getType();
+            arrayItems = gson.fromJson(serializedObject, type);
+
+            return arrayItems;
+        }
+        else
+        {
+            Log.i("msg","123");
+            return new ArrayList<>();
+        }
+    }
+
+
 }
