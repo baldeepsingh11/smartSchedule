@@ -94,6 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/rem_white"
+        android:onClick="setDate"
         android:orientation="vertical"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -112,6 +113,7 @@
                 android:clickable="true"
                 android:hint="Time"
                 android:inputType="none"
+                android:onClick="setTime"
                 android:textColor="@android:color/background_dark" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -189,8 +191,6 @@
                 android:text="Alarm"
                 android:textColor="#D74D64" />
         </LinearLayout>
-
-
 
 
     </LinearLayout>
