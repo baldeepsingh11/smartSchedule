@@ -83,7 +83,7 @@ public class reminderActivity extends AppCompatActivity {
 
     }
 
-int a;
+static int a;
 
     //mDate and mTime:EditText
     TextInputEditText mDate;
@@ -103,6 +103,7 @@ int a;
        showNotif();
         task.setmCalendar(myCalendar);
         task.setType(text);
+
         task.setTitle(name.getText().toString());
         task.setVenu(venu.getText().toString());
         mPrefs = getSharedPreferences("com.example.scrollview",MODE_PRIVATE);
@@ -124,8 +125,10 @@ int a;
 
     private void showNotif() {
         Intent intent = new Intent(getApplicationContext(),ReminderBroadcast.class);
+
         sharedPreferences = getSharedPreferences("my",Context.MODE_PRIVATE);
         a = getSharedPreferences("my",MODE_PRIVATE).getInt("Hello",0);
+        intent.putExtra("name",a);
 
         Log.i("msg", String.valueOf(a));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), a ,intent,0);
@@ -169,7 +172,7 @@ int a;
         spin = (Spinner) findViewById(R.id.spinner);
         name = findViewById(R.id.event_name);
 
-        createNotificationchannel();
+        createNotificationChannel();
 
 
         //For type of reminder
@@ -327,21 +330,20 @@ int a;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void createNotificationchannel() {
-        if (!(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)) {
-{
-        CharSequence name = "LemubitReminderChannel";
-        String description = "Channel for ";
-                int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("notifylemubit",name,importance);
-                    channel.setDescription(description);
-
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "hello";
+            String description = "byeee";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("hello", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
-
-
         }
-        }
-
     }
- }
+
+}

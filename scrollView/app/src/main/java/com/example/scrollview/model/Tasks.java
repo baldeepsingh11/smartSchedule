@@ -2,7 +2,6 @@ package com.example.scrollview.model;
 
 import java.sql.Time;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Tasks {
     private String imageURL;
@@ -11,16 +10,17 @@ public class Tasks {
     private Time time;
     private String venu;
     private String type;
+    private int ID;
 
     public void setType(String type) {
         this.type = type;
     }
 
-    public Tasks(String imageURL, String title, Calendar mCalendar, Time time, String venu, String type) {
+    public Tasks(String imageURL, String title, Calendar mCalendar, Time time, String venu, String type,int ID) {
         this.imageURL = imageURL;
         this.title = title;
         this.mCalendar = mCalendar;
-
+       this.ID = ID ;
         this.venu = venu;
         this.type = type;
     }
@@ -61,7 +61,14 @@ public class Tasks {
         this.mCalendar = mCalendar ;
     }
 
+    public int getID() {
+        return ID;
+    }
 
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public Time getTime() {
         return time;
