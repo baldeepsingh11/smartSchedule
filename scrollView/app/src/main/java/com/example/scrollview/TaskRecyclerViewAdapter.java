@@ -1,8 +1,11 @@
 package com.example.scrollview;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
@@ -25,6 +28,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static android.content.Context.ALARM_SERVICE;
 import static com.example.scrollview.reminderActivity.a;
 
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
@@ -110,12 +114,9 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 HomeFragment.savedTasks.remove(position);
-                                sharedPreferences = mContext.getSharedPreferences("my",Context.MODE_PRIVATE);
 
-                                a--;
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putInt("Hello",a);
-                                editor.commit();
+                                a = a-2;
+
                                 if(HomeFragment.savedTasks.size()==0)
                                 {
                                     HomeFragment.emptyView.setVisibility(View.VISIBLE);
@@ -128,6 +129,12 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
                                 //Log.i(TAG,"task size"+ String.valueOf(HomeFragment.savedTasks.size()));
                                 prefsEditor.apply();
                                 HomeFragment.taskAdapter.notifyDataSetChanged();
+
+                                Intent intent1 = new Intent(mContext,ReminderBroadcast.class);
+                                PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext,
+                                        position, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+                                AlarmManager am = (AlarmManager) mContext.getSystemService(ALARM_SERVICE);
+                                am.cancel(pendingIntent);
 
 
                                 // Continue with delete operation
@@ -166,6 +173,8 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
             linearLayout = itemView.findViewById(R.id.taskItemLayout);
 
         }
+
+
     }
 
 }
