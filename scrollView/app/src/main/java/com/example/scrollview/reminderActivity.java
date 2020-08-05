@@ -1,14 +1,12 @@
 package com.example.scrollview;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
@@ -21,14 +19,15 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.scrollview.model.Tasks;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,9 +36,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-
-import static android.content.ContentValues.TAG;
 
 public class reminderActivity extends AppCompatActivity {
 
@@ -49,7 +45,9 @@ public class reminderActivity extends AppCompatActivity {
     //Flag:Notification and Alarm button
     private boolean nFlag = false;
     private boolean aFlag = false;
+    SharedPreferences sharedPreferences;
     final Calendar myCalendar = Calendar.getInstance();
+    private int mYear, mMonth, mHour, mMinute, mDay;
 
 
     Tasks task = new Tasks();
@@ -85,11 +83,14 @@ public class reminderActivity extends AppCompatActivity {
 
     }
 
-    //date and time:EditText
-    TextInputEditText date;
-    TextInputEditText time;
+int a;
+
+    //mDate and mTime:EditText
+    TextInputEditText mDate;
+    TextInputEditText mTime;
     TextInputEditText venu;
     TextInputEditText name;
+
     //spinner (reminder type):
     Spinner spin;
     String[] type = {"Academics","Groups","Personal"} ;
@@ -99,7 +100,7 @@ public class reminderActivity extends AppCompatActivity {
     public void  submit (View view) {
 
         String text = spin.getSelectedItem().toString();
-
+       showNotif();
         task.setmCalendar(myCalendar);
         task.setType(text);
         task.setTitle(name.getText().toString());
@@ -120,18 +121,55 @@ public class reminderActivity extends AppCompatActivity {
         finish();
 
     }
-    
 
+    private void showNotif() {
+        Intent intent = new Intent(getApplicationContext(),ReminderBroadcast.class);
+        sharedPreferences = getSharedPreferences("my",Context.MODE_PRIVATE);
+        a = getSharedPreferences("my",MODE_PRIVATE).getInt("Hello",0);
+
+        Log.i("msg", String.valueOf(a));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), a ,intent,0);
+        a++;
+        Log.i("msg", String.valueOf(a));
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+       editor.putInt("Hello",a);
+       editor.commit();
+
+
+        AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
+         long mTime = System.currentTimeMillis();
+          long timesec = 1000*10;
+
+        myCalendar.set(Calendar.MONTH, --mMonth);
+        myCalendar.set(Calendar.YEAR, mYear);
+        myCalendar.set(Calendar.DAY_OF_MONTH, mDay);
+        myCalendar.set(Calendar.HOUR_OF_DAY, mHour);
+        myCalendar.set(Calendar.MINUTE, mMinute);
+        myCalendar.set(Calendar.SECOND, 0);
+
+        Log.i("minute", String.valueOf(mMinute));
+        Log.i("minute", String.valueOf(mHour));
+
+
+        long selectedTimestamp =  myCalendar.getTimeInMillis();
+
+
+          alarmManager.set(AlarmManager.RTC_WAKEUP,selectedTimestamp,pendingIntent);
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder);
         venu = findViewById(R.id.venu);
-        date = (TextInputEditText) findViewById(R.id.event_date);
-        time = (TextInputEditText)findViewById(R.id.event_time);
+        mDate = (TextInputEditText) findViewById(R.id.event_date);
+        mTime = (TextInputEditText)findViewById(R.id.event_time);
         spin = (Spinner) findViewById(R.id.spinner);
         name = findViewById(R.id.event_name);
 
+        createNotificationchannel();
 
 
         //For type of reminder
@@ -140,7 +178,7 @@ public class reminderActivity extends AppCompatActivity {
         spin.setAdapter(aa);
 
 
-        //Taking date in Edit Text using DatePicker and on focus change listener
+        //Taking mDate in Edit Text using DatePicker and on focus change listener
         final DatePickerDialog.OnDateSetListener datelistener = new DatePickerDialog.OnDateSetListener() {
 
 
@@ -152,13 +190,17 @@ public class reminderActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                monthOfYear ++;
+                mDay = dayOfMonth;
+                mMonth = monthOfYear;
+                mYear = year;
                 updateLabel();
-                date.clearFocus();
+                mDate.clearFocus();
             }
 
         };
 
-        date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        mDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -175,16 +217,16 @@ public class reminderActivity extends AppCompatActivity {
 
         });
 
-        //Taking time in EditText using onFocusChange listener and TimePicker Dialog box
+        //Taking mTime in EditText using onFocusChange listener and TimePicker Dialog box
 
 
-        time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        mTime.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus) {
                     Calendar mcurrentTime = Calendar.getInstance();
-                    int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                    int minute = mcurrentTime.get(Calendar.MINUTE);
+             //   int mHour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+             //       int mMinute = mcurrentTime.get(Calendar.MINUTE);
                     final int AMPM = mcurrentTime.get(Calendar.AM_PM);
                     TimePickerDialog mTimePicker;
                     mTimePicker = new TimePickerDialog(reminderActivity.this, new TimePickerDialog.OnTimeSetListener() {
@@ -192,13 +234,16 @@ public class reminderActivity extends AppCompatActivity {
                         public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                             updateTime(selectedHour,selectedMinute);
                             myCalendar.set(Calendar.HOUR_OF_DAY,selectedHour);
+                            myCalendar.set(Calendar.MINUTE,selectedMinute);
+                            mHour = selectedHour;
+                            mMinute =selectedMinute;
 
                         }
-                    }, hour, minute, false);
-                    mTimePicker.setTitle("Select Time");
+                    }, mHour, mMinute, false);
+                    mTimePicker.setTitle("Select mTime");
                     mTimePicker.show();
                 }
-                time.clearFocus();
+                mTime.clearFocus();
             }
 
         });
@@ -225,8 +270,8 @@ public class reminderActivity extends AppCompatActivity {
         String myFormat = "E, dd MMM yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
 
-        date.setText(sdf.format(myCalendar.getTime()));
-    }                    //feeding date to Edit Text
+        mDate.setText(sdf.format(myCalendar.getTime()));
+    }                    //feeding mDate to Edit Text
     private void updateTime(int hours, int mins) {
 
 
@@ -255,8 +300,8 @@ public class reminderActivity extends AppCompatActivity {
                 minutes + " " + timeSet;
         myCalendar.set(Calendar.HOUR_OF_DAY,hours);
         myCalendar.set(Calendar.MINUTE,mins);
-        time.setText(aTime);
-    }  //converting to 12 hour format and feeding in Edit text
+        mTime.setText(aTime);
+    }  //converting to 12 mHour format and feeding in Edit text
     private List<Tasks> getList() {
         List<Tasks> arrayItems;
       //  SharedPreferences sharedPreferences =getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
@@ -277,6 +322,25 @@ public class reminderActivity extends AppCompatActivity {
             return dTasks;
 
 
+        }
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createNotificationchannel() {
+        if (!(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)) {
+{
+        CharSequence name = "LemubitReminderChannel";
+        String description = "Channel for ";
+                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("notifylemubit",name,importance);
+                    channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+
+        }
         }
 
     }
