@@ -1,0 +1,229 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:2:1-44:12
+MERGED from [com.android.support:design:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4af7e9c56e58323565e2a476a0fedfc9\design-25.3.1\AndroidManifest.xml:17:1-31:12
+MERGED from [com.bignerdranch.android:recyclerview-multiselect:0.2] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\110792f10199c4c4f6cc4bf52934e78f\recyclerview-multiselect-0.2\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\3a89d3427939006c0d7c18dd2b347229\appcompat-v7-25.3.1\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\35b9440ab833677aa46bea771335a11f\constraint-layout-1.0.2\AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\aa887b2b4023dd2fd86101ab0c69b923\recyclerview-v7-25.3.1\AndroidManifest.xml:17:1-26:12
+MERGED from [com.getbase:floatingactionbutton:1.9.0] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4f5875c755e71e95be6f0d61a1250b13\floatingactionbutton-1.9.0\AndroidManifest.xml:2:1-14:12
+MERGED from [com.wdullaer:materialdatetimepicker:1.2.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\84712ead293a924421dce8de96e9ad7f\materialdatetimepicker-1.2.1\AndroidManifest.xml:17:1-30:12
+MERGED from [com.wrapp.floatlabelededittext:library:0.0.6] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e40b5645508a567c6823f7e4d242ec1d\library-0.0.6\AndroidManifest.xml:2:1-13:12
+MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\80e85a214598f718f1898cedf81822f2\com.amulyakhare.textdrawable-1.0.1\AndroidManifest.xml:2:1-14:12
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d64dd41fb8686928d6c513d60e57dea1\animated-vector-drawable-25.3.1\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\81a16022189acf92ac743cfef032039e\support-vector-drawable-25.3.1\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:transition:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d8a0e410f5840ed1bd29808a1a7a8032\transition-25.3.1\AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2031c48f67e66bbed27392a4cb5facdd\support-v4-25.3.1\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\1f0ed19966e588028a0d854db753c78f\support-fragment-25.3.1\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2169db9f49ba13924639051829d631e6\support-core-ui-25.3.1\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e3e684d2c864fb2e5c8b35ae31cc7d66\support-media-compat-25.3.1\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2bca0ec76ec2ffd6e43ca9df70fa5964\support-core-utils-25.3.1\AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\7f621c8db80a257fd6765853ce890e78\support-compat-25.3.1\AndroidManifest.xml:17:1-31:12
+INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:2:1-44:12
+INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:2:1-44:12
+	package
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:3:5-47
+		INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+		INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:2:1-44:12
+		INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:2:1-44:12
+		INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:5:5-80
+	android:name
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:5:22-78
+uses-permission#android.permission.INTERNET
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:6:5-66
+	android:name
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:6:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:7:22-76
+application
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:9:5-42:19
+MERGED from [com.android.support:design:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4af7e9c56e58323565e2a476a0fedfc9\design-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:design:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4af7e9c56e58323565e2a476a0fedfc9\design-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.bignerdranch.android:recyclerview-multiselect:0.2] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\110792f10199c4c4f6cc4bf52934e78f\recyclerview-multiselect-0.2\AndroidManifest.xml:9:5-20
+MERGED from [com.bignerdranch.android:recyclerview-multiselect:0.2] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\110792f10199c4c4f6cc4bf52934e78f\recyclerview-multiselect-0.2\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\3a89d3427939006c0d7c18dd2b347229\appcompat-v7-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\3a89d3427939006c0d7c18dd2b347229\appcompat-v7-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\35b9440ab833677aa46bea771335a11f\constraint-layout-1.0.2\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\35b9440ab833677aa46bea771335a11f\constraint-layout-1.0.2\AndroidManifest.xml:9:5-20
+MERGED from [com.getbase:floatingactionbutton:1.9.0] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4f5875c755e71e95be6f0d61a1250b13\floatingactionbutton-1.9.0\AndroidManifest.xml:12:5-20
+MERGED from [com.getbase:floatingactionbutton:1.9.0] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4f5875c755e71e95be6f0d61a1250b13\floatingactionbutton-1.9.0\AndroidManifest.xml:12:5-20
+MERGED from [com.wdullaer:materialdatetimepicker:1.2.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\84712ead293a924421dce8de96e9ad7f\materialdatetimepicker-1.2.1\AndroidManifest.xml:28:5-20
+MERGED from [com.wdullaer:materialdatetimepicker:1.2.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\84712ead293a924421dce8de96e9ad7f\materialdatetimepicker-1.2.1\AndroidManifest.xml:28:5-20
+MERGED from [com.wrapp.floatlabelededittext:library:0.0.6] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e40b5645508a567c6823f7e4d242ec1d\library-0.0.6\AndroidManifest.xml:11:5-20
+MERGED from [com.wrapp.floatlabelededittext:library:0.0.6] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e40b5645508a567c6823f7e4d242ec1d\library-0.0.6\AndroidManifest.xml:11:5-20
+MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\80e85a214598f718f1898cedf81822f2\com.amulyakhare.textdrawable-1.0.1\AndroidManifest.xml:12:5-20
+MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\80e85a214598f718f1898cedf81822f2\com.amulyakhare.textdrawable-1.0.1\AndroidManifest.xml:12:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d64dd41fb8686928d6c513d60e57dea1\animated-vector-drawable-25.3.1\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d64dd41fb8686928d6c513d60e57dea1\animated-vector-drawable-25.3.1\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\81a16022189acf92ac743cfef032039e\support-vector-drawable-25.3.1\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\81a16022189acf92ac743cfef032039e\support-vector-drawable-25.3.1\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:transition:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d8a0e410f5840ed1bd29808a1a7a8032\transition-25.3.1\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:transition:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d8a0e410f5840ed1bd29808a1a7a8032\transition-25.3.1\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2031c48f67e66bbed27392a4cb5facdd\support-v4-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2031c48f67e66bbed27392a4cb5facdd\support-v4-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\1f0ed19966e588028a0d854db753c78f\support-fragment-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\1f0ed19966e588028a0d854db753c78f\support-fragment-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2169db9f49ba13924639051829d631e6\support-core-ui-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2169db9f49ba13924639051829d631e6\support-core-ui-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e3e684d2c864fb2e5c8b35ae31cc7d66\support-media-compat-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e3e684d2c864fb2e5c8b35ae31cc7d66\support-media-compat-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2bca0ec76ec2ffd6e43ca9df70fa5964\support-core-utils-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2bca0ec76ec2ffd6e43ca9df70fa5964\support-core-utils-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\7f621c8db80a257fd6765853ce890e78\support-compat-25.3.1\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\7f621c8db80a257fd6765853ce890e78\support-compat-25.3.1\AndroidManifest.xml:29:5-20
+	android:supportsRtl
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:14:9-35
+	android:label
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:12:9-41
+	android:roundIcon
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:13:9-54
+	android:icon
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:11:9-43
+	android:allowBackup
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:10:9-35
+	android:theme
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:15:9-40
+activity#com.delaroystudios.alarmreminder.MainActivity
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:16:9-22:20
+	android:name
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:16:19-47
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:17:13-21:29
+action#android.intent.action.MAIN
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:18:17-69
+	android:name
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:18:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:20:17-77
+	android:name
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:20:27-74
+activity#com.delaroystudios.alarmreminder.AddReminderActivity
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:23:9-32:20
+	android:parentActivityName
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:25:13-55
+	android:label
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:24:13-64
+	android:theme
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:26:13-44
+	android:name
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:23:19-54
+meta-data#android.support.PARENT_ACTIVITY
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:28:13-31:19
+	android:value
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:30:17-46
+	android:name
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:29:17-63
+provider#com.delaroystudios.alarmreminder.data.AlarmReminderProvider
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:33:9-36:40
+	android:authorities
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:35:13-67
+	android:exported
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:36:13-37
+	android:name
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:34:13-55
+service#com.delaroystudios.alarmreminder.reminder.ReminderAlarmService
+ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:38:9-40:40
+	android:exported
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:40:13-37
+	android:name
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml:39:13-58
+uses-sdk
+INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+MERGED from [com.android.support:design:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4af7e9c56e58323565e2a476a0fedfc9\design-25.3.1\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:design:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4af7e9c56e58323565e2a476a0fedfc9\design-25.3.1\AndroidManifest.xml:21:5-23:62
+MERGED from [com.bignerdranch.android:recyclerview-multiselect:0.2] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\110792f10199c4c4f6cc4bf52934e78f\recyclerview-multiselect-0.2\AndroidManifest.xml:5:5-7:41
+MERGED from [com.bignerdranch.android:recyclerview-multiselect:0.2] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\110792f10199c4c4f6cc4bf52934e78f\recyclerview-multiselect-0.2\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\3a89d3427939006c0d7c18dd2b347229\appcompat-v7-25.3.1\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\3a89d3427939006c0d7c18dd2b347229\appcompat-v7-25.3.1\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\35b9440ab833677aa46bea771335a11f\constraint-layout-1.0.2\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\35b9440ab833677aa46bea771335a11f\constraint-layout-1.0.2\AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\aa887b2b4023dd2fd86101ab0c69b923\recyclerview-v7-25.3.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\aa887b2b4023dd2fd86101ab0c69b923\recyclerview-v7-25.3.1\AndroidManifest.xml:20:5-43
+MERGED from [com.getbase:floatingactionbutton:1.9.0] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4f5875c755e71e95be6f0d61a1250b13\floatingactionbutton-1.9.0\AndroidManifest.xml:8:5-10:41
+MERGED from [com.getbase:floatingactionbutton:1.9.0] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4f5875c755e71e95be6f0d61a1250b13\floatingactionbutton-1.9.0\AndroidManifest.xml:8:5-10:41
+MERGED from [com.wdullaer:materialdatetimepicker:1.2.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\84712ead293a924421dce8de96e9ad7f\materialdatetimepicker-1.2.1\AndroidManifest.xml:22:5-24:41
+MERGED from [com.wdullaer:materialdatetimepicker:1.2.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\84712ead293a924421dce8de96e9ad7f\materialdatetimepicker-1.2.1\AndroidManifest.xml:22:5-24:41
+MERGED from [com.wrapp.floatlabelededittext:library:0.0.6] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e40b5645508a567c6823f7e4d242ec1d\library-0.0.6\AndroidManifest.xml:7:5-9:41
+MERGED from [com.wrapp.floatlabelededittext:library:0.0.6] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e40b5645508a567c6823f7e4d242ec1d\library-0.0.6\AndroidManifest.xml:7:5-9:41
+MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\80e85a214598f718f1898cedf81822f2\com.amulyakhare.textdrawable-1.0.1\AndroidManifest.xml:8:5-10:41
+MERGED from [com.amulyakhare:com.amulyakhare.textdrawable:1.0.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\80e85a214598f718f1898cedf81822f2\com.amulyakhare.textdrawable-1.0.1\AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d64dd41fb8686928d6c513d60e57dea1\animated-vector-drawable-25.3.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d64dd41fb8686928d6c513d60e57dea1\animated-vector-drawable-25.3.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\81a16022189acf92ac743cfef032039e\support-vector-drawable-25.3.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\81a16022189acf92ac743cfef032039e\support-vector-drawable-25.3.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:transition:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d8a0e410f5840ed1bd29808a1a7a8032\transition-25.3.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d8a0e410f5840ed1bd29808a1a7a8032\transition-25.3.1\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2031c48f67e66bbed27392a4cb5facdd\support-v4-25.3.1\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2031c48f67e66bbed27392a4cb5facdd\support-v4-25.3.1\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\1f0ed19966e588028a0d854db753c78f\support-fragment-25.3.1\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\1f0ed19966e588028a0d854db753c78f\support-fragment-25.3.1\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2169db9f49ba13924639051829d631e6\support-core-ui-25.3.1\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2169db9f49ba13924639051829d631e6\support-core-ui-25.3.1\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e3e684d2c864fb2e5c8b35ae31cc7d66\support-media-compat-25.3.1\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e3e684d2c864fb2e5c8b35ae31cc7d66\support-media-compat-25.3.1\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2bca0ec76ec2ffd6e43ca9df70fa5964\support-core-utils-25.3.1\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2bca0ec76ec2ffd6e43ca9df70fa5964\support-core-utils-25.3.1\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\7f621c8db80a257fd6765853ce890e78\support-compat-25.3.1\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\7f621c8db80a257fd6765853ce890e78\support-compat-25.3.1\AndroidManifest.xml:21:5-23:58
+INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4af7e9c56e58323565e2a476a0fedfc9\design-25.3.1\AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+		INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+		ADDED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+		INJECTED from D:\AppDev\AppDev\AlarmReminder-master\AlarmReminder-master\app\src\main\AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:design:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4af7e9c56e58323565e2a476a0fedfc9\design-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\3a89d3427939006c0d7c18dd2b347229\appcompat-v7-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\3a89d3427939006c0d7c18dd2b347229\appcompat-v7-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\aa887b2b4023dd2fd86101ab0c69b923\recyclerview-v7-25.3.1\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\aa887b2b4023dd2fd86101ab0c69b923\recyclerview-v7-25.3.1\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d64dd41fb8686928d6c513d60e57dea1\animated-vector-drawable-25.3.1\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d64dd41fb8686928d6c513d60e57dea1\animated-vector-drawable-25.3.1\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\81a16022189acf92ac743cfef032039e\support-vector-drawable-25.3.1\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\81a16022189acf92ac743cfef032039e\support-vector-drawable-25.3.1\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:transition:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d8a0e410f5840ed1bd29808a1a7a8032\transition-25.3.1\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:transition:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\d8a0e410f5840ed1bd29808a1a7a8032\transition-25.3.1\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2031c48f67e66bbed27392a4cb5facdd\support-v4-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2031c48f67e66bbed27392a4cb5facdd\support-v4-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\1f0ed19966e588028a0d854db753c78f\support-fragment-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\1f0ed19966e588028a0d854db753c78f\support-fragment-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2169db9f49ba13924639051829d631e6\support-core-ui-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2169db9f49ba13924639051829d631e6\support-core-ui-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e3e684d2c864fb2e5c8b35ae31cc7d66\support-media-compat-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\e3e684d2c864fb2e5c8b35ae31cc7d66\support-media-compat-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2bca0ec76ec2ffd6e43ca9df70fa5964\support-core-utils-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\2bca0ec76ec2ffd6e43ca9df70fa5964\support-core-utils-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\7f621c8db80a257fd6765853ce890e78\support-compat-25.3.1\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\7f621c8db80a257fd6765853ce890e78\support-compat-25.3.1\AndroidManifest.xml:25:5-27:34
+	android:value
+		ADDED from [com.android.support:design:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4af7e9c56e58323565e2a476a0fedfc9\design-25.3.1\AndroidManifest.xml:27:9-31
+	android:name
+		ADDED from [com.android.support:design:25.3.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\4af7e9c56e58323565e2a476a0fedfc9\design-25.3.1\AndroidManifest.xml:26:9-47
+uses-permission#android.permission.VIBRATE
+ADDED from [com.wdullaer:materialdatetimepicker:1.2.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\84712ead293a924421dce8de96e9ad7f\materialdatetimepicker-1.2.1\AndroidManifest.xml:26:5-66
+	android:name
+		ADDED from [com.wdullaer:materialdatetimepicker:1.2.1] C:\Users\chhab\.gradle\caches\transforms-2\files-2.1\84712ead293a924421dce8de96e9ad7f\materialdatetimepicker-1.2.1\AndroidManifest.xml:26:22-63

@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\AppDev\\AppDev\\AlarmReminder-master\\AlarmReminder-master\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-w270dp-h560dp-v13\\values-w270dp-h560dp-v13.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\chhab\\.gradle\\caches\\transforms-2\\files-2.1\\84712ead293a924421dce8de96e9ad7f\\materialdatetimepicker-1.2.1\\res\\values-w270dp-h560dp-v13\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "223,292,352,413",
+                        "endColumns": "68,59,60,59",
+                        "endOffsets": "287,347,408,468"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,124,184,245",
+                        "endColumns": "68,59,60,59",
+                        "endOffsets": "119,179,240,300"
+                    }
+                }
+            ]
+        }
+    ]
+}

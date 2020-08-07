@@ -45,7 +45,6 @@ public class reminderActivity extends AppCompatActivity {
     //Flag:Notification and Alarm button
     private boolean nFlag = false;
     private boolean aFlag = false;
-    SharedPreferences sharedPreferences;
     final Calendar myCalendar = Calendar.getInstance();
     private int mYear, mMonth, mHour, mMinute, mDay;
 
@@ -98,14 +97,14 @@ static int a;
 
     //Onclick for tick:
     public void  submit (View view) {
-
         String text = spin.getSelectedItem().toString();
-       showNotif();
         task.setmCalendar(myCalendar);
         task.setType(text);
-
         task.setTitle(name.getText().toString());
         task.setVenu(venu.getText().toString());
+        String uniqueId = String.valueOf(myCalendar.get(Calendar.DAY_OF_MONTH))+String.valueOf(myCalendar.get(Calendar.MONTH))+String.valueOf(myCalendar.get(Calendar.HOUR_OF_DAY))+String.valueOf(myCalendar.get(Calendar.MINUTE));
+        task.setID(Integer.parseInt(uniqueId));
+
         mPrefs = getSharedPreferences("com.example.scrollview",MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         if(HomeFragment.emptyView.getVisibility()==View.VISIBLE)
@@ -118,6 +117,7 @@ static int a;
         prefsEditor.putString("tasks", json);
         Log.i(TAG,"task size"+ String.valueOf(HomeFragment.savedTasks.size()));
         prefsEditor.apply();
+        showNotif();
         HomeFragment.taskAdapter.notifyDataSetChanged();
         finish();
 
@@ -125,18 +125,6 @@ static int a;
 
     private void showNotif() {
         Intent intent = new Intent(getApplicationContext(),ReminderBroadcast.class);
-
-        sharedPreferences = getSharedPreferences("my",Context.MODE_PRIVATE);
-        a = getSharedPreferences("my",MODE_PRIVATE).getInt("Hello",0);
-        intent.putExtra("name",a);
-
-        Log.i("msg", String.valueOf(a));
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), a ,intent,0);
-        a++;
-        Log.i("msg", String.valueOf(a));
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-       editor.putInt("Hello",a);
-       editor.commit();
 
 
         AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
@@ -150,6 +138,9 @@ static int a;
         myCalendar.set(Calendar.MINUTE, mMinute);
         myCalendar.set(Calendar.SECOND, 0);
 
+        intent.putExtra("name",task.getID());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), task.getID() ,intent,0);
+        Log.i("msg", String.valueOf(task.getID()));
         Log.i("minute", String.valueOf(mMinute));
         Log.i("minute", String.valueOf(mHour));
 

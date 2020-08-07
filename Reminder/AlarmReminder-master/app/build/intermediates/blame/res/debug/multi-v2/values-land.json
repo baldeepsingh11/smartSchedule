@@ -1,0 +1,55 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\AppDev\\AppDev\\AlarmReminder-master\\AlarmReminder-master\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-land\\values-land.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\chhab\\.gradle\\caches\\transforms-2\\files-2.1\\4af7e9c56e58323565e2a476a0fedfc9\\design-25.3.1\\res\\values-land\\values-land.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "5",
+                        "endColumns": "12",
+                        "endOffsets": "232"
+                    },
+                    "to": {
+                        "startLines": "11",
+                        "startColumns": "4",
+                        "startOffsets": "615",
+                        "endLines": "14",
+                        "endColumns": "12",
+                        "endOffsets": "792"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\chhab\\.gradle\\caches\\transforms-2\\files-2.1\\3a89d3427939006c0d7c18dd2b347229\\appcompat-v7-25.3.1\\res\\values-land\\values-land.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,125,189,260",
+                        "endColumns": "69,63,70,67",
+                        "endOffsets": "120,184,255,323"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\chhab\\.gradle\\caches\\transforms-2\\files-2.1\\84712ead293a924421dce8de96e9ad7f\\materialdatetimepicker-1.2.1\\res\\values-land\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "214,266,320,380,441",
+                        "endColumns": "51,53,59,60,59",
+                        "endOffsets": "261,315,375,436,496"
+                    },
+                    "to": {
+                        "startLines": "6,7,8,9,10",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "328,380,434,494,555",
+                        "endColumns": "51,53,59,60,59",
+                        "endOffsets": "375,429,489,550,610"
+                    }
+                }
+            ]
+        }
+    ]
+}

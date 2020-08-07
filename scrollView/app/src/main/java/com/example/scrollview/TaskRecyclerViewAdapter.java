@@ -1,11 +1,17 @@
 package com.example.scrollview;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +31,12 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import static com.example.scrollview.reminderActivity.a;
+import static android.content.Context.ALARM_SERVICE;
+
 
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
 
     private List<Tasks> tasks;
-    SharedPreferences sharedPreferences;
     private Context mContext;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -92,8 +98,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
                 .into(holder.image);*/
 
 
-        Tasks task = tasks.get(position);
-
+        final Tasks task = tasks.get(position);
         holder.image.setImageDrawable(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.calender_icon, null));
         holder.title.setText(task.getTitle());
         holder.date.setText(datetimeString(task));
@@ -109,18 +114,19 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                Intent intent1 = new Intent(mContext,ReminderBroadcast.class);
+                                PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext,
+                                        HomeFragment.savedTasks.get(position).getID(), intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+                                Log.i("deleted",Integer.toString(HomeFragment.savedTasks.get(position).getID()));
+                                AlarmManager am = (AlarmManager) mContext.getSystemService(ALARM_SERVICE);
+                                am.cancel(pendingIntent);
                                 HomeFragment.savedTasks.remove(position);
-                                sharedPreferences = mContext.getSharedPreferences("my",Context.MODE_PRIVATE);
-
-                                a--;
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putInt("Hello",a);
-                                editor.commit();
+                                SharedPreferences sharedPreferences;
                                 if(HomeFragment.savedTasks.size()==0)
                                 {
                                     HomeFragment.emptyView.setVisibility(View.VISIBLE);
                                 }
-                                SharedPreferences sharedPreferences = mContext.getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
+                                sharedPreferences = mContext.getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
                                 SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
                                 Gson gson = new Gson();
                                 String json = gson.toJson(HomeFragment.savedTasks);
@@ -128,7 +134,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
                                 //Log.i(TAG,"task size"+ String.valueOf(HomeFragment.savedTasks.size()));
                                 prefsEditor.apply();
                                 HomeFragment.taskAdapter.notifyDataSetChanged();
-
+                                //code to delete a alarm
 
                                 // Continue with delete operation
                             }

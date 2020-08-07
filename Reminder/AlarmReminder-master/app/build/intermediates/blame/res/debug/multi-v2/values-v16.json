@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "D:\\AppDev\\AppDev\\AlarmReminder-master\\AlarmReminder-master\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v16\\values-v16.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\chhab\\.gradle\\caches\\transforms-2\\files-2.1\\84712ead293a924421dce8de96e9ad7f\\materialdatetimepicker-1.2.1\\res\\values-v16\\values.xml",
+                    "from": {
+                        "startLines": "4,7,10,13",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "214,470,603,722",
+                        "endLines": "4,9,12,15",
+                        "endColumns": "97,12,12,12",
+                        "endOffsets": "307,598,717,834"
+                    },
+                    "to": {
+                        "startLines": "3,4,7,10",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "121,219,352,471",
+                        "endLines": "3,6,9,12",
+                        "endColumns": "97,12,12,12",
+                        "endOffsets": "214,347,466,583"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\chhab\\.gradle\\caches\\transforms-2\\files-2.1\\3a89d3427939006c0d7c18dd2b347229\\appcompat-v7-25.3.1\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                }
+            ]
+        }
+    ]
+}
