@@ -125,11 +125,11 @@ static int a;
 
     private void showNotif() {
         Intent intent = new Intent(getApplicationContext(),ReminderBroadcast.class);
-
-
+        intent.putExtra("name",task.getID());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), task.getID() ,intent,0);
         AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
          long mTime = System.currentTimeMillis();
-          long timesec = 1000*10;
+         long timesec = 1000*10;
 
         myCalendar.set(Calendar.MONTH, --mMonth);
         myCalendar.set(Calendar.YEAR, mYear);
@@ -138,8 +138,6 @@ static int a;
         myCalendar.set(Calendar.MINUTE, mMinute);
         myCalendar.set(Calendar.SECOND, 0);
 
-        intent.putExtra("name",task.getID());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), task.getID() ,intent,0);
         Log.i("msg", String.valueOf(task.getID()));
         Log.i("minute", String.valueOf(mMinute));
         Log.i("minute", String.valueOf(mHour));
@@ -148,7 +146,7 @@ static int a;
         long selectedTimestamp =  myCalendar.getTimeInMillis();
 
 
-          alarmManager.set(AlarmManager.RTC_WAKEUP,selectedTimestamp,pendingIntent);
+        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,selectedTimestamp,pendingIntent);
     }
 
 
