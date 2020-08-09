@@ -3,18 +3,15 @@ package com.example.scrollview;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,25 +20,13 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-
 import com.example.scrollview.model.Attendence;
-
-import com.example.scrollview.model.Subject;
-import com.example.scrollview.model.Tasks;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import me.tankery.lib.circularseekbar.CircularSeekBar;
-
-import static android.content.ContentValues.TAG;
-import static com.example.scrollview.HomeFragment.emptyView;
 
 class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
     private Context context;
@@ -60,15 +45,22 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
     @Override
     public subjectAdapter1.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.subject_item1,parent,false);
-       subjects =  getList();
+       // SharedPreferences wmbPreference = context. getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
+
+            subjects =  getList();
+
 
         return new subjectAdapter1.ViewHolder(view);
+
+
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull final subjectAdapter1.ViewHolder holder, final int position) {
+
+
         final Attendence subject = subjects.get(position);
         holder.name.setText(subject.getName());
         holder.code.setText(subject.getCode());
@@ -188,7 +180,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
     }
 
 
-    private List<Attendence> getList() {
+    public List<Attendence> getList() {
         List<Attendence> arrayItems;
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);

@@ -3,26 +3,23 @@ package com.example.scrollview;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.scrollview.model.Tasks;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
 
@@ -116,8 +113,8 @@ public class HomeFragment extends Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
         String serializedObject = sharedPreferences.getString("tasks", null);
-        if (serializedObject != null) {
 
+        if (serializedObject != null) {
 
             Gson gson = new Gson();
             Type type = new TypeToken<List<Tasks>>(){}.getType();
