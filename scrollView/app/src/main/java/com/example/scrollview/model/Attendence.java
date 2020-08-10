@@ -1,9 +1,5 @@
 package com.example.scrollview.model;
 
-import android.widget.ProgressBar;
-
-import java.security.PrivateKey;
-
 public class Attendence {
     private String code;
     private String name;
@@ -11,6 +7,7 @@ public class Attendence {
     private String number;
     private String emailID;
     private String profileURL;
+    private String status;
     private double present;
     private double total;
     private double percentage;
@@ -54,6 +51,8 @@ public class Attendence {
         return (present / total )*100;
     }
 
+    public String getstatus(){return status;}
+
     public Attendence()
     {
         code = "MIN 106";
@@ -66,6 +65,10 @@ public class Attendence {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setName(String name) {
@@ -100,7 +103,7 @@ public class Attendence {
         this.percentage = percentage;
     }
 
-    public Attendence(String code, String name, String profName, String number, String emailID, String profileURL, double present, double total, double percentage) {
+    public Attendence(String code, String name, String profName, String number, String emailID, String profileURL, double present, double total, double percentage,String status) {
         this.code = code;
         this.name = name;
         this.profName = profName;
@@ -110,5 +113,6 @@ public class Attendence {
         this.present = present;
         this.total = total;
         this.percentage = percentage;
+        this.status = status;
     }
 }

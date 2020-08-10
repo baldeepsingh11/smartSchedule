@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import androidx.cardview.widget.CardView;
@@ -29,6 +30,7 @@ public class userFragment extends Fragment {
     Button arrowBtn;
     CardView cardView;
     ProgressBar progressBar;
+    EditText status;
 
     public userFragment() {
 
@@ -43,6 +45,8 @@ public class userFragment extends Fragment {
         arrowBtn = view.findViewById(R.id.arrowBtn);
         cardView = view.findViewById(R.id.cardView);
         recyclerView = view.findViewById(R.id.sub_recyclerview);
+        status = view.findViewById(R.id.textView1);
+
 
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL, false);

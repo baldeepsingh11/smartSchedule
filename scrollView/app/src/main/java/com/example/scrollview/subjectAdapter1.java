@@ -69,6 +69,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
       holder.percentage.setText(subject.getPercentage()+"%");
       holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
       holder.progressBar.setProgress((int) subject.getPercentage(),true);
+      holder.status.setText(subject.getstatus());
 
 
         holder.right.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +87,19 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                 holder.progressBar.setProgress((int) subject.getPercentage(),true);
                 holder.percentage.setText(subject.getPercentage()+"%");
                 holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
+
+                if(subject.getPercentage()>90){
+                holder.status.setText("Chill Out , You can bunk classes !, Go on a trip");
+                subject.setStatus("Chill Out , You can bunk classes !, Go on a trip");}
+                else if(subject.getPercentage()>75){
+                    holder.status.setText("You can bunk classes , attendence is maintained");
+                    subject.setStatus("You can bunk classes , attendence is maintained");}
+                else if(subject.getPercentage()==75){
+                    holder.status.setText("You should attend your next class");
+                    subject.setStatus("You should attend your next class");}
+                else{
+                    holder.status.setText("ALERT:Attend you next few classes ! ");
+                    subject.setStatus("ALERT:Attend you next few classes ! "    );}
 
                 mPrefs =context. getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
@@ -110,6 +124,20 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                 holder.progressBar.setProgress((int) subject.getPercentage(),true);
                 holder.percentage.setText(subject.getPercentage()+"%");
                 subjects.set(position,subject);
+
+                if(subject.getPercentage()>90){
+                    holder.status.setText("Chill Out , You can bunk classes !, Go on a trip ");
+                    subject.setStatus("Chill Out , You can bunk classes !, Go on a trip ");}
+                else if(subject.getPercentage()>75){
+                    holder.status.setText("You can bunk classes , attendence is maintained");
+                    subject.setStatus("You can bunk classes , attendence is maintained");}
+                else if(subject.getPercentage()==75){
+                    holder.status.setText("You should attend your next class");
+                    subject.setStatus("You should attend your next class");}
+                else{
+                    holder.status.setText("ALERT:Attend you next few classes ! ");
+                    subject.setStatus("ALERT:Attend you next few classes ! ");}
+
                 mPrefs =context. getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
 
@@ -161,6 +189,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
         private ImageView cross;
         private TextView percentage;
         private TextView percent;
+        private TextView status;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -176,6 +205,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
             right = itemView.findViewById(R.id.imageView);
             cross = itemView.findViewById(R.id.imageView3);
             percent = itemView.findViewById(R.id.textView7);
+            status = itemView.findViewById(R.id.textView1);
         }
     }
 
