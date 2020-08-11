@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
+import static com.example.scrollview.LoginActivity.user;
 
 
 public class HomeFragment extends Fragment {
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment {
     public static List<Tasks> savedTasks;
     RecyclerView taskRecyclerView;
     public static TextView emptyView;
+    TextView name;
 
 
 
@@ -54,7 +56,8 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         RecyclerView recyclerView = rootView.findViewById(R.id.events);
         emptyView = rootView.findViewById(R.id.empty_view);
-
+        name=rootView.findViewById(R.id.Name);
+        name.setText("Hi "+ user.getName());
 
 
         mImageUrls.add("https://www.iitr.ac.in/nss/images/nss_iitr_logo.png");

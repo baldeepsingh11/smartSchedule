@@ -79,7 +79,6 @@ class subjectAdapter extends RecyclerView.Adapter<subjectAdapter.ViewHolder> {
         public ConstraintLayout expandableView;
         public TextView name;
         public TextView code;
-
         public Button arrowBtn;
 
         public CardView cardView;

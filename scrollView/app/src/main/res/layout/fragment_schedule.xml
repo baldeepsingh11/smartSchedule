@@ -2,19 +2,23 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:agendaCalendar="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
 
     <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
         android:id="@+id/calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:selectedItem_background="@drawable/circle_white_solid_background"
         agendaCalendar:layout_constraintTop_toTopOf="parent"
         agendaCalendar:todayItem_background="@drawable/green_circle"
-        agendaCalendar:todayItem_textColor="@android:color/white" />
+        agendaCalendar:todayItem_textColor="@android:color/white"
+        agendaCalendar:selectedItem_background="@drawable/circle_shape"
+        agendaCalendar:selectedItem_textColor="@android:color/black"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/scheduleView"

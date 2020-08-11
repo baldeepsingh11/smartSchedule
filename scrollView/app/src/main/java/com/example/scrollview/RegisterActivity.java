@@ -5,41 +5,39 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.AuthResult;
+import com.example.scrollview.model.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.scrollview.LoginActivity.user;
+
 public class RegisterActivity extends AppCompatActivity {
     public static final String TAG = "TAG";
-    EditText firstName,lastName,email;
+    EditText firstName,branch,email,batch;
+
+
+
+    //variables for taking year as input
+    String[] type = {"1st year","2nd year","3rd year"} ;
+    Spinner spin;
+
     Button saveBtn;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -50,31 +48,47 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         firstName = findViewById(R.id.firstName);
-        lastName = findViewById(R.id.lastName);
+        branch = findViewById(R.id.branch);
         email = findViewById(R.id.emailAddress);
         saveBtn = findViewById(R.id.saveBtn);
+        batch = findViewById(R.id.batch);
+        spin = findViewById(R.id.year_spinner);
+
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userID = fAuth.getCurrentUser().getUid();
 
 
+        //spinner adapter
+        ArrayAdapter aa = new ArrayAdapter(this,R.layout.spinner_row,type);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setAdapter(aa);
+
+
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(firstName.getText().toString().isEmpty()||lastName.getText().toString().isEmpty() || email.getText().toString().isEmpty()){
+                if(firstName.getText().toString().isEmpty()||branch.getText().toString().isEmpty() || email.getText().toString().isEmpty()){
                     Toast.makeText(RegisterActivity.this, "Fill the required Details", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 DocumentReference docRef = fStore.collection("user").document(userID);
-                Map<String,Object> user = new HashMap<>();
-                user.put("first",firstName.getText().toString());
-                user.put("last",lastName.getText().toString());
+               /* Map<String,Object> user = new HashMap<>();
+                user.put("name",firstName.getText().toString());
+                user.put("branch",branch.getText().toString());
                 user.put("email",email.getText().toString());
-
-                //add user to database
-                docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                user.put("batch",batch.getText().toString());
+                user.put("year",spin.getSelectedItem().toString());*/
+                 user.setBatch(batch.getText().toString());
+                 user.setBranch(branch.getText().toString());
+                 user.setEmail(email.getText().toString());
+                 user.setName(firstName.getText().toString());
+                 user.setYear(spin.getSelectedItem().toString());
+                 //add user to database
+                 docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "onSuccess: User Profile Created." + userID);
