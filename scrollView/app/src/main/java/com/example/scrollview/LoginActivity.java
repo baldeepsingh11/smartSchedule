@@ -231,7 +231,6 @@ public class LoginActivity extends AppCompatActivity {
     public void getTimetable()
     {
         String[] days ={"sunday","monday","tuesday","wednesday","thursday","friday","saturday",};
-        final ArrayList<Integer> i = new ArrayList<>();
         for (final String day : days) {
             fStore.collection(user.getYear()).document(user.getBatch()).collection(day)
                     .get()
@@ -253,10 +252,15 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             Log.i(TAG, "onComplete: " + day +gson.toJson(temp));
                             timetable.put(day,temp);
-                            i.add(0);
+
 
                         }
-                    });
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.i(TAG, "onFailure: "+e);
+                }
+            });
 
         }
 
