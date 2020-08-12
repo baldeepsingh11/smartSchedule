@@ -26,6 +26,8 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.scrollview.LoginActivity.user;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,7 +71,7 @@ public class subjectFragment extends Fragment {
         {subjects.add(new Subject());}
         subjectAdapter subjectAdapter = new subjectAdapter(getContext(),subjects);
         recyclerView.setAdapter(subjectAdapter);
-        collapsingToolbarLayout.setTitle("Mechanical Engineering");
+        collapsingToolbarLayout.setTitle(user.getBranch());
 
        /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
                 R.drawable.subject_illustration);
