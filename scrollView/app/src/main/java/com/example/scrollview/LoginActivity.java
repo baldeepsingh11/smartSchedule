@@ -13,7 +13,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.scrollview.model.Attendence;
 import com.example.scrollview.model.Schedule;
+import com.example.scrollview.model.Subject;
 import com.example.scrollview.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -52,10 +54,9 @@ public class LoginActivity extends AppCompatActivity {
     Button next;
 
     public static User user = new User();
-    public static ArrayList<Schedule> monday = new ArrayList<>();
-    public static ArrayList<Schedule> tuesday = new ArrayList<>();
-    public static ArrayList<Schedule> wednesday = new ArrayList<>();
     public static Map<String,ArrayList<Schedule>> timetable = new HashMap<>();
+    public static ArrayList<Subject> subjects = new ArrayList<>();
+    public static ArrayList<Attendence> attendences  = new ArrayList<>();
 
     Gson gson  = new Gson();
 
@@ -206,6 +207,7 @@ public class LoginActivity extends AppCompatActivity {
                     user = documentSnapshot.toObject(User.class);
                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     getTimetable();
+                    getsubjectattendance();
                     finish();
 
 
@@ -227,7 +229,41 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void getsubjectattendance()
+    {
 
+
+            fStore.collection(user.getYear()).document(user.getBatch()).collection("subjects")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                            if (task.isSuccessful()) {
+                                for(QueryDocumentSnapshot document : task.getResult()) {
+
+                                    subjects.add(document.toObject(Subject.class));
+                                    attendences.add(document.toObject(Attendence.class));
+                                    Log.i(TAG, "onComplete:  subject" + gson.toJson(subjects));
+                                    Log.i(TAG, "onComplete: attendances" + gson.toJson(attendences));
+
+
+                                    //  Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+
+
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.i(TAG, "onFailure: " + e);
+                }
+            });
+    }
     public void getTimetable()
     {
         String[] days ={"sunday","monday","tuesday","wednesday","thursday","friday","saturday",};

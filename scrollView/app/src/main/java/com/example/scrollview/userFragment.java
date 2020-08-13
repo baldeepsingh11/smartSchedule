@@ -53,11 +53,11 @@ public class userFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        List<Attendence> subjects = new ArrayList<Attendence>();
+       /* List<Attendence> subjects = new ArrayList<Attendence>();
 
             for(int i= 0 ; i<6;i++)
             {subjects.add(new Attendence());}
-
+*/
 
         SharedPreferences wmbPreference = getContext(). getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
 
@@ -69,7 +69,7 @@ public class userFragment extends Fragment {
             SharedPreferences.Editor prefsEditor = mPrefs.edit();
 
             Gson gson = new Gson();
-            String json = gson.toJson(subjects);
+            String json = gson.toJson(LoginActivity.attendences);
             prefsEditor.putString("attendence", json);
             prefsEditor.apply();
 
@@ -87,7 +87,7 @@ public class userFragment extends Fragment {
 
 
 
-        subjectAdapter1 subjectAdapter = new subjectAdapter1(getContext(),subjects);
+        subjectAdapter1 subjectAdapter = new subjectAdapter1(getContext(),LoginActivity.attendences);
         recyclerView.setAdapter(subjectAdapter);
         if(arrowBtn!=null) {
 

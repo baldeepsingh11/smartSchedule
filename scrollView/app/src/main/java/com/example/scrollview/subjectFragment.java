@@ -26,6 +26,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.scrollview.LoginActivity.subjects;
 import static com.example.scrollview.LoginActivity.user;
 
 
@@ -66,9 +67,10 @@ public class subjectFragment extends Fragment {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        List<Subject> subjects = new ArrayList<Subject>();
+        /*List<Subject> subjects = new ArrayList<Subject>();
         for(int i= 0 ; i<6;i++)
-        {subjects.add(new Subject());}
+        {subjects.add(new Subject());}*/
+
         subjectAdapter subjectAdapter = new subjectAdapter(getContext(),subjects);
         recyclerView.setAdapter(subjectAdapter);
         collapsingToolbarLayout.setTitle(user.getBranch());

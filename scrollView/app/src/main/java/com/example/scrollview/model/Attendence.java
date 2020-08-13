@@ -3,7 +3,7 @@ package com.example.scrollview.model;
 public class Attendence {
     private String code;
     private String name;
-    private  String profName;
+    private String profName;
     private String number;
     private String emailID;
     private String profileURL;

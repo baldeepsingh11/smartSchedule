@@ -103,7 +103,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
 
                 mPrefs =context. getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
-                 subjects.set(position,subject) ;
+                subjects.set(position,subject) ;
                 Gson gson = new Gson();
                 String json = gson.toJson(subjects);
                 prefsEditor.putString("attendence", json);
