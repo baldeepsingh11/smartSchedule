@@ -18,10 +18,12 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,6 +53,8 @@ public class reminderActivity extends AppCompatActivity {
 
     Tasks task = new Tasks();
     SharedPreferences mPrefs;
+    int not=0 ;
+    int ala=0;
     //notification and alarm onclick listener
     public void notification(View view) {
 
@@ -58,11 +62,13 @@ public class reminderActivity extends AppCompatActivity {
         {
             nFlag = false;
             view.setAlpha(0.5f);
+            not=0;
         }
         else
         {
             nFlag=true;
             view.setAlpha(1);
+            not=1;
         }
 
     }
@@ -72,12 +78,14 @@ public class reminderActivity extends AppCompatActivity {
         {
             aFlag = false;
             view.setAlpha(0.5f);
+            ala=0;
 
         }
         else
         {
             aFlag=true;
             view.setAlpha(1);
+            ala=1;
         }
 
     }
@@ -89,7 +97,8 @@ static int a;
     TextInputEditText mTime;
     TextInputEditText venu;
     TextInputEditText name;
-
+    Button notif;
+    Button alarm;
     //spinner (reminder type):
     Spinner spin;
     String[] type = {"Academics","Groups","Personal"} ;
@@ -98,34 +107,43 @@ static int a;
     //Onclick for tick:
     public void  submit (View view) {
         String text = spin.getSelectedItem().toString();
-        task.setmCalendar(myCalendar);
-        task.setType(text);
-        task.setTitle(name.getText().toString());
-        task.setVenu(venu.getText().toString());
-        String uniqueId = String.valueOf(myCalendar.get(Calendar.DAY_OF_MONTH))+String.valueOf(myCalendar.get(Calendar.MONTH))+String.valueOf(myCalendar.get(Calendar.HOUR_OF_DAY))+String.valueOf(myCalendar.get(Calendar.MINUTE));
-        task.setID(Integer.parseInt(uniqueId));
+        if(name.getText().length()>0 &&  venu.getText().length()>0 && text.length()>0 &&  mDate.getText().length()>0 &&  mTime.getText().length()>0 ) {
 
-        mPrefs = getSharedPreferences("com.example.scrollview",MODE_PRIVATE);
-        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-        if(HomeFragment.emptyView.getVisibility()==View.VISIBLE)
-        {
-            HomeFragment.emptyView.setVisibility(View.GONE);
+            if (not == 1 || ala == 1) {
+
+                task.setmCalendar(myCalendar);
+                task.setType(text);
+                task.setTitle(name.getText().toString());
+                task.setVenu(venu.getText().toString());
+                String uniqueId = String.valueOf(myCalendar.get(Calendar.DAY_OF_MONTH)) + String.valueOf(myCalendar.get(Calendar.MONTH)) + String.valueOf(myCalendar.get(Calendar.HOUR_OF_DAY)) + String.valueOf(myCalendar.get(Calendar.MINUTE));
+                task.setID(Integer.parseInt(uniqueId));
+
+
+                mPrefs = getSharedPreferences("com.example.scrollview", MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                if (HomeFragment.emptyView.getVisibility() == View.VISIBLE) {
+                    HomeFragment.emptyView.setVisibility(View.GONE);
+                }
+                HomeFragment.savedTasks.add(task);
+                Gson gson = new Gson();
+                String json = gson.toJson(HomeFragment.savedTasks);
+                prefsEditor.putString("tasks", json);
+                Log.i(TAG, "task size" + String.valueOf(HomeFragment.savedTasks.size()));
+                prefsEditor.apply();
+                showNotif();
+                HomeFragment.taskAdapter.notifyDataSetChanged();
+                finish();
+            } else {
+                Toast.makeText(this, "Enter all values!", Toast.LENGTH_SHORT).show();
+            }
         }
-        HomeFragment.savedTasks.add(task);
-        Gson gson = new Gson();
-        String json = gson.toJson(HomeFragment.savedTasks);
-        prefsEditor.putString("tasks", json);
-        Log.i(TAG,"task size"+ String.valueOf(HomeFragment.savedTasks.size()));
-        prefsEditor.apply();
-        showNotif();
-        HomeFragment.taskAdapter.notifyDataSetChanged();
-        finish();
-
     }
 
     private void showNotif() {
         Intent intent = new Intent(getApplicationContext(),ReminderBroadcast.class);
         intent.putExtra("name",task.getID());
+        intent.putExtra("notif",not);
+        intent.putExtra("alarm",ala);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), task.getID() ,intent,0);
         AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
          long mTime = System.currentTimeMillis();
@@ -160,8 +178,11 @@ static int a;
         mTime = (TextInputEditText)findViewById(R.id.event_time);
         spin = (Spinner) findViewById(R.id.spinner);
         name = findViewById(R.id.event_name);
-
+        notif = findViewById(R.id.ntfcbtn);
+        alarm = findViewById(R.id.alrmbtn);
         createNotificationChannel();
+
+
 
 
         //For type of reminder
