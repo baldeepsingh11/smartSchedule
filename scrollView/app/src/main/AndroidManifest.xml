@@ -21,6 +21,8 @@
             </intent-filter>
         </activity>
         <receiver android:name="com.example.scrollview.ReminderBroadcast" />
+        <receiver android:name="com.example.scrollview.scheduleReminderBroadcast" />
+        <receiver android:name="com.example.scrollview.ActionReceiver" />
 
 
     </application>
