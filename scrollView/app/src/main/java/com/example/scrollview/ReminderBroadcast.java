@@ -58,7 +58,7 @@ if(not==1) {
     NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "hello")
             .setSmallIcon(R.drawable.ic_icons8_checkmark)
             .setContentTitle("Scrollview")
-            .setContentText(arrayItems.get(position).getTitle()+"  "+"AT"+" "+arrayItems.get(position).getVenu())
+            .setContentText(arrayItems.get(position).getTitle()+ "   "+"Venue:"+" "+ arrayItems.get(position).getVenu())
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             // Set the intent that will fire when the user taps the notification
             .setAutoCancel(true);
@@ -103,7 +103,7 @@ Intent intent1 = new Intent(context, Alarm.class);
     NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "hello")
             .setSmallIcon(R.drawable.ic_icons8_checkmark)
             .setContentTitle("Scrollview")
-            .setContentText(arrayItems.get(position).getTitle())
+            .setContentText(arrayItems.get(position).getTitle()+"/r/n  "+"Venue:"+" "+ arrayItems.get(position).getVenu())
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .addAction(R.mipmap.ic_launcher,"STOP",pendingIntent)
             // Set the intent that will fire when the user taps the notification
