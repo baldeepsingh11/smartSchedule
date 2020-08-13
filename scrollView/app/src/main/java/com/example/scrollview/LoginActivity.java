@@ -3,6 +3,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,8 +31,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -162,6 +168,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onVerificationFailed(FirebaseException e) {
                         Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "onVerificationFailed: "+e.getMessage());
 
                     }
                 });
@@ -226,6 +233,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+    public int splitTime(String time){
+        String[] strings = time.split("-");
+            return Integer.parseInt(strings[0]);
+    }
 
 
     public void getTimetable()
@@ -252,6 +263,14 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             Log.i(TAG, "onComplete: " + day +gson.toJson(temp));
                             timetable.put(day,temp);
+                            String time=timetable.get(day).get(i).getTime();
+                            i++;
+                            Calendar sCalendar = Calendar.getInstance();
+                            String dayLongName = sCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+                            if (dayLongName.equals(day)){
+                                int startTime =splitTime(time);
+                                setAlarm(sCalendar);
+                            }
 
 
                         }
@@ -329,5 +348,28 @@ public class LoginActivity extends AppCompatActivity {
                 });*/
 
 
+    }
+    private void setAlarm(int mMonth,int mYear,int mDay,int mHour,int mMinute) {
+        Intent intent = new Intent(getApplicationContext(),ReminderBroadcast.class);
+        intent.putExtra("name",schedule.getID());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), task.getID() ,intent,0);
+        AlarmManager alarmManager =(AlarmManager) getSystemService(ALARM_SERVICE);
+        Calendar myCalendar=Calendar.getInstance();
+        myCalendar.set(Calendar.MONTH, --mMonth);
+        myCalendar.set(Calendar.YEAR, mYear);
+        myCalendar.set(Calendar.DAY_OF_MONTH, mDay);
+        myCalendar.set(Calendar.HOUR_OF_DAY, mHour);
+        myCalendar.set(Calendar.MINUTE, mMinute);
+        myCalendar.set(Calendar.SECOND, 0);
+
+        Log.i("msg", String.valueOf(task.getID()));
+        Log.i("minute", String.valueOf(mMinute));
+        Log.i("minute", String.valueOf(mHour));
+
+
+        long selectedTimestamp =  myCalendar.getTimeInMillis();
+
+
+        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,selectedTimestamp,pendingIntent);
     }
 }

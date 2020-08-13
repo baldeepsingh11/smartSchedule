@@ -94,6 +94,8 @@ public class scheduleFragment extends Fragment {
                schedules.clear();
                adapter.notifyDataSetChanged();
                 schedules.addAll(timetable.get(getSelectedDay()));
+                if (schedules.size()>0) Log.i(TAG, "onCreateView: "+schedules.get(0).getTime());
+                else Log.i(TAG, "onCreateView: length is 0");
                 adapter.notifyDataSetChanged();
                //getschedule(getSelectedDay());
 
