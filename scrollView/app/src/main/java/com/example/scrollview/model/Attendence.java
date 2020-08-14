@@ -11,7 +11,15 @@ public class Attendence {
     private double present;
     private double total;
     private double percentage;
+    private int ID;
 
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
 
 

@@ -19,8 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.scrollview.model.Attendence;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
+import java.lang.reflect.Type;
 import java.util.List;
 
 
@@ -58,36 +59,24 @@ public class userFragment extends Fragment {
             for(int i= 0 ; i<6;i++)
             {subjects.add(new Attendence());}
 */
+        List<Attendence> arrayItems = null;
 
-        SharedPreferences wmbPreference = getContext(). getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("com.example.scrollview", Context.MODE_PRIVATE);
+        String serializedObject = sharedPreferences.getString("attendence", null);
+        if (serializedObject != null) {
 
-        boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
-
-        if (isFirstRun)
-        {
-            SharedPreferences mPrefs = getContext().getSharedPreferences("com.example.scrollview", Context.MODE_PRIVATE);
-            SharedPreferences.Editor prefsEditor = mPrefs.edit();
 
             Gson gson = new Gson();
-            String json = gson.toJson(LoginActivity.attendences);
-            prefsEditor.putString("attendence", json);
-            prefsEditor.apply();
-
-            Log.i("msg", String.valueOf(isFirstRun));
-        }else{
-
-            Log.i("msg", String.valueOf(isFirstRun));
-
+            Type type = new TypeToken<List<Attendence>>(){}.getType();
+            arrayItems = gson.fromJson(serializedObject, type);
         }
-        SharedPreferences.Editor editor = wmbPreference.edit();
-        editor.putBoolean("FIRSTRUN", false);
-        editor.commit();
+        else
+        {
+            Log.i("msg","123");
+        }
 
 
-
-
-
-        subjectAdapter1 subjectAdapter = new subjectAdapter1(getContext(),LoginActivity.attendences);
+        subjectAdapter1 subjectAdapter = new subjectAdapter1(getContext(),arrayItems);
         recyclerView.setAdapter(subjectAdapter);
         if(arrowBtn!=null) {
 

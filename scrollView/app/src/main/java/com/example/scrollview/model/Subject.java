@@ -8,6 +8,15 @@ public class Subject {
     private String emailID;
     private String profileURL;
     private String attendence;
+    private int ID;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public String getCode() {
         return code;

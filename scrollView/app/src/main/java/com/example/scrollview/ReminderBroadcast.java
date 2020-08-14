@@ -68,7 +68,7 @@ if(not==1) {
     NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
 // notificationId is a unique int for each notification that you must define
-    notificationManager.notify(0, builder.build());
+    notificationManager.notify(Id, builder.build());
     Log.i("gvhgvgh", String.valueOf(position));
     SharedPreferences sharedPreferences1;
     HomeFragment.savedTasks.remove(position);
@@ -114,7 +114,7 @@ Intent intent1 = new Intent(context, Alarm.class);
     NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
     SharedPreferences sharedPreferences1;
 // notificationId is a unique int for each notification that you must define
-    notificationManager.notify(0, builder.build());
+    notificationManager.notify(Id, builder.build());
     Log.i("gvhgvgh", String.valueOf(position));
     HomeFragment.savedTasks.remove(position);
     if (HomeFragment.savedTasks.size() == 0) {

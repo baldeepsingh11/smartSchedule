@@ -31,6 +31,15 @@ public class Schedule {
     public String getTime() {
         return time;
     }
+    private int ID;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public Schedule() {
         code = "MIN 106";
