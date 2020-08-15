@@ -81,7 +81,7 @@ public class userFragment extends Fragment {
         if(arrowBtn!=null) {
 
         }
-
+        Log.i("user fragment", "onCreateView: "+Integer.toString(arrayItems.size()));
         return view;
     }
 }

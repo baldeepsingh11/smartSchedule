@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     public static User user = new User();
     public static Map<String,ArrayList<Schedule>> timetable = new HashMap<>();
     public static ArrayList<Subject> subjects = new ArrayList<>();
-    public static ArrayList<Attendence> attendences  = new ArrayList<>();
+    public ArrayList<Attendence> attendences  = new ArrayList<>();
 
     Gson gson  = new Gson();
 
@@ -251,6 +251,8 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                             if (task.isSuccessful()) {
+                                SharedPreferences wmbPreference = getApplicationContext().getSharedPreferences("com.example.scrollview", Context.MODE_PRIVATE);
+                                boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
                                 for(QueryDocumentSnapshot document : task.getResult()) {
 
                                     subjects.add(document.toObject(Subject.class));
@@ -258,9 +260,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.i(TAG, "onComplete:  subject" + gson.toJson(subjects));
                                     Log.i(TAG, "onComplete: attendances" + gson.toJson(attendences));
 
-                                    SharedPreferences wmbPreference = getApplicationContext().getSharedPreferences("com.example.scrollview", Context.MODE_PRIVATE);
 
-                                    boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
 
                                     if (isFirstRun)
                                     {
@@ -268,22 +268,21 @@ public class LoginActivity extends AppCompatActivity {
                                         SharedPreferences.Editor prefsEditor = mPrefs.edit();
 
                                         Gson gson = new Gson();
-                                        String json = gson.toJson(LoginActivity.attendences);
+                                        String json = gson.toJson(attendences);
                                         prefsEditor.putString("attendence", json);
                                         prefsEditor.apply();
 
                                         Log.i("msg", String.valueOf(isFirstRun));
                                     }else{
-
                                         Log.i("msg", String.valueOf(isFirstRun));
-
                                     }
-                                    SharedPreferences.Editor editor = wmbPreference.edit();
-                                    editor.putBoolean("FIRSTRUN", false);
-                                    editor.commit();
 
                                     //  Log.d(TAG, document.getId() + " => " + document.getData());
                                 }
+                                SharedPreferences.Editor editor = wmbPreference.edit();
+                                editor.putBoolean("FIRSTRUN", false);
+                                editor.commit();
+                                Log.i(TAG, "onComplete: attendenes"+gson.toJson(attendences));
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
                             }

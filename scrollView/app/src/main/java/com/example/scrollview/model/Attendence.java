@@ -56,7 +56,7 @@ public class Attendence {
     }
 
     public double getPercentage() {
-        return (present / total )*100;
+        return Math.floor((present / total )*1000)/10;
     }
 
     public String getstatus(){return status;}
