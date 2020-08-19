@@ -93,25 +93,17 @@ public class EventsActivity extends AppCompatActivity {
         @Override
         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
-            RecyclerView list = (RecyclerView) view.findViewById(R.id.list);
-            list.setLayoutManager(new LinearLayoutManager(getContext()));
-            list.setAdapter(new Adapter(LayoutInflater.from(getContext()), new ArrayList<Item>() {
-                {
-                    for (int i = 0; i < 30; i++) {
-                        add(new Item("detail:" + i));
-                    }
-                }
-            }));
+
         }
 
-        private static class ViewHolder extends RecyclerView.ViewHolder {
+        /*private static class ViewHolder extends RecyclerView.ViewHolder {
             private final TextView title;
 
             public ViewHolder(View itemView) {
                 super(itemView);
                 title = (TextView) itemView.findViewById(R.id.title);
             }
-        }
+        }*/
 
         public static class Item {
             public final String title;
@@ -121,7 +113,7 @@ public class EventsActivity extends AppCompatActivity {
             }
         }
 
-        public static class Adapter extends RecyclerView.Adapter<ViewHolder> {
+         /*public static class Adapter extends RecyclerView.Adapter<ViewHolder> {
             private LayoutInflater inflater;
             private final List<Item> items;
 
@@ -144,7 +136,7 @@ public class EventsActivity extends AppCompatActivity {
             public int getItemCount() {
                 return items.size();
             }
-        }
+        }*/
 
     }
 }
