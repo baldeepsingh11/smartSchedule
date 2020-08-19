@@ -151,7 +151,7 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
             }
             Glide.with(getContext())
                     .asBitmap()
-                    .load(events.getCategories().)
+                    .load(HomeFragment.mImageUrls.get(i))
                     .into(view);
 
 
