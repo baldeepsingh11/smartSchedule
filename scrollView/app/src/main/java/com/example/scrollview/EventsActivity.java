@@ -74,7 +74,7 @@ public class EventsActivity extends AppCompatActivity {
 
         @Override
         public int getIconResId(int index) {
-            return events.getCategories().get(index).image;
+            return 0;
         }
 
         @Override

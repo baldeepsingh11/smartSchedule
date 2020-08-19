@@ -16,6 +16,8 @@ import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.example.scrollview.model.events;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
@@ -147,7 +149,12 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 view.setTransitionName("tab_" + i);
             }
-            view.setImageResource(iconAdapter.getIconResId(i));
+            Glide.with(getContext())
+                    .asBitmap()
+                    .load(events.getCategories().)
+                    .into(view);
+
+
             if (changePadding) {
                 //assuming that every indicator will have same size
                 changePadding = false;

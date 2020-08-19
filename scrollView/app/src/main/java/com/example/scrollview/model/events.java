@@ -1,43 +1,39 @@
 package com.example.scrollview.model;
 
+import com.example.scrollview.HomeFragment;
 import com.example.scrollview.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class events {
-    private static List<Category> categories = generateItems();
+    private static List<event> categories = generateItems();
 
-    public static List<Category> getCategories() {
+    public static List<event> getCategories() {
         return categories;
     }
 
-    private static List<Category> generateItems() {
-        Random rand = new Random();
-        List<Category> items = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            items.add(new Category("title:" + i, getImage(rand.nextInt(2))));
+    private static List<event> generateItems() {
+        List<event> items = new ArrayList<>();
+        for (int i = 0; i < HomeFragment.mImageUrls.size(); i++) {
+            items.add(new event("title:" + i,HomeFragment.mImageUrls.get(i)));
         }
         return items;
     }
 
-    public static class Category {
+    public static class event {
         public final String title;
-        public final int image;
+        public final String imageUrl;
 
-        private Category(String title, int image) {
+
+        private event(String title, String imageUrl) {
             this.title = title;
-            this.image = image;
+            this.imageUrl = imageUrl;
         }
     }
 
-    private static int getImage(int position) {
-        switch (position) {
-            case 0:
-                return R.drawable.image_1;
-            default:
-                return R.drawable.image_2;
-        }
+    private static String getImageUrl(int position) {
+        return categories.get(position).imageUrl;
+
     }
 }
