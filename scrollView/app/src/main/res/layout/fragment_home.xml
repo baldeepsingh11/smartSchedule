@@ -13,11 +13,10 @@
         android:id="@+id/NameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/events"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TopImage">
 
         <TextView
             android:id="@+id/Name"
@@ -42,24 +41,26 @@
         android:id="@+id/events"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:divider="@null"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/upcomingTasks"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NameLayout"
         app:reverseLayout="true" />
 
 
     <LinearLayout
         android:id="@+id/upcomingTasks"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/bg_white"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/events">
 
         <TextView
             android:id="@+id/listHeading"
@@ -74,11 +75,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/taskList"
-            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:orientation="vertical"
+            android:visibility="visible"></androidx.recyclerview.widget.RecyclerView>
 
 
     </LinearLayout>
@@ -99,7 +99,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:cropToPadding="false"
-        app:layout_constraintBottom_toTopOf="@+id/NameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

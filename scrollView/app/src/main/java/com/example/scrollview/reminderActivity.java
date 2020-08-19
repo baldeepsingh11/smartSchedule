@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
@@ -51,44 +52,40 @@ public class reminderActivity extends AppCompatActivity {
 
     Tasks task = new Tasks();
     SharedPreferences mPrefs;
-    int not=0 ;
-    int ala=0;
+    int not = 0;
+    int ala = 0;
+
     //notification and alarm onclick listener
     public void notification(View view) {
 
-        if(nFlag)
-        {
+        if (nFlag) {
             nFlag = false;
             view.setAlpha(0.5f);
-            not=0;
-        }
-        else
-        {
-            nFlag=true;
+            not = 0;
+        } else {
+            nFlag = true;
             view.setAlpha(1);
-            not=1;
+            not = 1;
         }
 
     }
+
     public void alarm(View view) {
 
-        if(aFlag)
-        {
+        if (aFlag) {
             aFlag = false;
             view.setAlpha(0.5f);
-            ala=0;
+            ala = 0;
 
-        }
-        else
-        {
-            aFlag=true;
+        } else {
+            aFlag = true;
             view.setAlpha(1);
-            ala=1;
+            ala = 1;
         }
 
     }
 
-static int a;
+    static int a;
 
     //mDate and mTime:EditText
     TextInputEditText mDate;
@@ -99,43 +96,53 @@ static int a;
     Button alarm;
     //spinner (reminder type):
     Spinner spin;
-    String[] type = {"Academics","Groups","Personal"} ;
+    String[] type = {"Academics", "Groups", "Personal"};
 
 
     //Onclick for tick:
-    public void  submit (View view) {
+    public void submit(View view) {
         String text = spin.getSelectedItem().toString();
-        if(name.getText().length()>0 &&  venu.getText().length()>0 && text.length()>0 &&  mDate.getText().length()>0 &&  mTime.getText().length()>0 ) {
+        if (name.getText().toString().trim().equals("")) {
+            name.setError("Name is required!");
+        }
+        else if (mDate.getText().toString().equals("")){
+            mDate.setError("Date is required!");
+        }
+        else if (mTime.getText().toString().equals("")) {
+            mTime.setError("Time is required!");
+        }
+        else if (venu.getText().toString().equals("")) {
+            venu.setError("Venue is required!");
+        }
+        else if (not == 0 && ala == 0) {
+            Toast.makeText(this, "Choose between alarm and notification", Toast.LENGTH_SHORT).show();
+        } else {
 
-            if (not == 1 || ala == 1) {
-
-                task.setmCalendar(myCalendar);
-                task.setType(text);
-                task.setTitle(name.getText().toString());
-                task.setVenu(venu.getText().toString());
-                String uniqueId = String.valueOf(myCalendar.get(Calendar.DAY_OF_MONTH)) + String.valueOf(myCalendar.get(Calendar.MONTH)) + String.valueOf(myCalendar.get(Calendar.HOUR_OF_DAY)) + String.valueOf(myCalendar.get(Calendar.MINUTE));
-                task.setID(Integer.parseInt(uniqueId));
+            task.setmCalendar(myCalendar);
+            task.setType(text);
+            task.setTitle(name.getText().toString());
+            task.setVenu(venu.getText().toString());
+            String uniqueId = String.valueOf(myCalendar.get(Calendar.DAY_OF_MONTH)) + String.valueOf(myCalendar.get(Calendar.MONTH)) + String.valueOf(myCalendar.get(Calendar.HOUR_OF_DAY)) + String.valueOf(myCalendar.get(Calendar.MINUTE));
+            task.setID(Integer.parseInt(uniqueId));
 
 
-                mPrefs = getSharedPreferences("com.example.scrollview", MODE_PRIVATE);
-                SharedPreferences.Editor prefsEditor = mPrefs.edit();
-                if (HomeFragment.emptyView.getVisibility() == View.VISIBLE) {
-                    HomeFragment.emptyView.setVisibility(View.GONE);
-                }
-                HomeFragment.savedTasks.add(task);
-                Gson gson = new Gson();
-                String json = gson.toJson(HomeFragment.savedTasks);
-                prefsEditor.putString("tasks", json);
-                Log.i(TAG, "task size" + String.valueOf(HomeFragment.savedTasks.size()));
-                prefsEditor.apply();
-                showNotif();
-                HomeFragment.taskAdapter.notifyDataSetChanged();
-                finish();
-            } else {
-                Toast.makeText(this, "Enter all values!", Toast.LENGTH_SHORT).show();
+            mPrefs = getSharedPreferences("com.example.scrollview", MODE_PRIVATE);
+            SharedPreferences.Editor prefsEditor = mPrefs.edit();
+            if (HomeFragment.emptyView.getVisibility() == View.VISIBLE) {
+                HomeFragment.emptyView.setVisibility(View.GONE);
             }
+            HomeFragment.savedTasks.add(task);
+            Gson gson = new Gson();
+            String json = gson.toJson(HomeFragment.savedTasks);
+            prefsEditor.putString("tasks", json);
+            Log.i(TAG, "task size" + String.valueOf(HomeFragment.savedTasks.size()));
+            prefsEditor.apply();
+            showNotif();
+            HomeFragment.taskAdapter.notifyDataSetChanged();
+            finish();
         }
     }
+
 
     private void showNotif() {
         Intent intent = new Intent(getApplicationContext(),ReminderBroadcast.class);
@@ -216,12 +223,17 @@ static int a;
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus) {
-                    new DatePickerDialog(reminderActivity.this, datelistener, myCalendar
+                    DatePickerDialog datePickerDialog =new DatePickerDialog(reminderActivity.this, datelistener, myCalendar
                             .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                            myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-
-
-
+                            myCalendar.get(Calendar.DAY_OF_MONTH));
+                    datePickerDialog.show();
+                datePickerDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        mDate.clearFocus();
+                    }
+                });
+                    mDate.setError(null);
 
                 }
             }
@@ -253,6 +265,7 @@ static int a;
                     }, mHour, mMinute, false);
                     mTimePicker.setTitle("Select mTime");
                     mTimePicker.show();
+                    mTime.setError(null);
                 }
                 mTime.clearFocus();
             }

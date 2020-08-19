@@ -7,6 +7,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="AppTheme.EventsActivity">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
     <!--<style name="custom" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorPrimary">#00BFFF</item>
         <item name="colorPrimaryDark">#00BFFF</item>

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -28,13 +29,15 @@ import static com.example.scrollview.LoginActivity.user;
 public class HomeFragment extends Fragment {
     public static TaskRecyclerViewAdapter taskAdapter;
     //vars
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mImageUrls = new ArrayList<>();
+    public static ArrayList<String> mNames = new ArrayList<>();
+    public static ArrayList<String> mImageUrls = new ArrayList<>();
     private ArrayList<String> mTasks = new ArrayList<>();
     private ArrayList<String> mTaskImages = new ArrayList<>();
     private ArrayList<String> mTaskDate = new ArrayList<>();
     public static List<Tasks> savedTasks;
+    static LinearLayoutManager layoutManager;
     RecyclerView taskRecyclerView;
+    public static RecyclerView recyclerView;
     public static TextView emptyView;
     TextView name;
 
@@ -51,11 +54,10 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        RecyclerView recyclerView = rootView.findViewById(R.id.events);
+        recyclerView = rootView.findViewById(R.id.events);
         emptyView = rootView.findViewById(R.id.empty_view);
         name=rootView.findViewById(R.id.Name);
         name.setText("Hi "+ user.getName());
-
 
         mImageUrls.add("https://www.iitr.ac.in/nss/images/nss_iitr_logo.png");
         mNames.add("NSS BDC");
@@ -77,7 +79,7 @@ public class HomeFragment extends Fragment {
 
 
         Log.d(TAG, "initRecyclerView: init recyclerview");
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
+        layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setLayoutManager(layoutManager);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getContext(), mNames, mImageUrls);

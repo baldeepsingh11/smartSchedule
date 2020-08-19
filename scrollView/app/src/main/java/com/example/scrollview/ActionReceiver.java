@@ -1,5 +1,6 @@
 package com.example.scrollview;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,8 @@ public class ActionReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
        String id = intent.getStringExtra("ID");
+       int NotificationId= intent.getIntExtra("NotificataionId",0);
+        Log.i("Action Receiver", "onReceive: "+Integer.toString(NotificationId));
       // Toast.makeText(context,"recieved",Toast.LENGTH_SHORT).show();
         Log.i("bwrwn",id);
 
@@ -28,7 +31,6 @@ public class ActionReceiver extends BroadcastReceiver {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
         String serializedObject = sharedPreferences.getString("attendence", null);
         if (serializedObject != null) {
-
 
             Gson gson = new Gson();
             Type type = new TypeToken<List<Attendence>>(){}.getType();
@@ -40,11 +42,14 @@ public class ActionReceiver extends BroadcastReceiver {
         }
 
         for(int i=0;i<arrayItems.size();i++){
+            cancelNotification(context,NotificationId);
+
             Log.i("bwr",arrayItems.get(i).getCode());
             if(id.equals(arrayItems.get(i).getCode())){
                 Log.i("matched","hurahh");
                 String action = intent.getAction();
                 if ("YES_ACTION".equals(action)) {
+                    cancelNotification(context,NotificationId);
                     Toast.makeText(context, "YES CALLED", Toast.LENGTH_SHORT).show();
 
                     arrayItems.get(i).setPresent(arrayItems.get(i).getPresent()+1);
@@ -65,6 +70,7 @@ public class ActionReceiver extends BroadcastReceiver {
 
 
                 else  if ("STOP_ACTION".equals(action)) {
+                    cancelNotification(context,NotificationId);
                     Toast.makeText(context, "STOP CALLED", Toast.LENGTH_SHORT).show();
 
                     arrayItems.get(i).setPresent(arrayItems.get(i).getPresent());
@@ -100,6 +106,11 @@ public class ActionReceiver extends BroadcastReceiver {
         //This is used to close the notification tray
         Intent it = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         context.sendBroadcast(it);
+    }
+    public static void cancelNotification(Context ctx, int notifyId) {
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager nMgr = (NotificationManager) ctx.getSystemService(ns);
+        nMgr.cancel(notifyId);
     }
 
 

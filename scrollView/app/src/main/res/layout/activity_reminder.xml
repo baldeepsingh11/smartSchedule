@@ -80,7 +80,6 @@
                 android:layout_marginStart="0dp"
                 android:backgroundTint="@android:color/background_light"
                 android:clickable="true"
-                android:editable="false"
                 android:hint="Date"
                 android:textColor="@android:color/background_light"
                 android:textColorHint="@android:color/background_light" />

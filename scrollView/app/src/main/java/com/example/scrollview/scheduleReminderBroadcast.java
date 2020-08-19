@@ -22,7 +22,9 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
         String id = intent.getStringExtra("ID");
         //This is the intent of PendingIntent
         PendingIntent pIntentlogin;
+        int NotificationId=(int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
         Intent intentAction = new Intent(context,ActionReceiver.class);
+        intentAction.putExtra("NotificationId",NotificationId);
 
         //This is optional if you have more than one buttons and want to differentiate between two
         intentAction.putExtra("action","actionName");
@@ -55,7 +57,7 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
         PendingIntent pendingIntentYes2 = PendingIntent.getBroadcast(context, 12345, yesReceive2, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.addAction(R.drawable.cross, "No", pendingIntentYes2);
 // notificationId is a unique int for each notification that you must define
-            notificationManager.notify((int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE), builder.build());
+            notificationManager.notify(NotificationId, builder.build());
 
     }
 
