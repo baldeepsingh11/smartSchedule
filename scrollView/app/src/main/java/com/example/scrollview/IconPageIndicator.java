@@ -9,6 +9,7 @@ import android.view.ViewTreeObserver;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
@@ -22,6 +23,8 @@ import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static com.example.scrollview.model.events.categories;
+import static com.example.scrollview.model.events.getCategories;
 
 //modified version of https://github.com/JakeWharton/ViewPagerIndicator/blob/master/library/src/com/viewpagerindicator/IconPageIndicator.java
 public class IconPageIndicator extends HorizontalScrollView implements PageIndicator {
@@ -143,16 +146,24 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
         int count = iconAdapter.getCount();
         LayoutInflater inflater = LayoutInflater.from(getContext());
         for (int i = 0; i < count; i++) {
-            final View parent = inflater.inflate(R.layout.indicator, mIconsLayout, false);
-            final ImageView view = (ImageView) parent.findViewById(R.id.icon);
+            final View parent_top = inflater.inflate(R.layout.indicator, mIconsLayout, false);
+        //    final View parent_bottom = inflater.inflate(R.layout.detail_page,)
+            final ImageView logoview = (ImageView) parent_top.findViewById(R.id.icon);
+            final ImageView posterview = (ImageView) parent.findViewById(R.id.event_poster);
+            final TextView title = (TextView) parent.findViewById(R.id.event_title);
+            final TextView description = (TextView) parent.findViewById(R.id.event_description);
             //// TODO: 25/04/2017 Use ViewCompat to support pre-lollipop
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                view.setTransitionName("tab_" + i);
+                logoview.setTransitionName("tab_" + i);
             }
             Glide.with(getContext())
                     .asBitmap()
-                    .load(events.getCategories().)
-                    .into(view);
+                    .load(HomeFragment.mImageUrls.get(i))
+                    .into(logoview);
+            Glide.with(getContext())
+                    .asBitmap()
+                    .load(getCategories().get(i).imageUrl)
+                    .into(posterview);
 
 
             if (changePadding) {

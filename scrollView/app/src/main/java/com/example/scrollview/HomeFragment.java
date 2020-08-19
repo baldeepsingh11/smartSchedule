@@ -120,7 +120,6 @@ public class HomeFragment extends Fragment {
         String serializedObject = sharedPreferences.getString("tasks", null);
 
         if (serializedObject != null) {
-
             Gson gson = new Gson();
             Type type = new TypeToken<List<Tasks>>(){}.getType();
             arrayItems = gson.fromJson(serializedObject, type);
