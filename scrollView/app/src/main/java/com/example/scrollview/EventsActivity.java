@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
@@ -20,12 +21,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 
+import com.bumptech.glide.Glide;
 import com.example.scrollview.model.events;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.scrollview.model.events.getCategories;
 
 public class EventsActivity extends AppCompatActivity {
 
@@ -56,6 +60,7 @@ public class EventsActivity extends AppCompatActivity {
                 supportStartPostponedEnterTransition();
             }
         });
+
     }
 
 
@@ -84,10 +89,22 @@ public class EventsActivity extends AppCompatActivity {
     }
 
     public static class DetailPage extends Fragment {
+        ImageView posterview;
+        TextView title;
+        TextView description;
+
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.detail_page, container, false);
+            View rootview = inflater.inflate(R.layout.detail_page, container, false);
+             posterview = (ImageView) rootview.findViewById(R.id.event_poster);
+             title = (TextView) rootview.findViewById(R.id.event_title);
+             description = (TextView) rootview.findViewById(R.id.event_description);
+           /* Glide.with(getContext())
+                    .asBitmap()
+                    //.load(getCategories().get(i).imageUrl)
+                    .into(posterview);*/
+            return rootview;
         }
 
         @Override
@@ -137,6 +154,8 @@ public class EventsActivity extends AppCompatActivity {
                 return items.size();
             }
         }*/
+
+
 
     }
 }

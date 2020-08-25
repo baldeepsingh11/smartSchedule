@@ -49,12 +49,12 @@ public class events {
         public event()
         {
             this.date_time = new Timestamp(new Date());
-            this.imageUrl = "https://mdg.iitr.ac.in/static/media/mdg_logo.fa8422e2.svg";
+            this.imageUrl = "https://miro.medium.com/fit/c/336/336/1*vmfVv3yPsKmJw4Z-lmaXJA.png";
             this.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et " +
                                 "dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
                                 "commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla " +
                                  "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-            this.posterUrl = "https://cdn2.vectorstock.com/i/1000x1000/14/21/tailor-background-or-poster-with-dummy-vector-15521421.jpg";
+            this.posterUrl = "https://img.channeli.in/static/images/imglogo.png";
             this.title = "MDG Talk";
             this.venu = "MAC Audi";
 

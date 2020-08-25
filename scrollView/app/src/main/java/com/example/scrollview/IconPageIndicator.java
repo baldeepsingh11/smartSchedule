@@ -3,6 +3,7 @@ package com.example.scrollview;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -19,15 +20,18 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.scrollview.model.events;
+import com.google.gson.Gson;
+import com.google.gson.internal.$Gson$Preconditions;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.example.scrollview.model.events.categories;
+
 import static com.example.scrollview.model.events.getCategories;
 
 //modified version of https://github.com/JakeWharton/ViewPagerIndicator/blob/master/library/src/com/viewpagerindicator/IconPageIndicator.java
 public class IconPageIndicator extends HorizontalScrollView implements PageIndicator {
+    private static final String TAG = "IconPageIndicator";
     private LinearLayout mIconsLayout;
 
     private ViewPager mViewPager;
@@ -146,28 +150,28 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
         int count = iconAdapter.getCount();
         LayoutInflater inflater = LayoutInflater.from(getContext());
         for (int i = 0; i < count; i++) {
-            final View parent_top = inflater.inflate(R.layout.indicator, mIconsLayout, false);
-        //    final View parent_bottom = inflater.inflate(R.layout.detail_page,)
-            final ImageView logoview = (ImageView) parent_top.findViewById(R.id.icon);
-            final ImageView posterview = (ImageView) parent.findViewById(R.id.event_poster);
-            final TextView title = (TextView) parent.findViewById(R.id.event_title);
-            final TextView description = (TextView) parent.findViewById(R.id.event_description);
+            final View parent = inflater.inflate(R.layout.indicator, mIconsLayout, false);
+            final View parent_bottom = inflater.inflate(R.layout.detail_page,mIconsLayout,false);
+            final ImageView logoview = (ImageView) parent.findViewById(R.id.icon);
+            final ImageView posterView = (ImageView) parent_bottom.findViewById(R.id.event_poster);
             //// TODO: 25/04/2017 Use ViewCompat to support pre-lollipop
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 logoview.setTransitionName("tab_" + i);
             }
-            Glide.with(getContext())
-                    .asBitmap()
-                    .load(HomeFragment.mImageUrls.get(i))
-<<<<<<< HEAD
-                    .into(logoview);
+            Log.i(TAG, "notifyDataSetChanged: " + new Gson().toJson(getCategories().get(i).imageUrl));
             Glide.with(getContext())
                     .asBitmap()
                     .load(getCategories().get(i).imageUrl)
-                    .into(posterview);
-=======
-                    .into(view);
->>>>>>> cef8da85789787079aa3e9b4cbce29eb3df711f3
+                    .into(logoview);
+            Glide.with(getContext())
+                    .asBitmap()
+                    .load(getCategories().get(i).posterUrl)
+                    .into(posterView);
+
+
+
+
+
 
 
             if (changePadding) {
