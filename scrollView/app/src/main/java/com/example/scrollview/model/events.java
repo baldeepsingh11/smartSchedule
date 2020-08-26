@@ -1,5 +1,8 @@
 package com.example.scrollview.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.scrollview.HomeFragment;
 import com.google.firebase.Timestamp;
 
@@ -19,7 +22,7 @@ public class events {
     private static List<event> generateItems() {
         List<event> items = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            items.add(new event());
+            items.add(new event(i));
         }
         return items;
     }
@@ -46,24 +49,57 @@ public class events {
             this.posterUrl = posterUrl;
             this.venu = venu;
         }
-        public event()
-        {
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public Timestamp getDate_time() {
+            return date_time;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public String getPosterUrl() {
+            return posterUrl;
+        }
+
+        public String getVenu() {
+            return venu;
+        }
+
+        public event(int i) {
             this.date_time = new Timestamp(new Date());
-            this.imageUrl = "https://miro.medium.com/fit/c/336/336/1*vmfVv3yPsKmJw4Z-lmaXJA.png";
+            this.imageUrl = HomeFragment.mImageUrls.get(i);
             this.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et " +
-                                "dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
-                                "commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla " +
-                                 "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-            this.posterUrl = "https://img.channeli.in/static/images/imglogo.png";
-            this.title = "MDG Talk";
+                    "dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
+                    "commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla " +
+                    "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            this.posterUrl = HomeFragment.mImageUrls.get(i);
+            this.title = HomeFragment.mNames.get(i);
             this.venu = "MAC Audi";
 
+        }
+        public event(){
+            this.date_time = new Timestamp(new Date());
+            this.imageUrl = HomeFragment.mImageUrls.get(0);
+            this.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et " +
+                    "dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
+                    "commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla " +
+                    "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            this.posterUrl = HomeFragment.mImageUrls.get(0);
+            this.title = "MDG Talk";
+            this.venu = "MAC Audi";
         }
 
     }
 
-    private static String getImageUrl(int position) {
-        return categories.get(position).imageUrl;
 
-    }
+
 }

@@ -297,6 +297,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
     }
+    public void getEvents(){
+        fStore.collection("events")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    }
+                }
+
+    }
     public void getTimetable()
     {
         String[] days ={"sunday","monday","tuesday","wednesday","thursday","friday","saturday",};

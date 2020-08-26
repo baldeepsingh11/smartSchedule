@@ -1,8 +1,12 @@
 package com.example.scrollview;
 
+import android.app.usage.UsageEvents;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +27,15 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.scrollview.model.events;
+import com.google.gson.Gson;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.scrollview.R.id.action_home;
+import static com.example.scrollview.R.id.image;
 import static com.example.scrollview.model.events.getCategories;
 
 public class EventsActivity extends AppCompatActivity {
@@ -74,7 +81,7 @@ public class EventsActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return DetailPage.instantiate(context, DetailPage.class.getName());
+            return DetailPage.newInstance(context,position);
         }
 
         @Override
@@ -99,11 +106,33 @@ public class EventsActivity extends AppCompatActivity {
             View rootview = inflater.inflate(R.layout.detail_page, container, false);
              posterview = (ImageView) rootview.findViewById(R.id.event_poster);
              title = (TextView) rootview.findViewById(R.id.event_title);
-             description = (TextView) rootview.findViewById(R.id.event_description);
+             description = (TextView) rootview.findViewById(R.id.event_desc);
+             //imageView=(ImageView) rootview.findViewById(R.id.)
+            String posterUrl=null;
+            events.event event1=new events.event();
+            if (getArguments() != null) {
+                String jsonString;
+                jsonString = getArguments().getString("events");
+                Log.i("fucked1", "onCreateView: "+jsonString);
+                Gson gson= new Gson();
+                event1=gson.fromJson(jsonString,event1.getClass());
+                Log.i("fucked2", "onCreateView: "+jsonString);
+                title.setText(event1.getTitle());
+                description.setText(event1.getDescription());
+
+
+            }
+            Glide.with(getContext())
+                    .asBitmap()
+                    .load(event1.getPosterUrl())
+                    .into(posterview);
            /* Glide.with(getContext())
                     .asBitmap()
-                    //.load(getCategories().get(i).imageUrl)
-                    .into(posterview);*/
+                    .load(event.getImageUrl())
+                    .into(imageView)*/
+
+
+
             return rootview;
         }
 
@@ -113,6 +142,16 @@ public class EventsActivity extends AppCompatActivity {
 
         }
 
+        public static DetailPage newInstance(Context context,int index) {
+            DetailPage detailPage = new DetailPage();
+            Bundle args = new Bundle();
+            Gson gson= new Gson();
+            String json=gson.toJson(getCategories().get(index));
+            args.putString("events", json);
+            detailPage.setArguments(args);
+            return detailPage;
+        }
+
         /*private static class ViewHolder extends RecyclerView.ViewHolder {
             private final TextView title;
 
@@ -120,8 +159,9 @@ public class EventsActivity extends AppCompatActivity {
                 super(itemView);
                 title = (TextView) itemView.findViewById(R.id.title);
             }
-        }*/
+        }
 
+        */
         public static class Item {
             public final String title;
 
@@ -129,8 +169,9 @@ public class EventsActivity extends AppCompatActivity {
                 this.title = title;
             }
         }
+        /*
 
-         /*public static class Adapter extends RecyclerView.Adapter<ViewHolder> {
+         public static class Adapter extends RecyclerView.Adapter<ViewHolder> {
             private LayoutInflater inflater;
             private final List<Item> items;
 
