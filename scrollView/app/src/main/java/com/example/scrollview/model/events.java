@@ -2,9 +2,20 @@ package com.example.scrollview.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.example.scrollview.HomeFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,19 +23,73 @@ import java.util.List;
 
 public class events {
     private static List<event> categories = generateItems();
+     /*static
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("events").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            Gson gson = new Gson();
 
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<event> events = new ArrayList<>();
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        events.add(document.toObject(events.event.class));
+                    }
+
+                    Log.i(TAG, "onComplete: events" + gson.toJson(events.get(0)));
+                    Log.i(TAG, "onComplete: events" + gson.toJson(events.get(1)));
+                    categories.addAll(events);
+
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }*/
+    private static final String TAG = "events";
 
 
     public static List<event> getCategories() {
         return categories;
     }
+    public static void setCategories(List<event> events)
+    {
+       categories = events;
+    }
 
     private static List<event> generateItems() {
-        List<event> items = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        final List<event> items = new ArrayList<>();
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("events").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+              Gson gson = new Gson();
+
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    List<event> events = new ArrayList<>();
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            events.add(document.toObject(events.event.class));
+                        }
+
+                        Log.i(TAG, "onComplete: events" + gson.toJson(events.get(0)));
+                        Log.i(TAG, "onComplete: events" + gson.toJson(events.get(1)));
+                        items.addAll(events);
+
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                }
+            });
+
+            for (int i = 0; i < 6; i++) {
             items.add(new event(i));
+
         }
-        return items;
+
+              return items;
+
     }
     public List<event> geteventlist()
     {

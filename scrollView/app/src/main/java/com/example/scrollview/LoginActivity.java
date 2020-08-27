@@ -24,6 +24,7 @@ import com.example.scrollview.model.Attendence;
 import com.example.scrollview.model.Schedule;
 import com.example.scrollview.model.Subject;
 import com.example.scrollview.model.User;
+import com.example.scrollview.model.events;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,6 +45,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -215,6 +217,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     getTimetable();
                     getsubjectattendance();
+                    getEvents();=
                     finish();
 
 
@@ -240,8 +243,7 @@ public class LoginActivity extends AppCompatActivity {
             return strings[0];
     }
 
-    public void getsubjectattendance()
-    {
+    public void getsubjectattendance() {
 
 
             fStore.collection(user.getYear()).document(user.getBatch()).collection("subjects")
@@ -303,12 +305,26 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        List<events.event> events_temp = new ArrayList<>();
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                events_temp.add(document.toObject(events.event.class));
+                            }
+
+                            Log.i(TAG, "onComplete: events" + gson.toJson(events_temp.get(0)));
+                            Log.i(TAG, "onComplete: events" + gson.toJson(events_temp.get(1)));
+                            events.setCategories(events_temp);
+
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
                     }
-                }
+
+                });
 
     }
-    public void getTimetable()
-    {
+    public void getTimetable() {
         String[] days ={"sunday","monday","tuesday","wednesday","thursday","friday","saturday",};
         for (final String day : days) {
             fStore.collection(user.getYear()).document(user.getBatch()).collection(day)
