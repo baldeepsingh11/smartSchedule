@@ -83,7 +83,7 @@ public class events {
                 }
             });
 
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 2; i++) {
             items.add(new event(i));
 
         }
@@ -141,24 +141,24 @@ public class events {
 
         public event(int i) {
             this.date_time = new Timestamp(new Date());
-            this.imageUrl = HomeFragment.mImageUrls.get(i);
+            this.imageUrl ="";
             this.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et " +
                     "dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
                     "commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla " +
                     "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-            this.posterUrl = HomeFragment.mImageUrls.get(i);
-            this.title = HomeFragment.mNames.get(i);
+            this.posterUrl = " ";
+            this.title = "";
             this.venu = "MAC Audi";
 
         }
         public event(){
             this.date_time = new Timestamp(new Date());
-            this.imageUrl = HomeFragment.mImageUrls.get(0);
+            this.imageUrl = "";
             this.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et " +
                     "dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
                     "commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla " +
                     "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-            this.posterUrl = HomeFragment.mImageUrls.get(0);
+            this.posterUrl = "";
             this.title = "MDG Talk";
             this.venu = "MAC Audi";
         }

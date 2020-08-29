@@ -1,8 +1,12 @@
 package com.example.scrollview;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +46,46 @@ class subjectAdapter extends RecyclerView.Adapter<subjectAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull subjectAdapter.ViewHolder holder, int position) {
-        Subject subject = subjects.get(position);
+    public void onBindViewHolder(@NonNull subjectAdapter.ViewHolder holder, final int position) {
+        final Subject subject = subjects.get(position);
         holder.name.setText(subject.getName());
         holder.code.setText(subject.getCode());
 
         final ConstraintLayout layout = holder.expandableView;
         final Button button = holder.arrowBtn;
         final CardView view = holder.cardView;
+
+        holder.email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + subjects.get(position).getEmailID()));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "your_subject");
+                    intent.putExtra(Intent.EXTRA_TEXT, "your_text");
+                    context.startActivity(intent);
+                }catch(ActivityNotFoundException e){
+                    //TODO smth
+                }
+            }
+        });
+        holder.phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse(subjects.get(position).getNumber()));
+                context.startActivity(intent);
+            }
+        });
+        holder.website.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse(subjects.get(position).getProfileURL()));
+                context.startActivity(intent);
+            }
+        });
 
         holder.arrowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +118,7 @@ class subjectAdapter extends RecyclerView.Adapter<subjectAdapter.ViewHolder> {
         public Button arrowBtn;
 
         public CardView cardView;
+        public Button email,phone,website;
         public Object progressBar;
 
         public ViewHolder(@NonNull View itemView) {
@@ -91,6 +128,9 @@ class subjectAdapter extends RecyclerView.Adapter<subjectAdapter.ViewHolder> {
             arrowBtn = itemView.findViewById(R.id.arrowBtn);
             expandableView = itemView.findViewById(R.id.expandableView);
             cardView = itemView.findViewById(R.id.cardView);
+            email=itemView.findViewById(R.id.prof_mail);
+            phone=itemView.findViewById(R.id.prof_phone);
+            website=itemView.findViewById(R.id.prof_site);
 
 
 

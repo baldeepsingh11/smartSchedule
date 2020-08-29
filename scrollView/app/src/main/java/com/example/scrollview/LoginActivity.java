@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     public static User user = new User();
     public static Map<String,ArrayList<Schedule>> timetable = new HashMap<>();
     public static ArrayList<Subject> subjects = new ArrayList<>();
+ //   public static events eventList = new events();
     public ArrayList<Attendence> attendences  = new ArrayList<>();
 
     Gson gson  = new Gson();
@@ -217,7 +218,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     getTimetable();
                     getsubjectattendance();
-                    getEvents();=
+                    getEvents();
                     finish();
 
 
@@ -314,6 +315,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.i(TAG, "onComplete: events" + gson.toJson(events_temp.get(0)));
                             Log.i(TAG, "onComplete: events" + gson.toJson(events_temp.get(1)));
                             events.setCategories(events_temp);
+                            Log.i(TAG, "onComplete: size" + Integer.toString(events.getCategories().size()));
 
 
                         } else {

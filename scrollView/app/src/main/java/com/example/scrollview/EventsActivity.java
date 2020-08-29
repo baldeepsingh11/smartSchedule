@@ -155,6 +155,7 @@ public class EventsActivity extends AppCompatActivity {
         /*private static class ViewHolder extends RecyclerView.ViewHolder {
             private final TextView title;
 
+
             public ViewHolder(View itemView) {
                 super(itemView);
                 title = (TextView) itemView.findViewById(R.id.title);

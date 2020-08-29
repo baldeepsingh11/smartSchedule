@@ -78,7 +78,6 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     }  //converting to 12 hour format
     public TaskRecyclerViewAdapter(Context mContext, List<Tasks> tasks) {
         this.tasks =tasks;
-
         this.mContext = mContext;
     }
     @NonNull

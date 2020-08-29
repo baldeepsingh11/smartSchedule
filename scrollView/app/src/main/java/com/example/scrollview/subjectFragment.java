@@ -44,6 +44,7 @@ public class subjectFragment extends Fragment {
     private boolean appBarExpanded = true;
 
 
+
     public subjectFragment() {
         // Required empty public constructor
     }

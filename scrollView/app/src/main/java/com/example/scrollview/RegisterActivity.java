@@ -30,13 +30,15 @@ import static com.example.scrollview.LoginActivity.user;
 
 public class RegisterActivity extends AppCompatActivity {
     public static final String TAG = "TAG";
-    EditText firstName,branch,email,batch;
+    EditText firstName,email,batch;
+    Spinner branch;
 
 
 
     //variables for taking year as input
     String[] type = {"1st year","2nd year","3rd year"} ;
     Spinner spin;
+    String[] branchArray ={"Electrical Engineering", "Mechanical Engineering", "Electronics and Communicatin Engineering"};
 
     Button saveBtn;
     FirebaseAuth fAuth;
@@ -64,13 +66,17 @@ public class RegisterActivity extends AppCompatActivity {
         ArrayAdapter aa = new ArrayAdapter(this,R.layout.spinner_row,type);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(aa);
+        //
+        ArrayAdapter aa1= new ArrayAdapter(this,R.layout.spinner_row,branchArray);
+        aa1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        branch.setAdapter(aa1);
 
 
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(firstName.getText().toString().isEmpty()||branch.getText().toString().isEmpty() || email.getText().toString().isEmpty()){
+                if(firstName.getText().toString().isEmpty()||branch.isSelected() || email.getText().toString().isEmpty()){
                     Toast.makeText(RegisterActivity.this, "Fill the required Details", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -83,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                 user.put("batch",batch.getText().toString());
                 user.put("year",spin.getSelectedItem().toString());*/
                  user.setBatch(batch.getText().toString());
-                 user.setBranch(branch.getText().toString());
+                 user.setBranch(branch.getSelectedItem().toString());
                  user.setEmail(email.getText().toString());
                  user.setName(firstName.getText().toString());
                  user.setYear(spin.getSelectedItem().toString());

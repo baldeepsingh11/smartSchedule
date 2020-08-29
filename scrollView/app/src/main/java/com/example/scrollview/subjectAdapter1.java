@@ -2,6 +2,7 @@ package com.example.scrollview;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -27,6 +28,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import me.itangqi.waveloadingview.WaveLoadingView;
 
 class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
     private Context context;
@@ -69,6 +72,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
       holder.percentage.setText(subject.getPercentage()+"%");
       holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
       holder.progressBar.setProgress((int) subject.getPercentage(),true);
+        holder.mWaveLoadingView.setProgressValue((int) subject.getPercentage());
       holder.status.setText(subject.getstatus());
 
 
@@ -85,6 +89,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
 
             //   Log.i("msg", String.valueOf(c));
                 holder.progressBar.setProgress((int) subject.getPercentage(),true);
+                holder.mWaveLoadingView.setProgressValue((int) subject.getPercentage());
                 holder.percentage.setText(subject.getPercentage()+"%");
                 holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
 
@@ -93,13 +98,17 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                 subject.setStatus("Chill Out , You can bunk classes !, Go on a trip");}
                 else if(subject.getPercentage()>75){
                     holder.status.setText("You can bunk classes , attendence is maintained");
-                    subject.setStatus("You can bunk classes , attendence is maintained");}
+                    subject.setStatus("You can bunk classes , attendence is maintained");
+                    holder.mWaveLoadingView.setWaveColor(Color.GREEN);
+                    holder.mWaveLoadingView.setBorderColor(Color.GREEN);}
                 else if(subject.getPercentage()==75){
                     holder.status.setText("You should attend your next class");
                     subject.setStatus("You should attend your next class");}
                 else{
                     holder.status.setText("ALERT:Attend you next few classes ! ");
-                    subject.setStatus("ALERT:Attend you next few classes ! "    );}
+                    subject.setStatus("ALERT:Attend you next few classes ! "    );
+                    holder.mWaveLoadingView.setWaveColor(Color.RED);
+                    holder.mWaveLoadingView.setBorderColor(Color.RED);}
 
                 mPrefs =context. getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
@@ -122,6 +131,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                 holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
             //    Log.i("msg", String.valueOf(c));
                 holder.progressBar.setProgress((int) subject.getPercentage(),true);
+                holder.mWaveLoadingView.setProgressValue((int) subject.getPercentage());
                 holder.percentage.setText(subject.getPercentage()+"%");
                 subjects.set(position,subject);
 
@@ -130,13 +140,18 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                     subject.setStatus("Chill Out , You can bunk classes !, Go on a trip ");}
                 else if(subject.getPercentage()>75){
                     holder.status.setText("You can bunk classes , attendence is maintained");
-                    subject.setStatus("You can bunk classes , attendence is maintained");}
+                    subject.setStatus("You can bunk classes , attendence is maintained");
+                    holder.mWaveLoadingView.setWaveColor(Color.GREEN);
+                    holder.mWaveLoadingView.setBorderColor(Color.GREEN);
+                }
                 else if(subject.getPercentage()==75){
                     holder.status.setText("You should attend your next class");
                     subject.setStatus("You should attend your next class");}
                 else{
                     holder.status.setText("ALERT:Attend you next few classes ! ");
-                    subject.setStatus("ALERT:Attend you next few classes ! ");}
+                    subject.setStatus("ALERT:Attend you next few classes ! ");
+                    holder.mWaveLoadingView.setWaveColor(Color.RED);
+                    holder.mWaveLoadingView.setBorderColor(Color.RED);}
 
                 mPrefs =context. getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
@@ -190,6 +205,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
         private TextView percentage;
         private TextView percent;
         private TextView status;
+        private WaveLoadingView mWaveLoadingView;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -206,6 +222,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
             cross = itemView.findViewById(R.id.imageView3);
             percent = itemView.findViewById(R.id.textView7);
             status = itemView.findViewById(R.id.textView1);
+            mWaveLoadingView = (WaveLoadingView) itemView.findViewById(R.id.waveLoadingView);
         }
     }
 

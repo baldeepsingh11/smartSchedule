@@ -20,6 +20,7 @@
         app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -44,5 +45,17 @@
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et congue lectus. Nunc vehicula sem vitae tempus rutrum. Aenean vehicula, augue ut tincidunt mattis, neque felis mattis nulla, sit amet elementum felis tellus eu tellus. In ipsum dui, convallis vitae ultricies non, accumsan et est. Integer a metus libero. Phasellus eget consectetur dui, eu malesuada dolor. Nam vel dui id sem scelerisque fermentum sed sed massa. Quisque iaculis in sapien vitae malesuada. Phasellus mollis tincidunt lorem, ac egestas erat cursus a. Nunc lorem ligula, tempor ac consectetur eget, viverra sed tellus. Integer eu sagittis diam. Nulla facilisi. Vivamus id dignissim turpis, vel semper magna. In eu malesuada lectus. Donec ornare, magna a congue posuere, velit odio viverra est, ut maximus risus orci sed tortor. Proin tempus tempus felis, sed gravida est viverra eget." />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/remind_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:text="Remind Me"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

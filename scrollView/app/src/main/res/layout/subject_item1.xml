@@ -70,9 +70,31 @@
                 android:background="@drawable/circle_shape"
                 android:indeterminate="false"
                 android:progressDrawable="@drawable/circle_progress_bar"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@+id/imageView"
                 app:layout_constraintEnd_toStartOf="@+id/arrowBtn"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <me.itangqi.waveloadingview.WaveLoadingView
+                android:id="@+id/waveLoadingView"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/arrowBtn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:wlv_borderColor="@color/colorAccent"
+                app:wlv_borderWidth="3dp"
+                app:wlv_progressValue="60"
+                app:wlv_round_rectangle="true"
+                app:wlv_shapeType="circle"
+                app:wlv_titleCenter="Attendance"
+                app:wlv_titleCenterColor="@android:color/white"
+                app:wlv_titleCenterSize="10sp"
+                app:wlv_titleCenterStrokeColor="@android:color/holo_blue_dark"
+                app:wlv_titleCenterStrokeWidth="3dp"
+                app:wlv_triangle_direction="north"
+                app:wlv_waveAmplitude="70"
+                app:wlv_waveColor="@color/colorAccent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expandableView"
@@ -113,21 +135,23 @@
                 android:id="@+id/imageView"
                 android:layout_width="52dp"
                 android:layout_height="34dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="6dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageView3"
                 app:layout_constraintTop_toBottomOf="@+id/progress"
-                app:srcCompat="@drawable/tick" />
+                app:srcCompat="@drawable/attend" />
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="41dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="22dp"
+                android:layout_width="52dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="18dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/progress"
-                app:srcCompat="@drawable/cross1" />
+                app:srcCompat="@drawable/absent" />
 
             <TextView
                 android:id="@+id/textView7"

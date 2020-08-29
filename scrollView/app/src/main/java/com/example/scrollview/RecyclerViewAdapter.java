@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.scrollview.model.events;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,14 +51,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private static final String TAG = "RecyclerViewAdapter";
 
     //vars
-    private ArrayList<String> mNames = new ArrayList<>();
-    private ArrayList<String> mImageUrls = new ArrayList<>();
+    private List<events.event> events;
     private Context mContext;
     private boolean isSpeakButtonLongPressed = false;
 
-    public RecyclerViewAdapter(Context context, ArrayList<String> names, ArrayList<String> imageUrls) {
-        mNames = names;
-        mImageUrls = imageUrls;
+    public RecyclerViewAdapter(Context context, List<events.event> events) {
+        this.events=events;
         mContext = context;
     }
 
@@ -70,14 +69,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
-
+        events.event event = events.get(position);
 
         Glide.with(mContext)
                 .asBitmap()
-                .load(mImageUrls.get(position))
+                .load(event.getImageUrl())
                 .into(holder.image);
 
-        holder.name.setText(mNames.get(position));
+        holder.name.setText(event.getTitle());
         switch (position % 4) {
             case 0:
                 holder.constraintLayout.setBackground(mContext.getDrawable(orange));
@@ -103,7 +102,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on an image: " + mNames.get(position));
+               // Log.d(TAG, "onClick: clicked on an image: " + mNames.get(position));
 
                 //Toast.makeText(mContext, mNames.get(position), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, EventsActivity.class);
@@ -219,7 +218,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return mImageUrls.size();
+        return events.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

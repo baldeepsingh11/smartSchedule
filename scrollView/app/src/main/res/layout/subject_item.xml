@@ -71,27 +71,27 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/prof_phone"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/ic_call_24px"
-                    app:layout_constraintEnd_toStartOf="@+id/button"
+                    app:layout_constraintEnd_toStartOf="@+id/prof_mail"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/prof_mail"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/ic_local_post_office_24px"
-                    app:layout_constraintEnd_toStartOf="@+id/button3"
+                    app:layout_constraintEnd_toStartOf="@+id/prof_site"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/prof_site"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginTop="20dp"
