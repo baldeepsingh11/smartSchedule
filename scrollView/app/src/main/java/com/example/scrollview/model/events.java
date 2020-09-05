@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 public class events {
-    private static List<event> categories = generateItems();
+    private static List<event> categories = new ArrayList<>();
      /*static
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();

@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
@@ -58,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     String verificationId;
     EditText phone,optEnter;
     Button next;
+    int eflag = 0;
 
     public static User user = new User();
     public static Map<String,ArrayList<Schedule>> timetable = new HashMap<>();
@@ -213,13 +215,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
-                    //    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+
                     user = documentSnapshot.toObject(User.class);
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     getTimetable();
                     getsubjectattendance();
                     getEvents();
                     finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
 
 
                 }else{
@@ -312,10 +316,11 @@ public class LoginActivity extends AppCompatActivity {
                                 events_temp.add(document.toObject(events.event.class));
                             }
 
-                            Log.i(TAG, "onComplete: events" + gson.toJson(events_temp.get(0)));
-                            Log.i(TAG, "onComplete: events" + gson.toJson(events_temp.get(1)));
+                           /* Log.i(TAG, "onComplete: events" + gson.toJson(events_temp.get(0)));
+                            Log.i(TAG, "onComplete: events" + gson.toJson(events_temp.get(1)));*/
                             events.setCategories(events_temp);
-                            Log.i(TAG, "onComplete: size" + Integer.toString(events.getCategories().size()));
+                            eflag = 1;
+                            Log.i(TAG, "onComplete: getcategories" +gson.toJson(events.getCategories()));
 
 
                         } else {
@@ -440,6 +445,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
     private void setAlarm(int mHour,int mMinute,int ID,String title,String code) {
         Calendar myCalendar = Calendar.getInstance(Locale.getDefault());
         Log.i(TAG, "setAlarm: hour "+Integer.toString(myCalendar.get(Calendar.HOUR_OF_DAY)));
