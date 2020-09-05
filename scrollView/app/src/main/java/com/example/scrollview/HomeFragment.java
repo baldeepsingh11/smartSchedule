@@ -1,21 +1,25 @@
 package com.example.scrollview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.scrollview.model.Tasks;
 import com.example.scrollview.model.events;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -42,8 +46,6 @@ public class HomeFragment extends Fragment {
     TextView name;
 
 
-
-
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -58,6 +60,7 @@ public class HomeFragment extends Fragment {
         emptyView = rootView.findViewById(R.id.empty_view);
         name=rootView.findViewById(R.id.Name);
         name.setText("Hi "+ user.getName());
+
         Log.i(TAG, "onCreateView: event.size"+ getCategories().size());
 
 

@@ -2,8 +2,15 @@ package com.example.scrollview;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +24,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -28,9 +37,30 @@ public class MainActivity extends AppCompatActivity {
     static ConstraintLayout eventsLayout;
     static ImageView dummyView;
     public static BottomNavigationView bottomNavigationView;
+    public void logout(View view)
+    {
+
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
 
 
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                        finish();
 
+                        // Continue with delete operation
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(R.drawable.ic_logout)
+                .show();
+
+    }
 
 
     @Override

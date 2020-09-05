@@ -199,13 +199,14 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        super.onStart();
+            super.onStart();
 
         if(fAuth.getCurrentUser() != null){
             progressBar.setVisibility(View.VISIBLE);
             state.setText("Checking..");
             state.setVisibility(View.VISIBLE);
             checkUserProfile();
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
         }
     }
 
@@ -378,72 +379,6 @@ public class LoginActivity extends AppCompatActivity {
             });
 
         }
-
-
-
-        /*fStore.collection(user.getYear()).document(user.getBatch()).collection("monday")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        if (task.isSuccessful()) {
-
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                 monday.add(document.toObject(Schedule.class));
-
-                              //  Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                        Log.i(TAG, "onComplete: monday" + gson.toJson(monday));
-                    }
-                });
-        fStore.collection(user.getYear()).document(user.getBatch()).collection("tuesday")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        if (task.isSuccessful()) {
-
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                tuesday.add(document.toObject(Schedule.class));
-
-                              //  Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                        Log.i(TAG, "onComplete: tuesday"+ gson.toJson(tuesday) );
-                    }
-                });
-        fStore.collection(user.getYear()).document(user.getBatch()).collection("wednesday")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        if (task.isSuccessful()) {
-
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                wednesday.add(document.toObject(Schedule.class));
-
-                             //   Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                        Log.i(TAG, "onComplete: wednesday " + gson.toJson(wednesday));
-                    }
-
-                });*/
-
-
     }
 
     private void setAlarm(int mHour,int mMinute,int ID,String title,String code) {
