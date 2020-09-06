@@ -206,7 +206,7 @@ public class LoginActivity extends AppCompatActivity {
             state.setText("Checking..");
             state.setVisibility(View.VISIBLE);
             checkUserProfile();
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
         }
     }
 
@@ -222,8 +222,8 @@ public class LoginActivity extends AppCompatActivity {
                     getTimetable();
                     getsubjectattendance();
                     getEvents();
-                    finish();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+
 
 
 
@@ -317,11 +317,11 @@ public class LoginActivity extends AppCompatActivity {
                                 events_temp.add(document.toObject(events.event.class));
                             }
 
-                           /* Log.i(TAG, "onComplete: events" + gson.toJson(events_temp.get(0)));
-                            Log.i(TAG, "onComplete: events" + gson.toJson(events_temp.get(1)));*/
                             events.setCategories(events_temp);
                             eflag = 1;
                             Log.i(TAG, "onComplete: getcategories" +gson.toJson(events.getCategories()));
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            finish();
 
 
                         } else {
