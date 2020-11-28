@@ -335,9 +335,9 @@ public class LoginActivity extends AppCompatActivity {
     public void getTimetable() {
         String[] days ={"sunday","monday","tuesday","wednesday","thursday","friday","saturday",};
         for (final String day : days) {
-            fStore.collection(user.getYear()).document(user.getBatch()).collection(day)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+
+            fStore.collection(user.getYear()).document(user.getBatch()).collection(day).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             ArrayList<Schedule> temp= new ArrayList<>();
@@ -345,7 +345,6 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 for(QueryDocumentSnapshot document : task.getResult()) {
                                     temp.add(document.toObject(Schedule.class));
-                                    Log.i(TAG, "onComplete: " + gson.toJson(temp));
                                     document.getId();
 
                                     //  Log.d(TAG, document.getId() + " => " + document.getData());
@@ -353,33 +352,39 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 Log.d(TAG, "Error getting documents: ", task.getException());
                             }
-                            Log.i(TAG, "onComplete: " + day +gson.toJson(temp));
+
                             Calendar sCalendar = Calendar.getInstance();
                             String dayLongName = sCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+
+                           //Adding timetable in static array list timetable
                             timetable.put(day,temp);
-                            Log.i(TAG, "onComplete:entered day"+day);
-                            Log.i(TAG, "onComplete: check "+Boolean.toString(dayLongName.equalsIgnoreCase(day)));
+
                             if (dayLongName.equalsIgnoreCase(day)){
                             for (int i = 0; i < timetable.get(day).size() ; i++) {
                                 String time=timetable.get(day).get(i).getTime();
-                                Log.i(TAG, "onComplete: today's day"+dayLongName);
-                                Log.i(TAG, "onComplete: day"+day);
                                 String startTime =splitTime(time);
                                 String[] strings = startTime.split(":");
-                                Log.i(TAG, "onComplete: start time "+ startTime);
-                                setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),i,timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
+
+                             //   setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),i,timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
                             }
                             }
+
+                            // run this code if its first run to enter into loop
+                                   Calendar myCalendar = Calendar.getInstance();
+                                   setAlarm(myCalendar.get(Calendar.HOUR_OF_DAY),myCalendar.get(Calendar.MINUTE),1,"continueLoop","1");
+                                   Log.i(TAG, "onComplete: phase 1 after set alarm");
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.i(TAG, "onFailure: "+e);
                 }
-            });
+               });
 
         }
     }
+
 
     private void setAlarm(int mHour,int mMinute,int ID,String title,String code) {
         Calendar myCalendar = Calendar.getInstance(Locale.getDefault());
@@ -391,9 +396,9 @@ public class LoginActivity extends AppCompatActivity {
 
         if (myCalendar.get(Calendar.HOUR_OF_DAY)==mHour&&myCalendar.get(Calendar.MINUTE)<=mMinute)
             check=true;
-            Log.i(TAG, "setAlarm: minute "+Boolean.toString(check)+"mMinute: "+Integer.toString(mMinute)+" myCalendar: "+Integer.toString(myCalendar.get(Calendar.MINUTE)));
+        Log.i(TAG, "setAlarm: minute "+Boolean.toString(check)+"mMinute: "+Integer.toString(mMinute)+" myCalendar: "+Integer.toString(myCalendar.get(Calendar.MINUTE)));
 
-            Log.i(TAG, "setAlarm: "+Boolean.toString(check));
+        Log.i(TAG, "setAlarm: "+Boolean.toString(check));
         if (check) {
             Log.i(TAG, "setAlarm: entered");
             Intent intent = new Intent(getApplicationContext(), scheduleReminderBroadcast.class);
@@ -415,7 +420,6 @@ public class LoginActivity extends AppCompatActivity {
             alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, selectedTimestamp, pendingIntent);
         }
     }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
