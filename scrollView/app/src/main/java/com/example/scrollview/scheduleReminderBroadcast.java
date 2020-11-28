@@ -13,20 +13,23 @@ import java.util.Date;
 
 public class scheduleReminderBroadcast extends BroadcastReceiver {
 
+    public void scheduleNext(){
 
+    }
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        Log.i("TAG", "onReceive: entered");
-        String title =intent.getStringExtra("name");
-        String id = intent.getStringExtra("ID");
-        //This is the intent of PendingIntent
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i("TAG", "onReceive: entered");
+            String title =intent.getStringExtra("name");
+            String id = intent.getStringExtra("ID");
+            //This is the intent of PendingIntent
         PendingIntent pIntentlogin;
         int NotificationId=(int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
         Intent intentAction = new Intent(context,ActionReceiver.class);
         intentAction.putExtra("NotificationId",NotificationId);
 
-        //This is optional if you have more than one buttons and want to differentiate between two
+
+        //This is optional if  you havemore than one buttons and want to differentiate between two
         intentAction.putExtra("action","actionName");
 
         pIntentlogin = PendingIntent.getBroadcast(context,1,intentAction, PendingIntent.FLAG_UPDATE_CURRENT);

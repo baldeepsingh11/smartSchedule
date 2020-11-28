@@ -360,15 +360,15 @@ public class LoginActivity extends AppCompatActivity {
                             Log.i(TAG, "onComplete:entered day"+day);
                             Log.i(TAG, "onComplete: check "+Boolean.toString(dayLongName.equalsIgnoreCase(day)));
                             if (dayLongName.equalsIgnoreCase(day)){
-                            for (int i = 0; i < timetable.get(day).size() ; i++) {
-                                String time=timetable.get(day).get(i).getTime();
-                                Log.i(TAG, "onComplete: today's day"+dayLongName);
-                                Log.i(TAG, "onComplete: day"+day);
-                                String startTime =splitTime(time);
-                                String[] strings = startTime.split(":");
-                                Log.i(TAG, "onComplete: start time "+ startTime);
-                                setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),i,timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
-                            }
+                                for (int i = 0; i < timetable.get(day).size() ; i++) {
+                                    String time=timetable.get(day).get(i).getTime();
+                                    Log.i(TAG, "onComplete: today's day"+dayLongName);
+                                    Log.i(TAG, "onComplete: day"+day);
+                                    String startTime =splitTime(time);
+                                    String[] strings = startTime.split(":");
+                                    Log.i(TAG, "onComplete: start time "+ startTime);
+                                    setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),i,timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
+                                }
                             }
                         }
                     }).addOnFailureListener(new OnFailureListener() {

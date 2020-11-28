@@ -58,7 +58,7 @@ public class EventsActivity extends AppCompatActivity {
         final ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new IconAdapter(this, getSupportFragmentManager()));
         indicator = (PageIndicator) findViewById(R.id.indicator);
-        indicator.setViewPager(pager);
+            indicator.setViewPager(pager);
         pager.setCurrentItem(getIntent().getIntExtra("position", 0), false);
         supportPostponeEnterTransition();
         pager.post(new Runnable() {
@@ -138,6 +138,9 @@ public class EventsActivity extends AppCompatActivity {
 
         @Override
         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+            RecyclerView list = (RecyclerView) view.findViewById(R.id.list);
+            list.setLayoutManager(new LinearLayoutManager(getContext()));
+
             super.onViewCreated(view, savedInstanceState);
 
         }
