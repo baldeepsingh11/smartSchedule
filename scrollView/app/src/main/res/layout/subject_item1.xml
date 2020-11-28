@@ -30,57 +30,20 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="96dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
                 android:text="Attendance - "
                 android:textStyle="normal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0%"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/progress"
-                app:layout_constraintEnd_toEndOf="@+id/progress"
-                app:layout_constraintStart_toStartOf="@id/progress"
-                app:layout_constraintTop_toTopOf="@id/progress" />
-
-            <Button
-                android:id="@+id/arrowBtn"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="16dp"
-
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/ic_keyboard_arrow_down_black_24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ProgressBar
-                android:id="@+id/progress"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="72dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/circle_shape"
-                android:indeterminate="false"
-                android:progressDrawable="@drawable/circle_progress_bar"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toTopOf="@+id/imageView"
-                app:layout_constraintEnd_toStartOf="@+id/arrowBtn"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/sub_name" />
 
             <me.itangqi.waveloadingview.WaveLoadingView
                 android:id="@+id/waveLoadingView"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toStartOf="@+id/arrowBtn"
+                android:layout_marginEnd="22dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:wlv_borderColor="@color/colorAccent"
                 app:wlv_borderWidth="3dp"
@@ -96,100 +59,101 @@
                 app:wlv_waveAmplitude="70"
                 app:wlv_waveColor="@color/colorAccent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/expandableView"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:paddingBottom="12dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:text="Status:"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5">
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Status:"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="40dp"
-                    android:text="NA"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="10dp"
+                android:text="NA"
+                android:textColor="#000000"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="52dp"
                 android:layout_height="34dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginBottom="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="4dp"
                 app:layout_constraintEnd_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/progress"
+                app:layout_constraintTop_toBottomOf="@+id/waveLoadingView"
                 app:srcCompat="@drawable/attend" />
 
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="52dp"
                 android:layout_height="25dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="18dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="6dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/progress"
+                app:layout_constraintTop_toBottomOf="@+id/waveLoadingView"
                 app:srcCompat="@drawable/absent" />
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="9dp"
-                android:layout_marginTop="21dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="2dp"
                 android:text="20/20"
-                app:layout_constraintStart_toEndOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/desc" />
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/textView1"
+                app:layout_constraintStart_toEndOf="@+id/textView5" />
 
             <TextView
                 android:id="@+id/desc"
                 style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="156dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="4dp"
-                android:text="Mechanical Engineering"
-                android:textColor="#8A000000"
-                android:textSize="14sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="5dp"
+                android:text="Engineering Thermodynamics"
+                android:textColor="#000000"
+                android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/waveLoadingView"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sub_name" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/sub_name"
                 style="@style/Base.Widget.MaterialComponents.TextView"
-                android:layout_width="155dp"
-                android:layout_height="34dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
                 android:text="MIN 106"
-                android:textSize="24sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/desc" />
 
+            <Button
+                android:id="@+id/menu_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/menu"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/waveLoadingView"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
