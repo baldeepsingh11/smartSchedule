@@ -340,10 +340,10 @@ public class LoginActivity extends AppCompatActivity {
             fStore.collection(user.getYear()).document(user.getBatch()).collection(day).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            ArrayList<Schedule> temp= new ArrayList<>();
+                            ArrayList<Schedule> temp = new ArrayList<>();
 
                             if (task.isSuccessful()) {
-                                for(QueryDocumentSnapshot document : task.getResult()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
                                     temp.add(document.toObject(Schedule.class));
                                     document.getId();
 
@@ -356,25 +356,44 @@ public class LoginActivity extends AppCompatActivity {
                             Calendar sCalendar = Calendar.getInstance();
                             String dayLongName = sCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
 
-                           //Adding timetable in static array list timetable
-                            timetable.put(day,temp);
+                            //Adding timetable in static array list timetable
+                            timetable.put(day, temp);
 
-                            if (dayLongName.equalsIgnoreCase(day)){
-                            for (int i = 0; i < timetable.get(day).size() ; i++) {
-                                String time=timetable.get(day).get(i).getTime();
-                                String startTime =splitTime(time);
-                                String[] strings = startTime.split(":");
+                            if (dayLongName.equalsIgnoreCase(day)) {
+                                for (int i = 0; i < timetable.get(day).size(); i++) {
+                                    String time = timetable.get(day).get(i).getTime();
+                                    String startTime = splitTime(time);
+                                    String[] strings = startTime.split(":");
 
-                             //   setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),i,timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
-                            }
+                                    //   setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),i,timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
+                                }
                             }
 
                             // run this code if its first run to enter into loop
-                                   Calendar myCalendar = Calendar.getInstance();
-                                   setAlarm(myCalendar.get(Calendar.HOUR_OF_DAY),myCalendar.get(Calendar.MINUTE),1,"continueLoop","1");
-                                   Log.i(TAG, "onComplete: phase 1 after set alarm");
+
+
+                            SharedPreferences wmbPreference = getApplicationContext().getSharedPreferences("com.example.scrollview", Context.MODE_PRIVATE);
+                            boolean isFirstRun = true; //wmbPreference.getBoolean("FIRSTRUN_NOTIFICATION", true);
+                            if (isFirstRun) {
+
+                                Calendar myCalendar = Calendar.getInstance();
+                                setAlarm(myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), 0, "continueLoop", "1");
+                                Log.i(TAG, "onComplete: phase 1 after set alarm");
+
+                                Log.i("msg", String.valueOf(isFirstRun));
+                            } else {
+                                Log.i("msg", String.valueOf(isFirstRun));
+                            }
+
+                            SharedPreferences.Editor editor = wmbPreference.edit();
+                            editor.putBoolean("FIRSTRUN_NOTIFICATION", false);
+                            editor.commit();
+
+
+
 
                         }
+
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {

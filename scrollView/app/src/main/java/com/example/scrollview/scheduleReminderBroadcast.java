@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ReceiverCallNotAllowedException;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -58,13 +59,8 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
         String dayOfWeek   = sdf.format(date);
         return dayOfWeek.substring(0, 1).toLowerCase()+dayOfWeek.substring(1);
     }
-    public void scheduleNextDay() {
+    public void scheduleToday() {
 
-
-    // first extract data from firebase or shared preferences
-
-
-    //  call set alarm for each notification required on the next day using for loop with title and code from the data extracted above
     Calendar myCalendar = Calendar.getInstance();
     int min = myCalendar.get(Calendar.MINUTE);
     /*for(int i=min ; i<=min+2; i++)
@@ -72,21 +68,43 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
         setAlarm(1,i,i,"Anfal","1");
     }*/
 
-    setNotifications(getToday());
-    /*setAlarm(1,min,min,"Anfal","1");
-        setAlarm(1,min+1,min+1,"Anfal","1");*/
-
-    Log.i(TAG, "scheduleNext: phase 1 after for loop " + min);
-    // set schedule next intent on next day 12 midnight
-
-    setAlarm(1,min+2,1,"continueLoop","1");
-
-
-
-}
-    public void scheduleToday(){
-    //schedule today's notifications and today's next intent
+      setNotifications(getToday());   // It will set notification for the today
+      Log.i(TAG, "scheduleNext: phase 1 after for loop " + min);
+    /*setAlarm(1,min+2,1,"continueLoop","1");*/
+        NextDayIntent();  // It will call this function again at 1 am but on next day
     }
+
+   public void NextDayIntent() {
+       //schedule an intent which will call scheduleToday(written in an if statement of on receive function) at 1 am
+
+
+       Calendar myCalendar = Calendar.getInstance(Locale.getDefault());
+       Log.i(TAG, "setAlarm: hour " + Integer.toString(myCalendar.get(Calendar.HOUR_OF_DAY)));
+           String title = "continueLoop";
+           String code = "1";
+           int mHour = 1;
+           int mMinute = 0;
+           int ID  =  0;
+           Log.i(TAG, "setAlarm: entered");
+           Intent intent = new Intent(Gcontext, scheduleReminderBroadcast.class);
+           intent.putExtra("name", title);
+           intent.putExtra("ID", code);
+           PendingIntent pendingIntent = PendingIntent.getBroadcast(Gcontext, ID, intent, 0);
+           AlarmManager alarmManager = (AlarmManager) Gcontext.getSystemService(ALARM_SERVICE);
+           myCalendar.set(Calendar.HOUR_OF_DAY,mHour);
+           myCalendar.set(Calendar.MINUTE, mMinute);
+           myCalendar.set(Calendar.SECOND, 10);
+           myCalendar.add(Calendar.DATE,1);
+           long selectedTimestamp = myCalendar.getTimeInMillis();
+           Toast.makeText(Gcontext, title + ' ' +  mHour+":"+mMinute, Toast.LENGTH_SHORT).show();
+           Log.i(TAG, "NextDayIntent: Scheduled"  + title + " " + mHour+":" + mMinute);
+           alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, selectedTimestamp, pendingIntent);
+
+
+
+
+
+   }
     public String splitTime(String time){
         String[] strings = time.split("-");
         return strings[0];
@@ -122,7 +140,7 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
                             String startTime =splitTime(time);
                             String[] strings = startTime.split(":");
 
-                            setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),Integer.parseInt(strings[1]),timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
+                            setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),i+1,timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
 
                          //   setAlarm(1,34+i,i,"Anfal","1");
 
@@ -160,8 +178,7 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
             AlarmManager alarmManager = (AlarmManager) Gcontext.getSystemService(ALARM_SERVICE);
             myCalendar.set(Calendar.HOUR_OF_DAY, mHour);
             myCalendar.set(Calendar.MINUTE, mMinute);
-            myCalendar.set(Calendar.SECOND, 0);
-
+            myCalendar.set(Calendar.SECOND, 10);
             Log.i(TAG, "phase 1" + title);
             Log.i("minute", String.valueOf(myCalendar.SECOND));
             Log.i("minute", String.valueOf(myCalendar.MINUTE));
@@ -172,7 +189,9 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
 
 
             long selectedTimestamp = myCalendar.getTimeInMillis();
-            
+
+            Toast.makeText(Gcontext, "scheduled " + title + " " + mHour + ":" +mMinute, Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "setAlarm: scheduled " + title + " "  + mHour+ ':' + mMinute);
             alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, selectedTimestamp, pendingIntent);
         }
     }
@@ -182,14 +201,15 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Gcontext = context;
         Log.i(TAG, "onReceive: " + "today " + getToday() + "  "+getNextDay());
-        Log.i("TAG", "onReceive: phase 1 entered");
         String title = intent.getStringExtra("name");
         String id = intent.getStringExtra("ID");
-        Log.i(TAG, "onReceive: phase 1" + id);
+        Log.i("TAG", "Received: " + title + " " + id);
+        Toast.makeText(Gcontext, "Received: " + title + " " + id, Toast.LENGTH_SHORT).show();
 
         if(title.equals("continueLoop")){
-            scheduleNextDay();
+            scheduleToday();
             Log.i(TAG, "onReceive: " + "phase 1 schedule next called");
+
         }
 
         else{
@@ -209,7 +229,7 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
             Log.i("msg", "notification acriv");
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "hello")
                     .setSmallIcon(R.drawable.ic_icons8_checkmark)
-                    .setContentTitle("Scrollview")
+                    .setContentTitle(title)
                     .setContentText(title)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setOngoing(true)
