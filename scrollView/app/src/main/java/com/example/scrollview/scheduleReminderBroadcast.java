@@ -42,7 +42,6 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
     private Context Gcontext;
     FirebaseFirestore fStore;
     //public Map<String,ArrayList<Schedule>> timetable = new HashMap<>();
-
     public String getToday(){
 
         Date date =  new Date();
@@ -50,68 +49,46 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
         String dayOfWeek   = sdf.format(date);
         String editedDayOfWeek = dayOfWeek.substring(0, 1).toLowerCase()+dayOfWeek.substring(1);
         return editedDayOfWeek ;
-    }
-    public String getNextDay() {
-        Calendar myCalendar = Calendar.getInstance();
-        myCalendar.add(Calendar.DATE,1);
-        Date date =  myCalendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE",Locale.getDefault());
-        String dayOfWeek   = sdf.format(date);
-        return dayOfWeek.substring(0, 1).toLowerCase()+dayOfWeek.substring(1);
-    }
+    } // It returns today in the form - "monday"
     public void scheduleToday() {
-
-    Calendar myCalendar = Calendar.getInstance();
-    int min = myCalendar.get(Calendar.MINUTE);
-    /*for(int i=min ; i<=min+2; i++)
-    {
-        setAlarm(1,i,i,"Anfal","1");
-    }*/
-
-      setNotifications(getToday());   // It will set notification for the today
-      Log.i(TAG, "scheduleNext: phase 1 after for loop " + min);
-    /*setAlarm(1,min+2,1,"continueLoop","1");*/
+        // This function will be called either on first run or 1am everyday
+        setNotifications(getToday());   // It will set notification for the today
+        /*setAlarm(1,min+2,1,"continueLoop","1");*/
         NextDayIntent();  // It will call this function again at 1 am but on next day
-    }
-
-   public void NextDayIntent() {
+    } // This function will be called either on first run or 1am everyday
+    public void NextDayIntent() {
        //schedule an intent which will call scheduleToday(written in an if statement of on receive function) at 1 am
-
-
        Calendar myCalendar = Calendar.getInstance(Locale.getDefault());
        Log.i(TAG, "setAlarm: hour " + Integer.toString(myCalendar.get(Calendar.HOUR_OF_DAY)));
-           String title = "continueLoop";
-           String code = "1";
-           int mHour = 1;
-           int mMinute = 0;
-           int ID  =  0;
-           Log.i(TAG, "setAlarm: entered");
-           Intent intent = new Intent(Gcontext, scheduleReminderBroadcast.class);
-           intent.putExtra("name", title);
-           intent.putExtra("ID", code);
-           PendingIntent pendingIntent = PendingIntent.getBroadcast(Gcontext, ID, intent, 0);
-           AlarmManager alarmManager = (AlarmManager) Gcontext.getSystemService(ALARM_SERVICE);
-           myCalendar.set(Calendar.HOUR_OF_DAY,mHour);
-           myCalendar.set(Calendar.MINUTE, mMinute);
-           myCalendar.set(Calendar.SECOND, 10);
-           myCalendar.add(Calendar.DATE,1);
-           long selectedTimestamp = myCalendar.getTimeInMillis();
-           Toast.makeText(Gcontext, title + ' ' +  mHour+":"+mMinute, Toast.LENGTH_SHORT).show();
-           Log.i(TAG, "NextDayIntent: Scheduled"  + title + " " + mHour+":" + mMinute);
-           alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, selectedTimestamp, pendingIntent);
-
-
-
-
-
-   }
+       String title = "continueLoop";
+       String code = "1";
+       int mHour = 1;
+       int mMinute = 0;
+       int ID  =  0;
+       Log.i(TAG, "setAlarm: entered");
+       Intent intent = new Intent(Gcontext, scheduleReminderBroadcast.class);
+       intent.putExtra("name", title);
+       intent.putExtra("ID", code);
+       PendingIntent pendingIntent = PendingIntent.getBroadcast(Gcontext, ID, intent, 0);
+       AlarmManager alarmManager = (AlarmManager) Gcontext.getSystemService(ALARM_SERVICE);
+       myCalendar.set(Calendar.HOUR_OF_DAY,mHour);
+       myCalendar.set(Calendar.MINUTE, mMinute);
+       myCalendar.set(Calendar.SECOND, 10);
+       myCalendar.add(Calendar.DATE,1);
+       long selectedTimestamp = myCalendar.getTimeInMillis();
+       Toast.makeText(Gcontext, title + ' ' +  mHour+":"+mMinute, Toast.LENGTH_SHORT).show();
+       Log.i(TAG, "NextDayIntent: Scheduled"  + title + " " + mHour+":" + mMinute);
+       alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, selectedTimestamp, pendingIntent);
+} //This will schedule an intent which will call scheduleToday(written in an if statement of on receive function) at 1 am
     public String splitTime(String time){
         String[] strings = time.split("-");
         return strings[0];
-    }
+    } // To get starting time of lecture from the string
     public void setNotifications(String d) {
 
-        final String day = d;
+        // This function will schedule all the notification of today
+
+         final String day = d;
          fStore = FirebaseFirestore.getInstance();
          fStore.collection("1st year").document("Q1").collection(day).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -139,8 +116,8 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
                             String time=temp.get(i).getTime();
                             String startTime =splitTime(time);
                             String[] strings = startTime.split(":");
-
                             setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),i+1,timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
+                            setNotificationAlarm(temp.get(i));
 
                          //   setAlarm(1,34+i,i,"Anfal","1");
 
@@ -155,7 +132,7 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
                 }
             });
 
-        }
+        } // This function will schedule all the notification of the day passed in the form "monday"
     private void setAlarm(int mHour,int mMinute,int ID,String title,String code) {
         Calendar myCalendar = Calendar.getInstance(Locale.getDefault());
         Log.i(TAG, "setAlarm: hour "+Integer.toString(myCalendar.get(Calendar.HOUR_OF_DAY)));
@@ -182,39 +159,32 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
             Log.i(TAG, "phase 1" + title);
             Log.i("minute", String.valueOf(myCalendar.SECOND));
             Log.i("minute", String.valueOf(myCalendar.MINUTE));
-
-            Log.i(TAG, "setAlarm: + phase1" + title);
-
-
-
-
             long selectedTimestamp = myCalendar.getTimeInMillis();
-
-            Toast.makeText(Gcontext, "scheduled " + title + " " + mHour + ":" +mMinute, Toast.LENGTH_SHORT).show();
             Log.i(TAG, "setAlarm: scheduled " + title + " "  + mHour+ ':' + mMinute);
             alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, selectedTimestamp, pendingIntent);
         }
-    }
+    } // This will schedule notifications for lectures taking schedule type object
+    private void setNotificationAlarm(Schedule temp) {
 
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Gcontext = context;
-        Log.i(TAG, "onReceive: " + "today " + getToday() + "  "+getNextDay());
         String title = intent.getStringExtra("name");
         String id = intent.getStringExtra("ID");
         Log.i("TAG", "Received: " + title + " " + id);
         Toast.makeText(Gcontext, "Received: " + title + " " + id, Toast.LENGTH_SHORT).show();
-
         if(title.equals("continueLoop")){
+            // In this case intent is received to schedule notification, not to show notifications
             scheduleToday();
             Log.i(TAG, "onReceive: " + "phase 1 schedule next called");
 
         }
 
         else{
-            // if intent is for building notification
-            //This tramsis the intent of PendingIntent
+            // If the intent is received for showing notification: example this code will run at  saturday 9 am for showing Maths class
+
             PendingIntent pIntentlogin;
             int NotificationId = (int) ((new Date().getTime() / 1000L) % Integer.MAX_VALUE);
             Intent intentAction = new Intent(context, ActionReceiver.class);
@@ -222,7 +192,6 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
 
             //This is optional if you have more than one buttons and want to differentiate between two
             intentAction.putExtra("action", "actionName");
-
             pIntentlogin = PendingIntent.getBroadcast(context, 1, intentAction, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
@@ -243,8 +212,6 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
             yesReceive.setAction("YES_ACTION");
             PendingIntent pendingIntentYes = PendingIntent.getBroadcast(context, 12345, yesReceive, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.tick, "Yes", pendingIntentYes);
-
-
             Intent yesReceive2 = new Intent(context, ActionReceiver.class);
             yesReceive2.putExtra("ID", id);
             yesReceive2.setAction("STOP_ACTION");
