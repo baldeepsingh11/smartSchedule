@@ -57,6 +57,7 @@ public class EventsActivity extends AppCompatActivity {
 
         final ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new IconAdapter(this, getSupportFragmentManager()));
+        pager.setPageTransformer(true, new ZoomAnimation());
         indicator = (PageIndicator) findViewById(R.id.indicator);
             indicator.setViewPager(pager);
         pager.setCurrentItem(getIntent().getIntExtra("position", 0), false);
