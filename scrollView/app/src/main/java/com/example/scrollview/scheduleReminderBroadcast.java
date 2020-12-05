@@ -116,8 +116,8 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
                             String time=temp.get(i).getTime();
                             String startTime =splitTime(time);
                             String[] strings = startTime.split(":");
-                            setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),i+1,timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
-                            setNotificationAlarm(temp.get(i));
+                            //setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),i+1,timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
+                            setNotificationAlarm(temp.get(i),i+1);
 
                          //   setAlarm(1,34+i,i,"Anfal","1");
 
@@ -133,7 +133,7 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
             });
 
         } // This function will schedule all the notification of the day passed in the form "monday"
-    private void setAlarm(int mHour,int mMinute,int ID,String title,String code) {
+    /*private void setAlarm(int mHour,int mMinute,int ID,String title,String code) {
         Calendar myCalendar = Calendar.getInstance(Locale.getDefault());
         Log.i(TAG, "setAlarm: hour "+Integer.toString(myCalendar.get(Calendar.HOUR_OF_DAY)));
         boolean check=false;
@@ -163,16 +163,57 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
             Log.i(TAG, "setAlarm: scheduled " + title + " "  + mHour+ ':' + mMinute);
             alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, selectedTimestamp, pendingIntent);
         }
-    } // This will schedule notifications for lectures taking schedule type object
-    private void setNotificationAlarm(Schedule temp) {
+    }*/
+    private void setNotificationAlarm(Schedule temp, int ID) {
+        String time=temp.getTime();
+        String startTime =splitTime(time);
+        String[] strings = startTime.split(":");
+        int mHour = Integer.parseInt(strings[0]);
+        int mMinute = Integer.parseInt(strings[1]);
+        String title = temp.getName();
+        String code = temp.getCode();
+        String venue = temp.getVenue();
+        //setAlarm(Integer.parseInt(strings[0]),Integer.parseInt(strings[1]),ID,timetable.get(day).get(i).getName(),timetable.get(day).get(i).getCode());
+        Calendar myCalendar = Calendar.getInstance(Locale.getDefault());
+        Log.i(TAG, "setAlarm: hour "+Integer.toString(myCalendar.get(Calendar.HOUR_OF_DAY)));
+        boolean check=false;
+        if (mHour>myCalendar.get(Calendar.HOUR_OF_DAY))
+            check=true;
+        Log.i(TAG, "setAlarm: hour"+Boolean.toString(check)+"mHour: "+Integer.toString(mHour)+" myCalendar: "+Integer.toString(myCalendar.get(Calendar.HOUR_OF_DAY)));
 
-    }
+        if (myCalendar.get(Calendar.HOUR_OF_DAY)==mHour&&myCalendar.get(Calendar.MINUTE)<=mMinute)
+            check=true;
+        Log.i(TAG, "setAlarm: minute "+Boolean.toString(check)+"mMinute: "+Integer.toString(mMinute)+" myCalendar: "+Integer.toString(myCalendar.get(Calendar.MINUTE)));
+
+        Log.i(TAG, "setAlarm: "+Boolean.toString(check));
+        if (check) {
+            Log.i(TAG, "setAlarm: entered");
+            Intent intent = new Intent(Gcontext, scheduleReminderBroadcast.class);
+            intent.putExtra("name", title);
+            intent.putExtra("ID",code);
+            intent.putExtra("venue",venue);
+            intent.putExtra("code",code);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(Gcontext, ID, intent, 0);
+            AlarmManager alarmManager = (AlarmManager) Gcontext.getSystemService(ALARM_SERVICE);
+            myCalendar.set(Calendar.HOUR_OF_DAY, mHour);
+            myCalendar.set(Calendar.MINUTE, mMinute);
+            myCalendar.set(Calendar.SECOND, 10);
+            Log.i(TAG, "phase 1" + title);
+            Log.i("minute", String.valueOf(myCalendar.SECOND));
+            Log.i("minute", String.valueOf(myCalendar.MINUTE));
+            long selectedTimestamp = myCalendar.getTimeInMillis();
+            Log.i(TAG, "setAlarm: scheduled " + title + " "  + mHour+ ':' + mMinute);
+            alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, selectedTimestamp, pendingIntent);
+        }
+    } // This will schedule notifications for lectures taking schedule type object
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Gcontext = context;
         String title = intent.getStringExtra("name");
         String id = intent.getStringExtra("ID");
+        String code = intent.getStringExtra("code");
+        String venue = intent.getStringExtra("venue");
         Log.i("TAG", "Received: " + title + " " + id);
         Toast.makeText(Gcontext, "Received: " + title + " " + id, Toast.LENGTH_SHORT).show();
         if(title.equals("continueLoop")){
@@ -193,13 +234,10 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
             //This is optional if you have more than one buttons and want to differentiate between two
             intentAction.putExtra("action", "actionName");
             pIntentlogin = PendingIntent.getBroadcast(context, 1, intentAction, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-            Log.i("msg", "notification acriv");
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "hello")
                     .setSmallIcon(R.drawable.ic_icons8_checkmark)
                     .setContentTitle(title)
-                    .setContentText(title)
+                    .setContentText(venue)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setOngoing(true)
                     // Set the intent that will fire when the user taps the notification
