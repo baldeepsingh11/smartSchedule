@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ActionReceiver extends BroadcastReceiver {
 
-    SharedPreferences mPrefs;
+       SharedPreferences mPrefs;
     @Override
     public void onReceive(Context context, Intent intent) {
        String id = intent.getStringExtra("ID");
@@ -53,16 +53,16 @@ public class ActionReceiver extends BroadcastReceiver {
                     arrayItems.get(i).setPresent(arrayItems.get(i).getPresent()+1);
                     arrayItems.get(i).setTotal(arrayItems.get(i).getTotal()+1);
                     if(arrayItems.get(i).getPercentage()>90){
-                       
+
                         arrayItems.get(i).setStatus("Chill Out , You can bunk classes !, Go on a trip");}
                     else if(arrayItems.get(i).getPercentage()>75){
-                       
+
                         arrayItems.get(i).setStatus("You can bunk classes , attendence is maintained");}
                     else if(arrayItems.get(i).getPercentage()==75){
-                        
+
                         arrayItems.get(i).setStatus("You should attend your next class");}
                     else{
-                        
+
                         arrayItems.get(i).setStatus("ALERT:Attend you next few classes ! "    );}
                 }
 
