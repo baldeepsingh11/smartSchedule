@@ -29,8 +29,10 @@
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
 
+        android:background="@drawable/input_field"
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
@@ -45,8 +47,10 @@
     <Spinner
         android:id="@+id/branch"
         android:layout_width="0dp"
+        android:background="@drawable/input_field"
         android:layout_height="54dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
 
         android:ems="10"
@@ -62,6 +66,8 @@
         android:id="@+id/emailAddress"
         android:layout_width="0dp"
         android:layout_height="54dp"
+        android:background="@drawable/input_field"
+        android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
 
@@ -79,10 +85,12 @@
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
 
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/input_field"
         android:ems="10"
+
         android:hint="Enrollment No."
         android:inputType="textEmailAddress"
         android:textColor="@android:color/black"
@@ -90,7 +98,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/branch" />
+        app:layout_constraintTop_toBottomOf="@+id/emailAddress" />
 
 
     <EditText
@@ -98,9 +106,10 @@
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="8dp"
 
         android:layout_marginEnd="8dp"
+        android:background="@drawable/input_field"
         android:ems="10"
         android:hint="Batch Name"
         android:inputType="textEmailAddress"
@@ -109,22 +118,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/branch" />
+        app:layout_constraintTop_toBottomOf="@+id/enrollment" />
 
     <Button
         android:id="@+id/saveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#2196F3"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/login_button"
         android:text="Save"
         android:textColor="#F9FAF8"
         android:textSize="17sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailAddress"
-        app:layout_constraintVertical_bias="0.634" />
+        app:layout_constraintTop_toBottomOf="@+id/year_spinner" />
 
     <TextView
         android:id="@+id/textView8"
@@ -144,11 +152,11 @@
     <Spinner
         android:id="@+id/year_spinner"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="54dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/spinner_background"
+        android:background="@drawable/input_field"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
