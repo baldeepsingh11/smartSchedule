@@ -21,13 +21,11 @@ public class ActionReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
        String id = intent.getStringExtra("ID");
+       String code = intent.getStringExtra("code");
        int NotificationId= intent.getIntExtra("NotificataionId",0);
         Log.i("Action Receiver", "onReceive: "+Integer.toString(NotificationId));
       // Toast.makeText(context,"recieved",Toast.LENGTH_SHORT).show();
-        Log.i("bwrwn",id);
-
         List<Attendence> arrayItems = null;
-
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
         String serializedObject = sharedPreferences.getString("attendence", null);
         if (serializedObject != null) {
@@ -42,14 +40,14 @@ public class ActionReceiver extends BroadcastReceiver {
         }
 
         for(int i=0;i<arrayItems.size();i++){
-            cancelNotification(context,NotificationId);
+            cancelNotification(context,Integer.valueOf(id));
 
             Log.i("bwr",arrayItems.get(i).getCode());
-            if(id.equals(arrayItems.get(i).getCode())){
+            if(code.equals(arrayItems.get(i).getCode())){
                 Log.i("matched","hurahh");
                 String action = intent.getAction();
                 if ("YES_ACTION".equals(action)) {
-                    cancelNotification(context,NotificationId);
+                    cancelNotification(context,Integer.valueOf(id));
                     Toast.makeText(context, "YES CALLED", Toast.LENGTH_SHORT).show();
 
                     arrayItems.get(i).setPresent(arrayItems.get(i).getPresent()+1);
@@ -70,7 +68,7 @@ public class ActionReceiver extends BroadcastReceiver {
 
 
                 else  if ("STOP_ACTION".equals(action)) {
-                    cancelNotification(context,NotificationId);
+                    cancelNotification(context,Integer.valueOf(id));
                     Toast.makeText(context, "STOP CALLED", Toast.LENGTH_SHORT).show();
 
                     arrayItems.get(i).setPresent(arrayItems.get(i).getPresent());
@@ -107,9 +105,12 @@ public class ActionReceiver extends BroadcastReceiver {
         Intent it = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         context.sendBroadcast(it);
     }
+
     public static void cancelNotification(Context ctx, int notifyId) {
         String ns = Context.NOTIFICATION_SERVICE;
+        Log.i("CancelNotification", "cancelNotification: called "+ notifyId);
         NotificationManager nMgr = (NotificationManager) ctx.getSystemService(ns);
+       // nMgr.cancelAll();
         nMgr.cancel(notifyId);
     }
 
