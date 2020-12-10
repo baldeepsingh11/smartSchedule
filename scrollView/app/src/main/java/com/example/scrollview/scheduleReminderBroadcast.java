@@ -190,7 +190,7 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
             Log.i(TAG, "setAlarm: entered");
             Intent intent = new Intent(Gcontext, scheduleReminderBroadcast.class);
             intent.putExtra("name", title);
-            intent.putExtra("ID",code);
+            intent.putExtra("ID",String.valueOf(ID));
             intent.putExtra("venue",venue);
             intent.putExtra("code",code);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(Gcontext, ID, intent, 0);
@@ -236,22 +236,25 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
             pIntentlogin = PendingIntent.getBroadcast(context, 1, intentAction, PendingIntent.FLAG_UPDATE_CURRENT);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "hello")
                     .setSmallIcon(R.drawable.ic_icons8_checkmark)
-                    .setContentTitle(title)
+                    .setContentTitle(title+id)
                     .setContentText(venue)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setOngoing(true)
+
                     // Set the intent that will fire when the user taps the notification
                     .setAutoCancel(true);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
             Intent yesReceive = new Intent(context, ActionReceiver.class);
-            yesReceive.putExtra("ID", id);
+            yesReceive.putExtra("ID", String.valueOf(NotificationId));
+            yesReceive.putExtra("code",code);
             yesReceive.setAction("YES_ACTION");
             PendingIntent pendingIntentYes = PendingIntent.getBroadcast(context, 12345, yesReceive, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.tick, "Yes", pendingIntentYes);
             Intent yesReceive2 = new Intent(context, ActionReceiver.class);
-            yesReceive2.putExtra("ID", id);
+            yesReceive2.putExtra("ID", String.valueOf(NotificationId));
+            yesReceive2.putExtra("code",code);
             yesReceive2.setAction("STOP_ACTION");
             PendingIntent pendingIntentYes2 = PendingIntent.getBroadcast(context, 12345, yesReceive2, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.addAction(R.drawable.cross, "No", pendingIntentYes2);
