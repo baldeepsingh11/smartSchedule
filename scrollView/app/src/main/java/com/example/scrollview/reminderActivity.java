@@ -28,6 +28,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.scrollview.model.Tasks;
+import com.example.scrollview.model.events;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -187,7 +188,15 @@ public class reminderActivity extends AppCompatActivity {
         alarm = findViewById(R.id.alrmbtn);
 
 
-
+        // Case when user enters here from events activity by pressing Remind Me button
+          Intent intent = getIntent();
+          String jsonString = intent.getStringExtra("events_info");
+          Log.i(TAG, "onCreate: " + jsonString);
+          if(jsonString!= null)
+        {   Gson gson = new Gson();
+            events.event event = gson.fromJson(jsonString,events.event.class);
+            setFieldThroughEventObject(event);
+        }
 
 
         //For type of reminder
@@ -347,6 +356,20 @@ public class reminderActivity extends AppCompatActivity {
 
 
         }
+
+    }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setFieldThroughEventObject(events.event eventObject)
+    {
+        name.setText(eventObject.getTitle());
+        venu.setText(eventObject.getVenu());
+
+        String myFormat = "E, dd MMM yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+        Calendar eventCalendar =  Calendar.getInstance();
+        eventCalendar.setTime(eventObject.getDate_time().toDate());
+        mDate.setText(sdf.format(eventCalendar.getTime()));
+        updateTime(eventCalendar.get(Calendar.HOUR_OF_DAY),eventCalendar.get(Calendar.MINUTE));
 
     }
 

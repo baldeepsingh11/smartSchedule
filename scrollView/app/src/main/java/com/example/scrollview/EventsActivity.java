@@ -2,6 +2,7 @@ package com.example.scrollview;
 
 import android.app.usage.UsageEvents;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,8 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
@@ -41,6 +45,7 @@ import static com.example.scrollview.model.events.getCategories;
 public class EventsActivity extends AppCompatActivity {
 
     private PageIndicator indicator;
+    private static final String TAG = "EventsActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +75,11 @@ public class EventsActivity extends AppCompatActivity {
         });
 
     }
+    public void RemindMe(View view)
+    {
+
+    }
+
 
 
     private class IconAdapter extends FragmentStatePagerAdapter implements IconPagerAdapter {
@@ -100,6 +110,7 @@ public class EventsActivity extends AppCompatActivity {
         ImageView posterview;
         TextView title;
         TextView description;
+        Button remindMe;
 
         @Nullable
         @Override
@@ -108,19 +119,17 @@ public class EventsActivity extends AppCompatActivity {
              posterview = (ImageView) rootview.findViewById(R.id.event_poster);
              title = (TextView) rootview.findViewById(R.id.event_title);
              description = (TextView) rootview.findViewById(R.id.event_desc);
+             remindMe = (Button) rootview.findViewById(R.id.remind_button);
              //imageView=(ImageView) rootview.findViewById(R.id.)
             String posterUrl=null;
-            events.event event1=new events.event();
+             events.event event1= new events.event();
             if (getArguments() != null) {
                 String jsonString;
                 jsonString = getArguments().getString("events");
-                Log.i("fucked1", "onCreateView: "+jsonString);
                 Gson gson= new Gson();
                 event1=gson.fromJson(jsonString,event1.getClass());
-                Log.i("fucked2", "onCreateView: "+jsonString);
                 title.setText(event1.getTitle());
                 description.setText(event1.getDescription());
-
 
             }
             Glide.with(getContext())
@@ -131,7 +140,17 @@ public class EventsActivity extends AppCompatActivity {
                     .asBitmap()
                     .load(event.getImageUrl())
                     .into(imageView)*/
+            remindMe.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String jsonString = getArguments().getString("events");
+                    Log.i(TAG, "onClick: " + jsonString);
+                    Intent intent = new Intent(getActivity(),reminderActivity.class);
+                    intent.putExtra("events_info",jsonString);
+                    startActivity(intent);
 
+                }
+            });
 
 
             return rootview;
