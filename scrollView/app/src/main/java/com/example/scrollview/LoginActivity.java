@@ -19,6 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.scrollview.model.Attendence;
 import com.example.scrollview.model.Schedule;
@@ -42,6 +44,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
     PhoneAuthCredential credential;
     Boolean verificationOnProgress = false;
-    ProgressBar progressBar;
+    AVLoadingIndicatorView progressBar;
     TextView state,resend;
     PhoneAuthProvider.ForceResendingToken token;
     FirebaseFirestore fStore;
@@ -93,6 +96,11 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         state = findViewById(R.id.state);
         resend = findViewById(R.id.resendOtpBtn);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_login);
+        getDelegate().setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         createNotificationChannel();
 
@@ -110,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(!phone.getText().toString().isEmpty() && phone.getText().toString().length() == 10) {
                     if(!verificationOnProgress){
                         next.setEnabled(false);
+                        progressBar.show();
                         progressBar.setVisibility(View.VISIBLE);
                         state.setVisibility(View.VISIBLE);
                         String phoneNum = "+91"+phone.getText().toString();
@@ -118,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                     }else {
                         next.setEnabled(false);
                         optEnter.setVisibility(View.GONE);
+                        progressBar.show();
                         progressBar.setVisibility(View.VISIBLE);
                         state.setText("Logging in");
                         state.setVisibility(View.VISIBLE);
@@ -156,6 +166,7 @@ public class LoginActivity extends AppCompatActivity {
                         verificationId = s;
                         token = forceResendingToken;
                         verificationOnProgress = true;
+                        progressBar.hide();
                         progressBar.setVisibility(View.GONE);
                         state.setVisibility(View.GONE);
                         next.setText("Verify");
@@ -181,6 +192,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+
+
     private void verifyAuth(PhoneAuthCredential credential) {
         fAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -189,6 +202,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Phone Verified."+fAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
                     checkUserProfile();
                 }else {
+                    progressBar.hide();
                     progressBar.setVisibility(View.GONE);
                     state.setVisibility(View.GONE);
                     Toast.makeText(LoginActivity.this, "Can not Verify phone and Create Account.", Toast.LENGTH_SHORT).show();
@@ -202,7 +216,9 @@ public class LoginActivity extends AppCompatActivity {
             super.onStart();
 
         if(fAuth.getCurrentUser() != null){
+            progressBar.show();
             progressBar.setVisibility(View.VISIBLE);
+
             state.setText("Checking..");
             state.setVisibility(View.VISIBLE);
             checkUserProfile();
@@ -455,4 +471,5 @@ public class LoginActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
 }
