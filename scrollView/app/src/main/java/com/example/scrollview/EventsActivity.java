@@ -4,11 +4,13 @@ import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -17,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
@@ -36,9 +40,12 @@ import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import static com.example.scrollview.R.id.action_home;
+import static com.example.scrollview.R.id.date;
 import static com.example.scrollview.R.id.image;
 import static com.example.scrollview.model.events.getCategories;
 
@@ -57,8 +64,11 @@ public class EventsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_events);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        getDelegate().setSupportActionBar(toolbar);
+        // getDelegate().setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         final ViewPager pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new IconAdapter(this, getSupportFragmentManager()));
@@ -75,12 +85,12 @@ public class EventsActivity extends AppCompatActivity {
         });
 
     }
-    public void RemindMe(View view)
-    {
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
     }
-
-
 
     private class IconAdapter extends FragmentStatePagerAdapter implements IconPagerAdapter {
         private final Context context;
@@ -111,7 +121,10 @@ public class EventsActivity extends AppCompatActivity {
         TextView title;
         TextView description;
         Button remindMe;
+        TextView location;
+        TextView date_time;
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -120,6 +133,9 @@ public class EventsActivity extends AppCompatActivity {
              title = (TextView) rootview.findViewById(R.id.event_title);
              description = (TextView) rootview.findViewById(R.id.event_desc);
              remindMe = (Button) rootview.findViewById(R.id.remind_button);
+             location = rootview.findViewById(R.id.event_location);
+             date_time = rootview.findViewById(R.id.event_dateTime);
+
              //imageView=(ImageView) rootview.findViewById(R.id.)
             String posterUrl=null;
              events.event event1= new events.event();
@@ -130,6 +146,14 @@ public class EventsActivity extends AppCompatActivity {
                 event1=gson.fromJson(jsonString,event1.getClass());
                 title.setText(event1.getTitle());
                 description.setText(event1.getDescription());
+                location.setText(event1.getVenu());
+                String myFormat = "E, dd MMM yyyy"; //In which you need put here
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+                Calendar eventCalendar =  Calendar.getInstance();
+                eventCalendar.setTime(event1.getDate_time().toDate());
+                String Date_Time = sdf.format(eventCalendar.getTime())+" "+ updateTime(eventCalendar.get(Calendar.HOUR_OF_DAY),eventCalendar.get(Calendar.MINUTE));
+                date_time.setText(Date_Time);
+               ;
 
             }
             Glide.with(getContext())
@@ -219,6 +243,35 @@ public class EventsActivity extends AppCompatActivity {
                 return items.size();
             }
         }*/
+        private String updateTime(int hours, int mins) {
+
+
+            String timeSet = "";
+            if (hours > 12) {
+                hours -= 12;
+                timeSet = "PM";
+            } else if (hours == 0) {
+                hours += 12;
+                timeSet = "AM";
+            } else if (hours == 12)
+                timeSet = "PM";
+            else
+                timeSet = "AM";
+
+
+            String minutes = "";
+            if (mins < 10)
+                minutes = "0" + mins;
+            else
+                minutes = String.valueOf(mins);
+
+
+            // Append in a StringBuilder
+            String aTime = String.valueOf(hours) + ':' +
+                    minutes + " " + timeSet;
+
+            return aTime;
+        }
 
 
 
