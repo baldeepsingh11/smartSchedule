@@ -8,85 +8,95 @@
 
     tools:context=".LoginActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_login"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        android:theme="@style/AppTheme.EventsActivity"
+        app:elevation="0dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/verify"
         android:layout_width="296dp"
-        android:layout_height="78dp"
+        android:layout_height="wrap_content"
 
-        android:layout_marginTop="212dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="34dp"
         android:text="Hello There!"
         android:textColor="@color/design_default_color_on_secondary"
         android:textColorHint="@color/colorPrimary"
         android:textSize="35sp"
         android:textStyle="normal|bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/phone"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/nextBtn"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="184dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/login_button"
         android:text="NEXT"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
 
     <EditText
         android:id="@+id/phone"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="388dp"
         android:background="@drawable/input_field"
         android:ems="10"
         android:hint="Mobile Number"
         android:inputType="phone"
         android:textColorHint="@android:color/darker_gray"
-        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
 
     </EditText>
 
 
-    <ProgressBar
+    <com.wang.avi.AVLoadingIndicatorView
         android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
+        style="@style/AVLoadingIndicatorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
 
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="20dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/codeEnter"
-        app:layout_constraintHorizontal_bias="0.222"
+        android:visibility="gone"
+        app:indicatorColor="@color/red"
+        app:indicatorName="BallPulseIndicator"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phone" />
+        app:layout_constraintTop_toBottomOf="@+id/codeEnter" />
 
     <TextView
         android:id="@+id/state"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:text="Sending OTP.."
         android:textColor="@color/red"
         android:textSize="18sp"
-        android:visibility="invisible"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/nextBtn" />
 
     <EditText
         android:id="@+id/codeEnter"
@@ -100,8 +110,10 @@
         android:inputType="number"
         android:textColorHighlight="#E8E9EE"
         android:textColorHint="@android:color/darker_gray"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/nextBtn"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="@id/phone"
         app:layout_constraintRight_toRightOf="@+id/phone"
         app:layout_constraintTop_toBottomOf="@+id/phone"
         app:layout_constraintVertical_bias="0.0" />
@@ -111,14 +123,14 @@
         android:id="@+id/resendOtpBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="61dp"
+        android:layout_marginStart="181dp"
+        android:layout_marginEnd="184dp"
+        android:layout_marginBottom="73dp"
         android:text="Resend"
-        android:visibility="invisible"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/progressBar"
-        app:layout_constraintTop_toBottomOf="@+id/codeEnter" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
