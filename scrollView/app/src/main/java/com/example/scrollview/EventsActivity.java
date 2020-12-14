@@ -17,15 +17,12 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-<<<<<<< HEAD
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-=======
 
-import androidx.annotation.NonNull;
->>>>>>> loginUi
+
+
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.Nullable;
@@ -282,9 +279,4 @@ public class EventsActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        finish();
-        return super.onOptionsItemSelected(item);
-    }
 }

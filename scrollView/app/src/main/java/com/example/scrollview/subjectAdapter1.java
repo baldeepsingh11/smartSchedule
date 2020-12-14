@@ -34,6 +34,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.grabner.circleprogress.CircleProgressView;
 import me.itangqi.waveloadingview.WaveLoadingView;
 
 class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
@@ -107,7 +108,12 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
 //      holder.percentage.setText(subject.getPercentage()+"%");
          holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
       //holder.progressBar.setProgress((int) subject.getPercentage(),true);
-        holder.mWaveLoadingView.setProgressValue((int) subject.getPercentage());
+        holder.mWaveLoadingView.setTextSize(50);
+        holder.mWaveLoadingView.setMaxValue(100);
+        holder.mWaveLoadingView.setBarWidth(20);
+        holder.mWaveLoadingView.setRimWidth(25);
+        holder.mWaveLoadingView.setValue(0);
+        holder.mWaveLoadingView.setValue((float) subject.getPercentage());
       holder.status.setText(subject.getstatus());
 
 
@@ -124,7 +130,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
 
             //   Log.i("msg", String.valueOf(c));
                // holder.progressBar.setProgress((int) subject.getPercentage(),true);
-                holder.mWaveLoadingView.setProgressValue((int) subject.getPercentage());
+                holder.mWaveLoadingView.setValue((float) subject.getPercentage());
                // holder.percentage.setText(subject.getPercentage()+"%");
                 holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
 
@@ -143,19 +149,19 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                         Log.i("mission count", "onClick: "+Integer.toString(count));
                     }
                     if (count==0){
-                        holder.status.setText("On track,you should attend your next class");
+                        holder.status.setText("Status: On track,you should attend your next class");
                     }
                     else if(count==1){
-                    holder.status.setText("On track, you can leave your next class");
-                    subject.setStatus("On track, you can leave your next class");}
+                    holder.status.setText("Status: On track, you can leave your next class");
+                    subject.setStatus("Status: On track, you can leave your next class");}
                     else if(count>1) {
-                        holder.status.setText("On track, you can leave your next "+Integer.toString(count)+" classes");
+                        holder.status.setText("Status: On track, you can leave your next "+Integer.toString(count)+" classes");
                     }
-                    holder.mWaveLoadingView.setWaveColor(Color.GREEN);
-                    holder.mWaveLoadingView.setBorderColor(Color.GREEN);}
+                    holder.mWaveLoadingView.setBarColor(Color.GREEN);
+                }
                 else if(subject.getPercentage()==75){
-                    holder.status.setText("On track,you should attend your next class");
-                    subject.setStatus("On track,you should attend your next class");}
+                    holder.status.setText("Status: On track,you should attend your next class");
+                    subject.setStatus("Status: On track,you should attend your next class");}
                 else{
                     double percentage=  subject.getPercentage();
                     double attended=  subject.getPresent();
@@ -167,14 +173,14 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                         total+=1;
                         count++;
                     }
-                    if (count==1){holder.status.setText("You should attend your next class to get back on track");
-                    subject.setStatus("You should attend your next class to get back on track");}
+                    if (count==1){holder.status.setText("Status: You should attend your next class to get back on track");
+                    subject.setStatus("Status: You should attend your next class to get back on track");}
                     else{
-                    holder.status.setText("You should attend your next " +Integer.toString(count)+" classes to get back on track");
-                    subject.setStatus("You should attend your next " +Integer.toString(count)+" classes to get back on track");
+                    holder.status.setText("Status: You should attend your next " +Integer.toString(count)+" classes to get back on track");
+                    subject.setStatus("Status: You should attend your next " +Integer.toString(count)+" classes to get back on track");
                     }
-                    holder.mWaveLoadingView.setWaveColor(Color.RED);
-                    holder.mWaveLoadingView.setBorderColor(Color.RED);}
+                    holder.mWaveLoadingView.setBarColor(Color.RED);
+                    }
 
                 mPrefs =context. getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
@@ -197,7 +203,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                 holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
             //    Log.i("msg", String.valueOf(c));
                // holder.progressBar.setProgress((int) subject.getPercentage(),true);
-                holder.mWaveLoadingView.setProgressValue((int) subject.getPercentage());
+                holder.mWaveLoadingView.setValue((int) subject.getPercentage());
                // holder.percentage.setText(subject.getPercentage()+"%");
                 subjects.set(position,subject);
 
@@ -215,22 +221,22 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                          Log.i("mission total", "onClick: "+Double.toString(total));
                      }
                      if(count==0){
-                         holder.status.setText("On track, you can't miss your next class");
-                         subject.setStatus("On track, you can't miss your next class");
+                         holder.status.setText("Status: On track, you can't miss your next class");
+                         subject.setStatus("Status: On track, you can't miss your next class");
                      }
 
                      else if(count==1){
-                         holder.status.setText("On track, you can leave your next class");
-                         subject.setStatus("On track, you can leave your next class");}
+                         holder.status.setText("Status: On track, you can leave your next class");
+                         subject.setStatus("Status: On track, you can leave your next class");}
                      else if(count>1) {
-                         holder.status.setText("On track, you can leave your next "+Integer.toString(count)+" classes");
+                         holder.status.setText("Status: On track, you can leave your next "+Integer.toString(count)+" classes");
                      }
-                    holder.mWaveLoadingView.setWaveColor(Color.GREEN);
-                    holder.mWaveLoadingView.setBorderColor(Color.GREEN);
+                    holder.mWaveLoadingView.setBarColor(Color.GREEN);
+
                 }
                 else if(subject.getPercentage()==75){
-                    holder.status.setText("You should attend your next class");
-                    subject.setStatus("You should attend your next class");}
+                    holder.status.setText("Status: You should attend your next class");
+                    subject.setStatus("Status: You should attend your next class");}
                 else{
                      double percentage=  subject.getPercentage();
                      double attended=  subject.getPresent();
@@ -243,14 +249,14 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                          count++;
                          Log.i("count", "onClick: "+ Double.toString(count));
                      }
-                     if (count==1){holder.status.setText("You should attend your next class to get back on track");
-                         subject.setStatus("You should attend your next class to get back on track");}
+                     if (count==1){holder.status.setText("Status: You should attend your next class to get back on track");
+                         subject.setStatus("Status: You should attend your next class to get back on track");}
                      else{
-                         holder.status.setText("You should attend your next " +Integer.toString(count)+" classes to get back on track");
-                         subject.setStatus("You should attend your next " +Integer.toString(count)+" classes to get back on track");
+                         holder.status.setText("Status: You should attend your next " +Integer.toString(count)+" classes to get back on track");
+                         subject.setStatus("Status: You should attend your next " +Integer.toString(count)+" classes to get back on track");
                      }
-                    holder.mWaveLoadingView.setWaveColor(Color.RED);
-                    holder.mWaveLoadingView.setBorderColor(Color.RED);}
+                    holder.mWaveLoadingView.setBarColor(Color.RED);
+                    }
 
                 mPrefs =context. getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
@@ -285,7 +291,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
        // private TextView percentage;
         private TextView percent;
         private TextView status;
-        private WaveLoadingView mWaveLoadingView;
+        private CircleProgressView mWaveLoadingView;
         private Button menuButton;
 
 
@@ -299,7 +305,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
             cross = itemView.findViewById(R.id.imageView3);
             percent = itemView.findViewById(R.id.textView7);
             status = itemView.findViewById(R.id.textView1);
-            mWaveLoadingView = (WaveLoadingView) itemView.findViewById(R.id.waveLoadingView);
+            mWaveLoadingView = (CircleProgressView) itemView.findViewById(R.id.circleProgressView);
             menuButton = (Button) itemView.findViewById(R.id.menu_button);
         }
     }

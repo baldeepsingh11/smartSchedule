@@ -37,68 +37,51 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sub_name" />
 
-            <me.itangqi.waveloadingview.WaveLoadingView
-                android:id="@+id/waveLoadingView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+
+            <at.grabner.circleprogress.CircleProgressView
+                android:id="@+id/circleProgressView"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="22dp"
+                app:cpv_blockCount="18"
+                app:cpv_blockScale="0.9"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:wlv_borderColor="@color/colorAccent"
-                app:wlv_borderWidth="3dp"
-                app:wlv_progressValue="60"
-                app:wlv_round_rectangle="true"
-                app:wlv_shapeType="circle"
-                app:wlv_titleCenter="Attendance"
-                app:wlv_titleCenterColor="@android:color/white"
-                app:wlv_titleCenterSize="10sp"
-                app:wlv_titleCenterStrokeColor="@android:color/holo_blue_dark"
-                app:wlv_titleCenterStrokeWidth="3dp"
-                app:wlv_triangle_direction="north"
-                app:wlv_waveAmplitude="70"
-                app:wlv_waveColor="@color/colorAccent" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:text="Status:"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="10dp"
                 android:text="NA"
                 android:textColor="#000000"
+                android:textSize="13sp"
                 app:layout_constraintEnd_toStartOf="@+id/imageView"
-                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="52dp"
                 android:layout_height="34dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/waveLoadingView"
+                app:layout_constraintTop_toBottomOf="@+id/circleProgressView"
                 app:srcCompat="@drawable/attend" />
 
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="52dp"
                 android:layout_height="25dp"
-                android:layout_marginTop="4dp"
                 android:layout_marginEnd="6dp"
+                android:layout_marginBottom="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/waveLoadingView"
                 app:srcCompat="@drawable/absent" />
 
             <TextView
@@ -121,12 +104,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="5dp"
                 android:text="Engineering Thermodynamics"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/waveLoadingView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -145,14 +126,13 @@
 
             <Button
                 android:id="@+id/menu_button"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="5dp"
                 android:background="@drawable/menu"
                 app:layout_constraintDimensionRatio="1"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/waveLoadingView"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
