@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
 
     Gson gson  = new Gson();
 
-
     PhoneAuthCredential credential;
     Boolean verificationOnProgress = false;
     AVLoadingIndicatorView progressBar;
@@ -85,69 +85,74 @@ public class LoginActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        setContentView(R.layout.activity_splash_screen);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
-        phone = findViewById(R.id.phone);
-        optEnter = findViewById(R.id.codeEnter);
-        next = findViewById(R.id.nextBtn);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-        progressBar = findViewById(R.id.progressBar);
-        state = findViewById(R.id.state);
-        resend = findViewById(R.id.resendOtpBtn);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_login);
-        getDelegate().setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setTheme(R.style.Theme_AppCompat_NoActionBar);
 
-        createNotificationChannel();
+            setContentView(R.layout.activity_login);
+            phone = findViewById(R.id.phone);
+            optEnter = findViewById(R.id.codeEnter);
+            next = findViewById(R.id.nextBtn);
+            progressBar = findViewById(R.id.progressBar);
+            state = findViewById(R.id.state);
+            resend = findViewById(R.id.resendOtpBtn);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_login);
+            getDelegate().setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        resend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // todo:: resend OTP
-            }
-        });
+            createNotificationChannel();
+
+            resend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // todo:: resend OTP
+                }
+            });
 
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!phone.getText().toString().isEmpty() && phone.getText().toString().length() == 10) {
-                    if(!verificationOnProgress){
-                        next.setEnabled(false);
-                        progressBar.show();
-                        progressBar.setVisibility(View.VISIBLE);
-                        state.setVisibility(View.VISIBLE);
-                        String phoneNum = "+91"+phone.getText().toString();
-                        Log.d("phone", "Phone No.: " + phoneNum);
-                        requestPhoneAuth(phoneNum);
-                    }else {
-                        next.setEnabled(false);
-                        optEnter.setVisibility(View.GONE);
-                        progressBar.show();
-                        progressBar.setVisibility(View.VISIBLE);
-                        state.setText("Logging in");
-                        state.setVisibility(View.VISIBLE);
-                        otpCode = optEnter.getText().toString();
-                        if(otpCode.isEmpty()){
-                            optEnter.setError("Required");
-                            return;
+            next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!phone.getText().toString().isEmpty() && phone.getText().toString().length() == 10) {
+                        if (!verificationOnProgress) {
+                            next.setEnabled(false);
+                            progressBar.show();
+                            progressBar.setVisibility(View.VISIBLE);
+                            state.setVisibility(View.VISIBLE);
+                            String phoneNum = "+91" + phone.getText().toString();
+                            Log.d("phone", "Phone No.: " + phoneNum);
+                            requestPhoneAuth(phoneNum);
+                        } else {
+                            next.setEnabled(false);
+                            optEnter.setVisibility(View.GONE);
+                            progressBar.show();
+                            progressBar.setVisibility(View.VISIBLE);
+                            state.setText("Logging in");
+                            state.setVisibility(View.VISIBLE);
+                            otpCode = optEnter.getText().toString();
+                            if (otpCode.isEmpty()) {
+                                optEnter.setError("Required");
+                                return;
+                            }
+
+                            credential = PhoneAuthProvider.getCredential(verificationId, otpCode);
+                            verifyAuth(credential);
                         }
 
-                        credential = PhoneAuthProvider.getCredential(verificationId,otpCode);
-                        verifyAuth(credential);
+                    } else {
+                        phone.setError("Valid Phone Required");
                     }
-
-                }else {
-                    phone.setError("Valid Phone Required");
                 }
-            }
-        });
+            });
+        }
 
-    }
+
 
     private void requestPhoneAuth(String phoneNumber) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber,60L, TimeUnit.SECONDS,this,
@@ -200,12 +205,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(LoginActivity.this, "Phone Verified."+fAuth.getCurrentUser().getUid(), Toast.LENGTH_SHORT).show();
-                    checkUserProfile();
+                    startActivity(new Intent(LoginActivity.this,splash_screen.class));
+                    finish();
+                    //checkUserProfile();
                 }else {
                     progressBar.hide();
                     progressBar.setVisibility(View.GONE);
                     state.setVisibility(View.GONE);
-                    Toast.makeText(LoginActivity.this, "Can not Verify phone and Create Account.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Can not Verify phone and Create Account.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -215,15 +222,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
             super.onStart();
 
-        if(fAuth.getCurrentUser() != null){
-            progressBar.show();
-            progressBar.setVisibility(View.VISIBLE);
+       /* if(fAuth.getCurrentUser() != null){
 
+            *//*progressBar.show();
+            progressBar.setVisibility(View.VISIBLE);
             state.setText("Checking..");
-            state.setVisibility(View.VISIBLE);
+            state.setVisibility(View.VISIBLE);*//*
+
             checkUserProfile();
 
-        }
+        }*/
     }
 
     private void checkUserProfile() {
@@ -260,7 +268,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-    public String splitTime(String time){
+    public  String splitTime(String time){
         String[] strings = time.split("-");
             return strings[0];
     }
@@ -418,10 +426,16 @@ public class LoginActivity extends AppCompatActivity {
                });
 
         }
+
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
+    }
 
-    private void setAlarm(int mHour,int mMinute,int ID,String title,String code) {
+    private void setAlarm(int mHour, int mMinute, int ID, String title, String code) {
         Calendar myCalendar = Calendar.getInstance(Locale.getDefault());
         Log.i(TAG, "setAlarm: hour "+Integer.toString(myCalendar.get(Calendar.HOUR_OF_DAY)));
         boolean check=false;
