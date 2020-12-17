@@ -75,6 +75,7 @@ public class subjectFragment extends Fragment {
         subjectAdapter subjectAdapter = new subjectAdapter(getContext(),subjects);
         recyclerView.setAdapter(subjectAdapter);
         collapsingToolbarLayout.setTitle(user.getBranch());
+        collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.vpi__background_holo_dark));
 
        /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
                 R.drawable.subject_illustration);

@@ -19,11 +19,17 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Registry;
+import com.bumptech.glide.annotation.GlideModule;
+import com.bumptech.glide.module.AppGlideModule;
 import com.example.scrollview.model.events;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Preconditions;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
+
+import java.io.InputStream;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -159,6 +165,7 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
                 logoview.setTransitionName("tab_" + i);
             }
             Log.i(TAG, "notifyDataSetChanged: " + new Gson().toJson(getCategories().get(i).imageUrl));
+
             Glide.with(getContext())
                     .asBitmap()
                     .load(getCategories().get(i).imageUrl)
@@ -254,8 +261,11 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
         smoothScrollTo(scrollTo, 0);
     }
 
+
     @Override
     public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
         mListener = listener;
     }
+
+
 }

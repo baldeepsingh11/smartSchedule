@@ -431,6 +431,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        startActivity(new Intent(LoginActivity.this,splash_screen.class));
         finish();
         return super.onOptionsItemSelected(item);
     }

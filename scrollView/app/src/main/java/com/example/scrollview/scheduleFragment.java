@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -76,12 +77,12 @@ public class scheduleFragment extends Fragment {
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDayChanged() {
-
+                Log.i(TAG, "onDayChanged: ");
             }
 
             @Override
             public void onClickListener() {
-
+                Log.i(TAG, "onClickListener: ");
             }
 
             @Override
@@ -105,18 +106,13 @@ public class scheduleFragment extends Fragment {
 
             @Override
             public void onItemClick(View view) {
-
+                Log.i(TAG, "onItemClick: ");
             }
 
             @Override
             public void onDataUpdate() {
                 Log.d(TAG, "onDataUpdate: ");
-                Date date = new Date();
-                SimpleDateFormat sdf = new SimpleDateFormat("EEEE",Locale.getDefault());
-                String dayOfWeek = sdf.format(date);
-                schedules.clear();
-                schedules.addAll(timetable.get(dayOfWeek.substring(0, 1).toLowerCase()+dayOfWeek.substring(1)));
-                adapter.notifyDataSetChanged();
+
               //  getschedule(getSelectedDay());
 
 
@@ -126,13 +122,22 @@ public class scheduleFragment extends Fragment {
             public void onMonthChange() {
                 Log.d(TAG, "onMonthChange: ");
             }
-
+             
             @Override
             public void onWeekChange(int i) {
-
+                Log.i(TAG, "onWeekChange: ");
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("EEEE",Locale.getDefault());
+                String dayOfWeek = sdf.format(date);
+                schedules.clear();
+                schedules.addAll(timetable.get(dayOfWeek.substring(0, 1).toLowerCase()+dayOfWeek.substring(1)));
+                adapter.notifyDataSetChanged();
 
             }
         });
+
+
+
         adapter = new scheduleAdapter(getContext(),schedules);
         schedules.addAll(timetable.get(getSelectedDay()));
         adapter.notifyDataSetChanged();
@@ -147,8 +152,7 @@ public class scheduleFragment extends Fragment {
     }
 
     // Function for retrieving data based on day
-    public void getschedule(String day)
-    {
+    public void getschedule(String day) {
         firebaseFirestore.collection(day).document("ME").collection("Q1").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -174,20 +178,18 @@ public class scheduleFragment extends Fragment {
     /*public int getSelectedDay()
     {
         Day day = collapsibleCalendar.getSelectedDay();
-        *//* Date date =  new GregorianCalendar(day.getYear(),day.getMonth(),day.getDay()).getTime();//new Date(day.getYear(),day.getMonth(),day.getDay()-1);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE",Locale.getDefault());*//*
+         Date date =  new GregorianCalendar(day.getYear(),day.getMonth(),day.getDay()).getTime();//new Date(day.getYear(),day.getMonth(),day.getDay()-1);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE",Locale.getDefault());
         Calendar myCalendar = Calendar.getInstance();
        myCalendar.set(Calendar.YEAR,day.getYear());
        myCalendar.set(Calendar.MONTH,day.getMonth());
        myCalendar.set(Calendar.DAY_OF_MONTH,day.getDay());
-       // myCalendar.setTime(date);
+       myCalendar.setTime(date);
         int dayOfWeek   = myCalendar.get(Calendar.DAY_OF_WEEK)-1;
         Log.i(TAG, "getSelectedDay: " + myCalendar.get(Calendar.DAY_OF_WEEK) + day.getDay());
         return dayOfWeek ;
-    }*/
-
-    public String getSelectedDay()
-    {
+}*/
+    public String getSelectedDay(){
         Day day = collapsibleCalendar.getSelectedDay();
         Date date =  new GregorianCalendar(day.getYear(),day.getMonth(),day.getDay()).getTime();//new Date(day.getYear(),day.getMonth(),day.getDay()-1);
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE",Locale.getDefault());
@@ -198,5 +200,6 @@ public class scheduleFragment extends Fragment {
 
         return editedDayOfweek ;
     }
+
 
 }

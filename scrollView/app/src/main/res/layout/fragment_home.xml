@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="visible"></androidx.recyclerview.widget.RecyclerView>
+            android:visibility="visible" />
 
 
     </LinearLayout>
@@ -87,12 +87,12 @@
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="120dp"
+        android:layout_marginTop="120dp"
         android:text="Click add button to add a new Reminder"
         android:textAlignment="center"
         android:textSize="20sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/upcomingTasks" />
+        app:layout_constraintTop_toTopOf="@+id/upcomingTasks" />
 
 
     <ImageView

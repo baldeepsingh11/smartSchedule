@@ -23,33 +23,7 @@ import java.util.List;
 
 public class events {
     private static List<event> categories = new ArrayList<>();
-     /*static
-    {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("events").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            Gson gson = new Gson();
-
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<event> events = new ArrayList<>();
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        events.add(document.toObject(events.event.class));
-                    }
-
-                    Log.i(TAG, "onComplete: events" + gson.toJson(events.get(0)));
-                    Log.i(TAG, "onComplete: events" + gson.toJson(events.get(1)));
-                    categories.addAll(events);
-
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-            }
-        });
-    }*/
     private static final String TAG = "events";
-
-
     public static List<event> getCategories() {
         return categories;
     }
@@ -60,7 +34,6 @@ public class events {
 
     private static List<event> generateItems() {
         final List<event> items = new ArrayList<>();
-
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("events").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
               Gson gson = new Gson();
@@ -162,6 +135,7 @@ public class events {
             this.title = "MDG Talk";
             this.venu = "MAC Audi";
         }
+
 
     }
 

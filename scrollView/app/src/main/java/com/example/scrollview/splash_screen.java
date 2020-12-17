@@ -93,6 +93,7 @@ public class splash_screen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(splash_screen.this,LoginActivity.class));
+                finish();
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -226,37 +227,45 @@ public class splash_screen extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             SharedPreferences wmbPreference = getApplicationContext().getSharedPreferences("com.example.scrollview", Context.MODE_PRIVATE);
                             boolean isFirstRun = wmbPreference.getBoolean("FIRSTRUN", true);
-                            for(QueryDocumentSnapshot document : task.getResult()) {
+                            ArrayList<Subject> temp = new ArrayList<>();
+                                for(QueryDocumentSnapshot document : task.getResult()) {
+                                    temp.add(document.toObject(Subject.class));
+                                    //subjects.add(document.toObject(Subject.class));
+                                    attendences.add(document.toObject(Attendence.class));
+                                    Log.i(TAG, "onComplete:  subject" + gson.toJson(subjects));
+                                    Log.i(TAG, "onComplete: attendances" + gson.toJson(attendences));
 
-                                subjects.add(document.toObject(Subject.class));
-                                attendences.add(document.toObject(Attendence.class));
-                                Log.i(TAG, "onComplete:  subject" + gson.toJson(subjects));
-                                Log.i(TAG, "onComplete: attendances" + gson.toJson(attendences));
 
 
+                                    if (isFirstRun)
+                                    {
+                                        SharedPreferences mPrefs = getApplicationContext().getSharedPreferences("com.example.scrollview", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor prefsEditor = mPrefs.edit();
 
-                                if (isFirstRun)
-                                {
-                                    SharedPreferences mPrefs = getApplicationContext().getSharedPreferences("com.example.scrollview", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                                        Gson gson = new Gson();
+                                        String json = gson.toJson(attendences);
+                                        prefsEditor.putString("attendence", json);
+                                        prefsEditor.apply();
 
-                                    Gson gson = new Gson();
-                                    String json = gson.toJson(attendences);
-                                    prefsEditor.putString("attendence", json);
-                                    prefsEditor.apply();
+                                        Log.i("msg", String.valueOf(isFirstRun));
+                                    }else{
+                                        Log.i("msg", String.valueOf(isFirstRun));
+                                    }
 
-                                    Log.i("msg", String.valueOf(isFirstRun));
-                                }else{
-                                    Log.i("msg", String.valueOf(isFirstRun));
+                                    //  Log.d(TAG, document.getId() + " => " + document.getData());
                                 }
 
-                                //  Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
+                            subjects.addAll(temp);
+                            subjects.addAll(temp);
+                            subjects.addAll(temp);
                             SharedPreferences.Editor editor = wmbPreference.edit();
                             editor.putBoolean("FIRSTRUN", false);
                             editor.commit();
                             Log.i(TAG, "onComplete: attendenes"+gson.toJson(attendences));
-                        } else {
+                        }
+
+                        else
+                        {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
 
