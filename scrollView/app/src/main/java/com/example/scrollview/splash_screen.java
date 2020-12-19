@@ -114,6 +114,11 @@ public class splash_screen extends AppCompatActivity {
 
 
                     user = documentSnapshot.toObject(User.class);
+                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.scrollview", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+                    prefsEditor.putString("user", gson.toJson(user));
+                    prefsEditor.apply();
+
                     getTimetable();
                     getsubjectattendance();
                     getEvents();
@@ -255,8 +260,6 @@ public class splash_screen extends AppCompatActivity {
                                     //  Log.d(TAG, document.getId() + " => " + document.getData());
                                 }
 
-                            subjects.addAll(temp);
-                            subjects.addAll(temp);
                             subjects.addAll(temp);
                             SharedPreferences.Editor editor = wmbPreference.edit();
                             editor.putBoolean("FIRSTRUN", false);

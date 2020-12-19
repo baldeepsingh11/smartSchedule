@@ -6,14 +6,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ReceiverCallNotAllowedException;
+import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.scrollview.model.Schedule;
+import com.example.scrollview.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -76,7 +76,7 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
        myCalendar.set(Calendar.SECOND, 10);
        myCalendar.add(Calendar.DATE,1);
        long selectedTimestamp = myCalendar.getTimeInMillis();
-       Toast.makeText(Gcontext, title + ' ' +  mHour+":"+mMinute, Toast.LENGTH_SHORT).show();
+
        Log.i(TAG, "NextDayIntent: Scheduled"  + title + " " + mHour+":" + mMinute);
        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, selectedTimestamp, pendingIntent);
 } //This will schedule an intent which will call scheduleToday(written in an if statement of on receive function) at 1 am
@@ -90,7 +90,11 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
 
          final String day = d;
          fStore = FirebaseFirestore.getInstance();
-         fStore.collection("1st year").document("Q1").collection(day).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        SharedPreferences wmbPreference = Gcontext.getSharedPreferences("com.example.scrollview", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        User user = gson.fromJson(wmbPreference.getString("user",null),User.class);
+        Log.i(TAG, "setNotifications: " + gson.toJson(user));
+        fStore.collection(user.getYear()).document(user.getBatch()).collection(day).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     ArrayList<Schedule> temp= new ArrayList<>();
@@ -215,7 +219,7 @@ public class scheduleReminderBroadcast extends BroadcastReceiver {
         String code = intent.getStringExtra("code");
         String venue = intent.getStringExtra("venue");
         Log.i("TAG", "Received: " + title + " " + id);
-        Toast.makeText(Gcontext, "Received: " + title + " " + id, Toast.LENGTH_SHORT).show();
+
         if(title.equals("continueLoop")){
             // In this case intent is received to schedule notification, not to show notifications
             scheduleToday();
