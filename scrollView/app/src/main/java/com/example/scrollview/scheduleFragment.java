@@ -37,7 +37,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import static com.example.scrollview.LoginActivity.timetable;
+import static com.example.scrollview.splash_screen.timetable;
 
 
 public class scheduleFragment extends Fragment {

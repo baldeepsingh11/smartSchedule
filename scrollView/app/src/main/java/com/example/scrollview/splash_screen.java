@@ -40,13 +40,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import static com.example.scrollview.LoginActivity.timetable;
-import static com.example.scrollview.LoginActivity.user;
-import static com.example.scrollview.LoginActivity.subjects;
-
 public class splash_screen extends AppCompatActivity {
     private static final String TAG = "splash_screen";
+    public static User user = new User();
+    public static Map<String,ArrayList<Schedule>> timetable = new HashMap<>();
+    public static ArrayList<Subject> subjects = new ArrayList<>();
 
 
     public ArrayList<Attendence> attendences  = new ArrayList<>();
@@ -107,18 +105,18 @@ public class splash_screen extends AppCompatActivity {
     }
     private void checkUserProfile(){
         DocumentReference docRef = fStore.collection("user").document(fAuth.getCurrentUser().getUid());
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        docRef.get().addOnSuccessListener(new  OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
 
 
                     user = documentSnapshot.toObject(User.class);
+                    Log.i(TAG, "onSuccess: " + gson.toJson(user));
                     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.scrollview", Context.MODE_PRIVATE);
                     SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
                     prefsEditor.putString("user", gson.toJson(user));
                     prefsEditor.apply();
-
                     getTimetable();
                     getsubjectattendance();
                     getEvents();
@@ -295,8 +293,8 @@ public class splash_screen extends AppCompatActivity {
                             }
 
                             events.setCategories(events_temp);
+
                             eflag = 1;
-                            Log.i(TAG, "onComplete: getcategories" +gson.toJson(events.getCategories()));
                             startActivity(new Intent(splash_screen.this,MainActivity.class));
                             finish();
 

@@ -26,8 +26,9 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.scrollview.LoginActivity.subjects;
-import static com.example.scrollview.LoginActivity.user;
+import static com.example.scrollview.splash_screen.subjects;
+
+import static com.example.scrollview.splash_screen.user;
 
 
 /**

@@ -28,10 +28,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.scrollview.model.events;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.TELECOM_SERVICE;
 import static com.example.scrollview.HomeFragment.layoutManager;
 import static com.example.scrollview.HomeFragment.recyclerView;
 import static com.example.scrollview.MainActivity.bottomNavigationView;
@@ -41,6 +43,7 @@ import static com.example.scrollview.R.drawable.blue;
 import static com.example.scrollview.R.drawable.dark_blue;
 import static com.example.scrollview.R.drawable.orange;
 import static com.example.scrollview.R.drawable.red;
+import static com.example.scrollview.splash_screen.user;
 
 /**
  * Created by User on 2/12/2018.
@@ -54,57 +57,69 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<events.event> events;
     private Context mContext;
     private boolean isSpeakButtonLongPressed = false;
+    final private int ADD_TYPE = 0;
+    final private int CONTENT_TYPE =1;
 
     public RecyclerViewAdapter(Context context, List<events.event> events) {
-        this.events=events;
+        Log.i(TAG, "RecyclerViewAdapter: " + new Gson().toJson(user));
+        if(user.getAdmin()) {
+            events.add(0, new events.event());
+        }
+        this.events= events;
         mContext = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
+        View view;
+        if(viewType==CONTENT_TYPE) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
+        }
+        else
+        {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_add_item, parent, false);
+        }
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        Log.d(TAG, "onBindViewHolder: called.");
-        events.event event = events.get(position);
+        if(position != 0 || !user.getAdmin())
+        {
+            Log.d(TAG, "onBindViewHolder: called.");
+            events.event event = events.get(position);
 
-        Glide.with(mContext)
-                .asBitmap()
-                .load(event.getImageUrl())
-                .into(holder.image);
+            Glide.with(mContext)
+                    .asBitmap()
+                    .load(event.getImageUrl())
+                    .into(holder.image);
 
-        holder.name.setText(event.getTitle());
-        switch (position % 4) {
-            case 0:
-                holder.constraintLayout.setBackground(mContext.getDrawable(orange));
-                break;
-            case 1:
-                holder.constraintLayout.setBackground(mContext.getDrawable(blue));
-                break;
-            case 2:
-                holder.constraintLayout.setBackground(mContext.getDrawable(dark_blue));
-                break;
-            case 3:
-                holder.constraintLayout.setBackground(mContext.getDrawable(red));
-                break;
+            holder.name.setText(event.getTitle());
+            switch (position % 4) {
+                case 0:
+                    holder.constraintLayout.setBackground(mContext.getDrawable(orange));
+                    break;
+                case 1:
+                    holder.constraintLayout.setBackground(mContext.getDrawable(blue));
+                    break;
+                case 2:
+                    holder.constraintLayout.setBackground(mContext.getDrawable(dark_blue));
+                    break;
+                case 3:
+                    holder.constraintLayout.setBackground(mContext.getDrawable(red));
+                    break;
 
-        }
-        holder.itemView.setOnLongClickListener(speakHoldListener);
-        holder.itemView.setOnTouchListener(speakTouchListener);
-        dummyView.setOnTouchListener(speakTouchListener);
-        dummyView.setOnLongClickListener(speakHoldListener);
-        holder.itemView.setHapticFeedbackEnabled(false);
+            }
+            holder.itemView.setOnLongClickListener(speakHoldListener);
+            holder.itemView.setOnTouchListener(speakTouchListener);
+            dummyView.setOnTouchListener(speakTouchListener);
+            dummyView.setOnLongClickListener(speakHoldListener);
+            holder.itemView.setHapticFeedbackEnabled(false);
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               // Log.d(TAG, "onClick: clicked on an image: " + mNames.get(position));
-
-                //Toast.makeText(mContext, mNames.get(position), Toast.LENGTH_SHORT).show();
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                 Intent intent = new Intent(mContext, EventsActivity.class);
                 intent.putExtra("position", position);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -121,8 +136,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 } else {
                     mContext.startActivity(intent);
                 }
-            }
-        });
+                }
+
+
+            });
+        }
+        else if(user.getAdmin())
+        {
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, "This is under construction", Toast.LENGTH_SHORT).show();
+                    com.example.scrollview.model.events.addEvent(new events.event());
+                    notifyDataSetChanged();
+                }
+            });
+        }
 
     }
 
@@ -221,6 +251,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return events.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if(position==0&&user.getAdmin())
+            return ADD_TYPE;
+        else
+            return CONTENT_TYPE;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView image;
@@ -234,4 +272,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             constraintLayout = itemView.findViewById(R.id.eventLayout);
         }
     }
+
 }

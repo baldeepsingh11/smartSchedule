@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,7 +20,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.scrollview.model.Tasks;
 import com.example.scrollview.model.events;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,8 +39,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
-import static com.example.scrollview.LoginActivity.user;
+import static com.example.scrollview.splash_screen.user;
 import static com.example.scrollview.model.events.getCategories;
+import static com.example.scrollview.splash_screen.user;
 
 
 public class HomeFragment extends Fragment {
@@ -44,6 +56,8 @@ public class HomeFragment extends Fragment {
     public static RecyclerView recyclerView;
     public static TextView emptyView;
     TextView name;
+    private FirebaseFirestore fStore;
+    private FirebaseAuth fAuth;
 
 
     public HomeFragment() {
@@ -60,6 +74,8 @@ public class HomeFragment extends Fragment {
         emptyView = rootView.findViewById(R.id.empty_view);
         name=rootView.findViewById(R.id.Name);
         name.setText("Hi "+ user.getName());
+        fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
 
         Log.i(TAG, "onCreateView: event.size"+ getCategories().size());
 
@@ -98,6 +114,50 @@ public class HomeFragment extends Fragment {
         taskRecyclerView.setLayoutManager(taskLayout);
         taskAdapter = new TaskRecyclerViewAdapter(getContext(),savedTasks);
         taskRecyclerView.setAdapter(taskAdapter);
+        DocumentReference userDocRef = fStore.collection("user").document(fAuth.getCurrentUser().getUid());
+        userDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                try {
+                    Log.i(TAG, "onEvent: " + "firebase listener working");
+                    user = documentSnapshot.toObject(user.getClass());
+                    taskAdapter.notifyDataSetChanged();
+                }
+                catch (Exception e1)
+                {
+                    e1.printStackTrace();
+                }
+
+            }
+        });
+        final CollectionReference eventColRef = fStore.collection("events");
+        eventColRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                fStore.collection("events")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                List<events.event> events_temp = new ArrayList<>();
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        events_temp.add(document.toObject(events.event.class));
+                                    }
+                                    events.setCategories(events_temp);
+                                    taskAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+
+                        });
+            }
+        });
+
+
+
         return rootView;
     }
 

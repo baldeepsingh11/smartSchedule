@@ -7,12 +7,22 @@ public class User {
     private String batch;
     private String branch;
     private String year;
+    private Boolean isAdmin;
+
 
     public User()
     {
 
     }
 
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
 
     public User(String name, String email, String batch, String branch, String year) {
         this.name = name;

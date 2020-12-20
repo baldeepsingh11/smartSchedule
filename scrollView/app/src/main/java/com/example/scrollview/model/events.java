@@ -29,7 +29,15 @@ public class events {
     }
     public static void setCategories(List<event> events)
     {
-       categories = events;
+        categories = events;
+    }
+    public static void addEvent(event event)
+    {
+        categories.add(1,event);
+    }
+    public static void removeEvent(int index)
+    {
+        categories.remove(index);
     }
 
     private static List<event> generateItems() {

@@ -26,7 +26,7 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.scrollview.LoginActivity.user;
+import static com.example.scrollview.splash_screen.user;
 
 public class RegisterActivity extends AppCompatActivity {
     public static final String TAG = "TAG";
@@ -93,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                  user.setEmail(email.getText().toString());
                  user.setName(firstName.getText().toString());
                  user.setYear(spin.getSelectedItem().toString());
+                 user.setAdmin(false);
                  //add user to database
                  docRef.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

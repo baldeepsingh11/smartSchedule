@@ -65,9 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     Button next;
     int eflag = 0;
 
-    public static User user = new User();
-    public static Map<String,ArrayList<Schedule>> timetable = new HashMap<>();
-    public static ArrayList<Subject> subjects = new ArrayList<>();
+
  //   public static events eventList = new events();
     public ArrayList<Attendence> attendences  = new ArrayList<>();
 
@@ -234,7 +232,7 @@ public class LoginActivity extends AppCompatActivity {
         }*/
     }
 
-    private void checkUserProfile() {
+   /* private void checkUserProfile() {
         DocumentReference docRef = fStore.collection("user").document(fAuth.getCurrentUser().getUid());
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -272,7 +270,6 @@ public class LoginActivity extends AppCompatActivity {
         String[] strings = time.split("-");
             return strings[0];
     }
-
     public void getsubjectattendance() {
 
 
@@ -427,7 +424,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
 
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

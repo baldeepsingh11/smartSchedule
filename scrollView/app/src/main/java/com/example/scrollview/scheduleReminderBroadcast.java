@@ -34,8 +34,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import static android.content.Context.ALARM_SERVICE;
-import static com.example.scrollview.LoginActivity.timetable;
-import static com.example.scrollview.LoginActivity.user;
+import static com.example.scrollview.splash_screen.timetable;
+import static com.example.scrollview.splash_screen.user;
 
 public class scheduleReminderBroadcast extends BroadcastReceiver {
     private static final String TAG = "scheduleReminderBro";

@@ -40,6 +40,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.scrollview.model.events;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.gson.Gson;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
@@ -67,7 +73,6 @@ public class EventsActivity extends AppCompatActivity {
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         }
         setContentView(R.layout.activity_events);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // getDelegate().setSupportActionBar(toolbar);
         setSupportActionBar(toolbar);
@@ -200,6 +205,7 @@ public class EventsActivity extends AppCompatActivity {
             Gson gson= new Gson();
             String json=gson.toJson(getCategories().get(index));
             args.putString("events", json);
+            Log.i(TAG, "newInstance: " +  index + " " + json);
             detailPage.setArguments(args);
             return detailPage;
         }
