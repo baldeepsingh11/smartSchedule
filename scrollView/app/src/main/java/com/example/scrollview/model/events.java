@@ -33,7 +33,8 @@ public class events {
     }
     public static void addEvent(event event)
     {
-        categories.add(1,event);
+        categories.add(0,event);
+        Log.i(TAG, "addEvent: " + new Gson().toJson(categories));
     }
     public static void removeEvent(int index)
     {
@@ -135,13 +136,10 @@ public class events {
         public event(){
             this.date_time = new Timestamp(new Date());
             this.imageUrl = "";
-            this.description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et " +
-                    "dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea " +
-                    "commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla " +
-                    "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            this.description = "";
             this.posterUrl = "";
-            this.title = "MDG Talk";
-            this.venu = "MAC Audi";
+            this.title = "";
+            this.venu = "";
         }
 
 

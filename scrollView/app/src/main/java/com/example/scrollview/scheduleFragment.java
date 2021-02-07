@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.scrollview.model.Schedule;
@@ -24,7 +26,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
@@ -38,6 +46,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.example.scrollview.splash_screen.timetable;
+import static com.example.scrollview.splash_screen.user;
 
 
 public class scheduleFragment extends Fragment {
@@ -47,9 +56,11 @@ public class scheduleFragment extends Fragment {
     Button arrowBtn;
     CardView cardView;
     TextView code;
+    FloatingActionButton addButton;
 
     //Firbase
     FirebaseFirestore firebaseFirestore;
+    FirebaseAuth fAuth;
 
     final List<Schedule> schedules = new ArrayList<Schedule>();
     scheduleAdapter adapter;
@@ -72,7 +83,9 @@ public class scheduleFragment extends Fragment {
         cardView = rootView.findViewById(R.id.schedule_card);
         recyclerView = rootView.findViewById(R.id.scheduleView);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
         collapsibleCalendar = rootView.findViewById(R.id.calendar);
+        addButton = rootView.findViewById(R.id.floatingActionButton_schedule);
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDayChanged() {
@@ -136,6 +149,7 @@ public class scheduleFragment extends Fragment {
 
             }
         });
+        checkAdminOptions();
         adapter = new scheduleAdapter(getContext(),schedules);
         schedules.addAll(timetable.get(getSelectedDay()));
         adapter.notifyDataSetChanged();
@@ -144,7 +158,23 @@ public class scheduleFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-        
+        DocumentReference userDocref = firebaseFirestore.collection("user").document(fAuth.getCurrentUser().getUid());
+        userDocref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if(documentSnapshot!=null) {
+                    user = documentSnapshot.toObject(user.getClass());
+                    checkAdminOptions();
+                }
+
+            }
+        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "under construction", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return rootView;
     }
@@ -201,6 +231,13 @@ public class scheduleFragment extends Fragment {
 
         return editedDayOfweek ;
     }
-
+    public void checkAdminOptions()
+    {   if(user.getAdmin())
+         addButton.setVisibility(View.VISIBLE);
+        else
+    {
+        addButton.setVisibility(View.GONE);
+    }
+    }
 
 }

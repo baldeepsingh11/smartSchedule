@@ -1,13 +1,11 @@
 package com.example.scrollview;
 
-import android.app.usage.UsageEvents;
+
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,17 +15,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-
-
-import androidx.annotation.NonNull;
-
 import androidx.appcompat.widget.Toolbar;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -36,28 +26,13 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
-
 import com.bumptech.glide.Glide;
 import com.example.scrollview.model.events;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.gson.Gson;
 import com.viewpagerindicator.IconPagerAdapter;
 import com.viewpagerindicator.PageIndicator;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
-
-import static com.example.scrollview.R.id.action_home;
-import static com.example.scrollview.R.id.date;
-import static com.example.scrollview.R.id.image;
 import static com.example.scrollview.model.events.getCategories;
 
 public class EventsActivity extends AppCompatActivity {
@@ -85,7 +60,7 @@ public class EventsActivity extends AppCompatActivity {
         pager.setPageTransformer(true, new ZoomAnimation());
         indicator = (PageIndicator) findViewById(R.id.indicator);
             indicator.setViewPager(pager);
-        pager.setCurrentItem(getIntent().getIntExtra("position", 0), false);
+        pager.setCurrentItem(getIntent().getIntExtra("position", 0)-1, false);
         supportPostponeEnterTransition();
         pager.post(new Runnable() {
             @Override

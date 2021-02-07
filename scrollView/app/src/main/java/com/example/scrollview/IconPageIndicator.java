@@ -145,6 +145,7 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
 
     @Override
     public void setViewPager(ViewPager view, int initialPosition) {
+        initialPosition+=1;
         setViewPager(view);
         setCurrentItem(initialPosition);
     }

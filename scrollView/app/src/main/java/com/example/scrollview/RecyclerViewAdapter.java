@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,25 +14,16 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.scrollview.model.events;
 import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.Context.TELECOM_SERVICE;
 import static com.example.scrollview.HomeFragment.layoutManager;
 import static com.example.scrollview.HomeFragment.recyclerView;
 import static com.example.scrollview.MainActivity.bottomNavigationView;
@@ -45,9 +35,7 @@ import static com.example.scrollview.R.drawable.orange;
 import static com.example.scrollview.R.drawable.red;
 import static com.example.scrollview.splash_screen.user;
 
-/**
- * Created by User on 2/12/2018.
- */
+
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
@@ -149,6 +137,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 public void onClick(View v) {
                     Toast.makeText(mContext, "This is under construction", Toast.LENGTH_SHORT).show();
                     com.example.scrollview.model.events.addEvent(new events.event());
+                    events.add(0,new events.event());
                     notifyDataSetChanged();
                 }
             });
