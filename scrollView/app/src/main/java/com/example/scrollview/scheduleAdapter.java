@@ -1,6 +1,8 @@
 package com.example.scrollview;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -17,18 +20,24 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.scrollview.model.Schedule;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.scrollview.splash_screen.user;
 
 public class scheduleAdapter extends RecyclerView.Adapter<scheduleAdapter.ViewHolder> {
 
     private static final String TAG = "scheduleAdapter";
     private List<Schedule> list;
+    private String day;
     private Context mContext;
 
-    public scheduleAdapter(Context context, List<Schedule> schedules) {
+    public scheduleAdapter(Context context, List<Schedule> schedules , String day) {
        this.list= (ArrayList<Schedule>) schedules;
+       this.day = day;
        this.mContext=context;
     }
 
@@ -40,8 +49,8 @@ public class scheduleAdapter extends RecyclerView.Adapter<scheduleAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull scheduleAdapter.ViewHolder holder, int position) {
-        Schedule schedule = list.get(position);
+    public void onBindViewHolder(@NonNull scheduleAdapter.ViewHolder holder, final int position) {
+        final Schedule schedule = list.get(position);
         holder.subjectCode.setText(schedule.getCode());
         holder.subjectName.setText(schedule.getName());
         holder.profName.setText(schedule.getProfName());
@@ -86,6 +95,39 @@ public class scheduleAdapter extends RecyclerView.Adapter<scheduleAdapter.ViewHo
                     button.animate().setDuration(500).rotationXBy(-180);
 
                 }
+            }
+        });
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(mContext)
+                        .setTitle("Delete Subject")
+                        .setMessage("Are you sure you want to delete this Schedule?")
+
+
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+                                fStore.collection(user.getYear()).document(user.getBatch()).collection(day)
+                                        .document(schedule.getTime()).delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(mContext, "Subject deleted successfully", Toast.LENGTH_SHORT).show();
+                                                splash_screen.timetable.get(day).remove(position);
+                                                scheduleFragment.schedules.remove(position);
+                                                notifyDataSetChanged();
+                                            }
+                                        });
+                                // Continue with delete operation
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_menu_delete)
+                        .show();
+                return false;
             }
         });
 

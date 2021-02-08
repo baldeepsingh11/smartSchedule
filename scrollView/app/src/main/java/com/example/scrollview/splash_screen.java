@@ -281,7 +281,7 @@ public class splash_screen extends AppCompatActivity {
         });
     }
     public void getEvents(){
-        fStore.collection("events")
+        fStore.collection("events").orderBy("date_time")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -290,6 +290,10 @@ public class splash_screen extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 events_temp.add(document.toObject(events.event.class));
+                            }
+                            if(user.getAdmin())
+                            {
+                                events_temp.add(0,new events.event());
                             }
 
                             events.setCategories(events_temp);

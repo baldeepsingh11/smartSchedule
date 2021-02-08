@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -18,16 +20,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.scrollview.model.Schedule;
 import com.example.scrollview.model.Subject;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.scrollview.splash_screen.subjects;
 
+import static com.example.scrollview.splash_screen.timetable;
 import static com.example.scrollview.splash_screen.user;
 
 
@@ -43,6 +58,7 @@ public class subjectFragment extends Fragment {
     private AppBarLayout appBarLayout;
     private Menu collapsedMenu;
     private boolean appBarExpanded = true;
+    FloatingActionButton addButton;
 
 
 
@@ -55,7 +71,7 @@ public class subjectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_subject, container, false);
+        final View view = inflater.inflate(R.layout.fragment_subject, container, false);
 
 
         expandableView = view.findViewById(R.id.expandableView);
@@ -64,7 +80,9 @@ public class subjectFragment extends Fragment {
         recyclerView = view.findViewById(R.id.sub_recyclerview);
         collapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar);
         appBarLayout = view.findViewById(R.id.appbar);
-
+        addButton = view.findViewById(R.id.floatingActionButton_subject);
+        final FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -73,7 +91,7 @@ public class subjectFragment extends Fragment {
         for(int i= 0 ; i<6;i++)
         {subjects.add(new Subject());}*/
 
-        subjectAdapter subjectAdapter = new subjectAdapter(getContext(),subjects);
+        final subjectAdapter subjectAdapter = new subjectAdapter(getContext(),subjects);
         recyclerView.setAdapter(subjectAdapter);
         collapsingToolbarLayout.setTitle(user.getBranch());
         collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.vpi__background_holo_dark));
@@ -109,6 +127,47 @@ public class subjectFragment extends Fragment {
             }
         });
         // Inflate the layout for this fragment
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Subject addedSubject = new Subject();
+
+                fStore.collection(user.getYear()).document(user.getBatch()).collection("subjects").document(addedSubject.getCode())
+                        .set(addedSubject).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getContext(), addedSubject.getCode() + "added successfully", Toast.LENGTH_SHORT).show();
+                        subjects.add(addedSubject);
+                        subjectAdapter.notifyDataSetChanged();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "cannot add subject", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+        DocumentReference userDocref = fStore.collection("user").document(fAuth.getCurrentUser().getUid());
+        userDocref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if(documentSnapshot!=null) {
+                    user = documentSnapshot.toObject(user.getClass());
+                    checkAdminOptions();
+                }
+
+            }
+        });
+
         return view;
+    }
+    public void checkAdminOptions()
+    {   if(user.getAdmin())
+        addButton.setVisibility(View.VISIBLE);
+    else
+    {
+        addButton.setVisibility(View.GONE);
+    }
     }
 }

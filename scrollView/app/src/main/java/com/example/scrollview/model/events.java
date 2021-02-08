@@ -31,11 +31,17 @@ public class events {
     {
         categories = events;
     }
-    public static void addEvent(event event)
+    public static void addEvent(event event , int index)
     {
-        categories.add(0,event);
+        categories.add(index,event);
         Log.i(TAG, "addEvent: " + new Gson().toJson(categories));
     }
+    public static int getSize()
+    {
+        return categories.size();
+    }
+
+
     public static void removeEvent(int index)
     {
         categories.remove(index);

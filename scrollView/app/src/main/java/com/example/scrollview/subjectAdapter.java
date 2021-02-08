@@ -1,8 +1,13 @@
 package com.example.scrollview;
 
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -12,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -19,10 +25,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.scrollview.model.Subject;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.ALARM_SERVICE;
+import static com.example.scrollview.splash_screen.user;
 
 class subjectAdapter extends RecyclerView.Adapter<subjectAdapter.ViewHolder> {
     private Context context;
@@ -100,6 +112,39 @@ class subjectAdapter extends RecyclerView.Adapter<subjectAdapter.ViewHolder> {
                     button.setBackgroundResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
 
                 }
+            }
+        });
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Delete Subject")
+                        .setMessage("Are you sure you want to delete this Subject?")
+
+
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+                                fStore.collection(user.getYear()).document(user.getBatch()).collection("subjects")
+                                        .document(subject.getCode()).delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(context, "Subject deleted successfully", Toast.LENGTH_SHORT).show();
+                                                splash_screen.subjects.remove(position);
+                                                notifyDataSetChanged();
+                                            }
+                                        });
+                                // Continue with delete operation
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_menu_delete)
+                        .show();
+
+                return false;
             }
         });
 

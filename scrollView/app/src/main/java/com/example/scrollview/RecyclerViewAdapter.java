@@ -18,9 +18,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.scrollview.model.events;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,14 +47,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<events.event> events;
     private Context mContext;
     private boolean isSpeakButtonLongPressed = false;
+    private boolean flag = false;
     final private int ADD_TYPE = 0;
     final private int CONTENT_TYPE =1;
 
     public RecyclerViewAdapter(Context context, List<events.event> events) {
         Log.i(TAG, "RecyclerViewAdapter: " + new Gson().toJson(user));
-        if(user.getAdmin()) {
-            events.add(0, new events.event());
-        }
         this.events= events;
         mContext = context;
     }
@@ -136,9 +136,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(mContext, "This is under construction", Toast.LENGTH_SHORT).show();
-                    com.example.scrollview.model.events.addEvent(new events.event());
-                    events.add(0,new events.event());
+                  //  com.example.scrollview.model.events.addEvent(new events.event(),1);
+                    events.add(0,new events.event());                                           // Replace it with the event taken by the admin
+                    FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+                    firestore.collection("events").document().set(new events.event());  // Replace it with the event taken by the admin
                     notifyDataSetChanged();
+
                 }
             });
         }

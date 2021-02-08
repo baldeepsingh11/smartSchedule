@@ -44,6 +44,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import static com.example.scrollview.splash_screen.timetable;
 import static com.example.scrollview.splash_screen.user;
@@ -62,7 +63,7 @@ public class scheduleFragment extends Fragment {
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth fAuth;
 
-    final List<Schedule> schedules = new ArrayList<Schedule>();
+    final static List<Schedule> schedules = new ArrayList<Schedule>();
     scheduleAdapter adapter;
 
     CollapsibleCalendar collapsibleCalendar;
@@ -150,7 +151,7 @@ public class scheduleFragment extends Fragment {
             }
         });
         checkAdminOptions();
-        adapter = new scheduleAdapter(getContext(),schedules);
+        adapter = new scheduleAdapter(getContext(),schedules,getSelectedDay());
         schedules.addAll(timetable.get(getSelectedDay()));
         adapter.notifyDataSetChanged();
         // getschedule(getSelectedDay());
@@ -173,6 +174,15 @@ public class scheduleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "under construction", Toast.LENGTH_SHORT).show();
+
+                Schedule addedSchedule = new Schedule();   // replace added schedule with one given by the user
+
+                schedules.add(addedSchedule);
+                timetable.get(getSelectedDay()).add(addedSchedule);
+                FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+                fStore.collection(user.getYear()).document(user.getBatch()).collection(getSelectedDay()).document(addedSchedule.getTime()).set(addedSchedule);
+                adapter.notifyDataSetChanged();
+
             }
         });
 
