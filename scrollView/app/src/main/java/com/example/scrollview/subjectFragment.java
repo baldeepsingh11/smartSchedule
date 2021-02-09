@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -30,12 +31,16 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
+
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,8 +142,7 @@ public class subjectFragment extends Fragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(getContext(), addedSubject.getCode() + "added successfully", Toast.LENGTH_SHORT).show();
-                        subjects.add(addedSubject);
-                        subjectAdapter.notifyDataSetChanged();
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -156,6 +160,30 @@ public class subjectFragment extends Fragment {
                     user = documentSnapshot.toObject(user.getClass());
                     checkAdminOptions();
                 }
+
+            }
+        });
+        fStore.collection(user.getYear()).document(user.getBatch()).collection("subjects").
+                addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    private static final String TAG = "SubjectSnapshotListener" ;
+
+                    @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.i("TAG", "listen:error", e);
+                    return;
+                }
+
+                    ArrayList<Subject> temp = new ArrayList<>();
+                    for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments())
+                    {
+                        Log.i(TAG, "onEvent: " + new Gson().toJson(doc.toObject(Subject.class
+                        )));
+                        temp.add(doc.toObject(Subject.class));
+                    }
+                    subjects.clear();
+                    subjects.addAll(temp);
+                    subjectAdapter.notifyDataSetChanged();
 
             }
         });

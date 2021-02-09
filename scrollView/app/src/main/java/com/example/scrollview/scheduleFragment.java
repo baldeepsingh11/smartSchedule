@@ -22,6 +22,9 @@ import android.widget.Toast;
 
 
 import com.example.scrollview.model.Schedule;
+
+
+import com.example.scrollview.model.Subject;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,7 +36,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
 
@@ -46,6 +51,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import static com.example.scrollview.splash_screen.subjects;
 import static com.example.scrollview.splash_screen.timetable;
 import static com.example.scrollview.splash_screen.user;
 
@@ -62,10 +68,9 @@ public class scheduleFragment extends Fragment {
     //Firbase
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth fAuth;
-
     final static List<Schedule> schedules = new ArrayList<Schedule>();
+    public static String day;
     scheduleAdapter adapter;
-
     CollapsibleCalendar collapsibleCalendar;
 
     public scheduleFragment() {
@@ -87,6 +92,7 @@ public class scheduleFragment extends Fragment {
         fAuth = FirebaseAuth.getInstance();
         collapsibleCalendar = rootView.findViewById(R.id.calendar);
         addButton = rootView.findViewById(R.id.floatingActionButton_schedule);
+        Query docRef = firebaseFirestore.collection(user.getYear()).document(user.getBatch()).collection(getSelectedDay()).orderBy("time");
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDayChanged() {
@@ -105,8 +111,9 @@ public class scheduleFragment extends Fragment {
                 SimpleDateFormat sdf = new SimpleDateFormat("EEEE",Locale.getDefault());
                 Log.i(getClass().getName(), "Selected Day: "
                         + day.getYear() + "/" + (day.getMonth() + 1) + "/" + day.getDay()+ sdf.format(date));*/
-               schedules.clear();
-               adapter.notifyDataSetChanged();
+                schedules.clear();
+                day=getSelectedDay();
+                adapter.notifyDataSetChanged();
                 schedules.addAll(timetable.get(getSelectedDay()));
                 if (schedules.size()>0) Log.i(TAG, "onCreateView: "+schedules.get(0).getTime());
                 else Log.i(TAG, "onCreateView: length is 0");
@@ -151,7 +158,8 @@ public class scheduleFragment extends Fragment {
             }
         });
         checkAdminOptions();
-        adapter = new scheduleAdapter(getContext(),schedules,getSelectedDay());
+        day = getSelectedDay();
+        adapter = new scheduleAdapter(getContext(),schedules);
         schedules.addAll(timetable.get(getSelectedDay()));
         adapter.notifyDataSetChanged();
         // getschedule(getSelectedDay());
@@ -159,6 +167,9 @@ public class scheduleFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+
+
+
         DocumentReference userDocref = firebaseFirestore.collection("user").document(fAuth.getCurrentUser().getUid());
         userDocref.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -174,17 +185,50 @@ public class scheduleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "under construction", Toast.LENGTH_SHORT).show();
-
                 Schedule addedSchedule = new Schedule();   // replace added schedule with one given by the user
-
-                schedules.add(addedSchedule);
-                timetable.get(getSelectedDay()).add(addedSchedule);
                 FirebaseFirestore fStore = FirebaseFirestore.getInstance();
                 fStore.collection(user.getYear()).document(user.getBatch()).collection(getSelectedDay()).document(addedSchedule.getTime()).set(addedSchedule);
-                adapter.notifyDataSetChanged();
+
 
             }
         });
+
+
+        String[] days ={"sunday","monday","tuesday","wednesday","thursday","friday","saturday",};
+        for(final String day : days)
+        {
+            firebaseFirestore.collection(user.getYear()).document(user.getBatch()).collection(day).orderBy("time")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                            if (e != null) {
+                                Log.i("TAG", "listen:error", e);
+                                return;
+                            }
+
+                            ArrayList<Schedule> temp = new ArrayList<>();
+                            for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments())
+                            {
+                                Log.i(TAG, "onEvent: " + new Gson().toJson(doc.toObject(Subject.class
+                                )));
+                                temp.add(doc.toObject(Schedule.class));
+                            }
+                            timetable.get(day).clear();
+                            timetable.get(day).addAll(temp);
+                            if(day.equals(getSelectedDay()))
+                            {
+                                schedules.clear();
+                                schedules.addAll(temp);
+                                adapter.notifyDataSetChanged();
+                            }
+
+                           }
+                        }
+                    );
+
+        }
+
+
 
         return rootView;
     }
@@ -214,20 +258,7 @@ public class scheduleFragment extends Fragment {
     }
     // Function for getting selected day of week
 
-    /*public int getSelectedDay()
-    {
-        Day day = collapsibleCalendar.getSelectedDay();
-        *//* Date date =  new GregorianCalendar(day.getYear(),day.getMonth(),day.getDay()).getTime();//new Date(day.getYear(),day.getMonth(),day.getDay()-1);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE",Locale.getDefault());*//*
-        Calendar myCalendar = Calendar.getInstance();
-       myCalendar.set(Calendar.YEAR,day.getYear());
-       myCalendar.set(Calendar.MONTH,day.getMonth());
-       myCalendar.set(Calendar.DAY_OF_MONTH,day.getDay());
-       // myCalendar.setTime(date);
-        int dayOfWeek   = myCalendar.get(Calendar.DAY_OF_WEEK)-1;
-        Log.i(TAG, "getSelectedDay: " + myCalendar.get(Calendar.DAY_OF_WEEK) + day.getDay());
-        return dayOfWeek ;
-    }*/
+
 
     public String getSelectedDay()
     {

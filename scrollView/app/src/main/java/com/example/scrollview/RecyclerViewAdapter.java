@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.scrollview.model.events;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import java.util.ArrayList;
@@ -71,11 +74,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         if(position != 0 || !user.getAdmin())
         {
             Log.d(TAG, "onBindViewHolder: called.");
-            events.event event = events.get(position);
+            final events.event event = events.get(position);
 
             Glide.with(mContext)
                     .asBitmap()
@@ -98,49 +101,90 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     break;
 
             }
-            holder.itemView.setOnLongClickListener(speakHoldListener);
-            holder.itemView.setOnTouchListener(speakTouchListener);
+           // holder.itemView.setOnLongClickListener(speakHoldListener);
+           // holder.itemView.setOnTouchListener(speakTouchListener);
             dummyView.setOnTouchListener(speakTouchListener);
             dummyView.setOnLongClickListener(speakHoldListener);
-            holder.itemView.setHapticFeedbackEnabled(false);
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if(user.getAdmin()) {
+                        new AlertDialog.Builder(mContext)
+                                .setTitle("Delete Subject")
+                                .setMessage("Are you sure you want to delete this Event?")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+                                        fStore.collection("events")
+                                                .document(event.getVenu() + event.getDate_time()).delete()
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(mContext, "Event deleted successfully", Toast.LENGTH_SHORT).show();
+                                                       /* com.example.scrollview.model.events.removeEvent(position);
+                                                        notifyDataSetChanged();*/
+                                                    }
+                                                });
+                                        // Continue with delete operation
+                                    }
+                                })
 
-
+                                // A null listener allows the button to dismiss the dialog and take no further action.
+                                .setNegativeButton(android.R.string.no, null)
+                                .setIcon(android.R.drawable.ic_menu_delete)
+                                .show();
+                    }
+                    return false;
+                }
+            });
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                Intent intent = new Intent(mContext, EventsActivity.class);
-                intent.putExtra("position", position);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-                    int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-                    List<Pair<View, String>> pairs = new ArrayList<Pair<View, String>>();
-                    for (int i = firstVisibleItemPosition; i <= lastVisibleItemPosition; i++) {
-                        ViewHolder holderForAdapterPosition = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
-                        View itemView = holderForAdapterPosition.image;
-                        pairs.add(Pair.create(itemView, "tab_" + i));
+                    Intent intent = new Intent(mContext, EventsActivity.class);
+                    if(user.getAdmin())
+                      intent.putExtra("position", position+1);
+                    else
+                        intent.putExtra("position", position);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+                        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+                        List<Pair<View, String>> pairs = new ArrayList<Pair<View, String>>();
+                        for (int i = firstVisibleItemPosition; i <= lastVisibleItemPosition; i++) {
+                            ViewHolder holderForAdapterPosition = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+                            View itemView = holderForAdapterPosition.image;
+                            pairs.add(Pair.create(itemView, "tab_" + i));
+                        }
+                        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation((Activity) mContext, pairs.toArray(new Pair[]{})).toBundle();
+                        mContext.startActivity(intent, bundle);
+                    } else {
+                        mContext.startActivity(intent);
                     }
-                    Bundle bundle = ActivityOptions.makeSceneTransitionAnimation((Activity) mContext, pairs.toArray(new Pair[]{})).toBundle();
-                    mContext.startActivity(intent, bundle);
-                } else {
-                    mContext.startActivity(intent);
-                }
                 }
 
 
             });
+            holder.itemView.setHapticFeedbackEnabled(false);
+
+
+
         }
         else if(user.getAdmin())
         {
-
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(mContext, "This is under construction", Toast.LENGTH_SHORT).show();
-                  //  com.example.scrollview.model.events.addEvent(new events.event(),1);
-                    events.add(0,new events.event());                                           // Replace it with the event taken by the admin
+
+
+                    com.example.scrollview.model.events.event addedEvent = new events.event();
+                    /*com.example.scrollview.model.events.addEvent(new events.event(),1);*/
                     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-                    firestore.collection("events").document().set(new events.event());  // Replace it with the event taken by the admin
-                    notifyDataSetChanged();
+                    firestore.collection("events").document(addedEvent.getVenu() + addedEvent.getDate_time()).set(addedEvent);
+
+
+
+
 
                 }
             });

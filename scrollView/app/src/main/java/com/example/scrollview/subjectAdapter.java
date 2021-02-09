@@ -62,6 +62,8 @@ class subjectAdapter extends RecyclerView.Adapter<subjectAdapter.ViewHolder> {
         final Subject subject = subjects.get(position);
         holder.name.setText(subject.getName());
         holder.code.setText(subject.getCode());
+        holder.profName.setText(subject.getProfName());
+
 
         final ConstraintLayout layout = holder.expandableView;
         final Button button = holder.arrowBtn;
@@ -117,32 +119,33 @@ class subjectAdapter extends RecyclerView.Adapter<subjectAdapter.ViewHolder> {
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                new AlertDialog.Builder(context)
-                        .setTitle("Delete Subject")
-                        .setMessage("Are you sure you want to delete this Subject?")
+                if(user.getAdmin()) {
+                    new AlertDialog.Builder(context)
+                            .setTitle("Delete Subject")
+                            .setMessage("Are you sure you want to delete this Subject?")
 
 
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-                                fStore.collection(user.getYear()).document(user.getBatch()).collection("subjects")
-                                        .document(subject.getCode()).delete()
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(context, "Subject deleted successfully", Toast.LENGTH_SHORT).show();
-                                                splash_screen.subjects.remove(position);
-                                                notifyDataSetChanged();
-                                            }
-                                        });
-                                // Continue with delete operation
-                            }
-                        })
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+                                    fStore.collection(user.getYear()).document(user.getBatch()).collection("subjects")
+                                            .document(subject.getCode()).delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(context, "Subject deleted successfully", Toast.LENGTH_SHORT).show();
 
-                        // A null listener allows the button to dismiss the dialog and take no further action.
-                        .setNegativeButton(android.R.string.no, null)
-                        .setIcon(android.R.drawable.ic_menu_delete)
-                        .show();
+                                                }
+                                            });
+                                    // Continue with delete operation
+                                }
+                            })
+
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setNegativeButton(android.R.string.no, null)
+                            .setIcon(android.R.drawable.ic_menu_delete)
+                            .show();
+                }
 
                 return false;
             }
@@ -161,7 +164,7 @@ class subjectAdapter extends RecyclerView.Adapter<subjectAdapter.ViewHolder> {
         public TextView name;
         public TextView code;
         public Button arrowBtn;
-
+        public TextView profName;
         public CardView cardView;
         public Button email,phone,website;
         public Object progressBar;
@@ -176,6 +179,7 @@ class subjectAdapter extends RecyclerView.Adapter<subjectAdapter.ViewHolder> {
             email=itemView.findViewById(R.id.prof_mail);
             phone=itemView.findViewById(R.id.prof_phone);
             website=itemView.findViewById(R.id.prof_site);
+            profName = itemView.findViewById(R.id.subject_profName);
 
 
 

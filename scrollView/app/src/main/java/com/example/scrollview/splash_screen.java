@@ -147,7 +147,7 @@ public class splash_screen extends AppCompatActivity {
         for (final String day : days) {
 
 
-            fStore.collection(user.getYear()).document(user.getBatch()).collection(day).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            fStore.collection(user.getYear()).document(user.getBatch()).collection(day).orderBy("time").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     ArrayList<Schedule> temp = new ArrayList<>();

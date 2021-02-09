@@ -23,6 +23,7 @@ import com.example.scrollview.model.Schedule;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,13 +33,13 @@ public class scheduleAdapter extends RecyclerView.Adapter<scheduleAdapter.ViewHo
 
     private static final String TAG = "scheduleAdapter";
     private List<Schedule> list;
-    private String day;
     private Context mContext;
 
-    public scheduleAdapter(Context context, List<Schedule> schedules , String day) {
+    public scheduleAdapter(Context context, List<Schedule> schedules) {
        this.list= (ArrayList<Schedule>) schedules;
-       this.day = day;
+
        this.mContext=context;
+
     }
 
     @NonNull
@@ -97,39 +98,44 @@ public class scheduleAdapter extends RecyclerView.Adapter<scheduleAdapter.ViewHo
                 }
             }
         });
-        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                new AlertDialog.Builder(mContext)
-                        .setTitle("Delete Subject")
-                        .setMessage("Are you sure you want to delete this Schedule?")
+
+            holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (user.getAdmin())
+                    {
+                        new AlertDialog.Builder(mContext)
+                                .setTitle("Delete Schedule")
+                                .setMessage("Are you sure you want to delete this Schedule?")
 
 
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                FirebaseFirestore fStore = FirebaseFirestore.getInstance();
-                                fStore.collection(user.getYear()).document(user.getBatch()).collection(day)
-                                        .document(schedule.getTime()).delete()
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Toast.makeText(mContext, "Subject deleted successfully", Toast.LENGTH_SHORT).show();
-                                                splash_screen.timetable.get(day).remove(position);
-                                                scheduleFragment.schedules.remove(position);
-                                                notifyDataSetChanged();
-                                            }
-                                        });
-                                // Continue with delete operation
-                            }
-                        })
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        FirebaseFirestore fStore = FirebaseFirestore.getInstance();
+                                        fStore.collection(user.getYear()).document(user.getBatch()).collection(scheduleFragment.day)
+                                                .document(schedule.getTime()).delete()
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(mContext, "Schedule deleted successfully" + scheduleFragment.day, Toast.LENGTH_SHORT).show();
+                                                        /*splash_screen.timetable.get(day).remove(position);
+                                                        scheduleFragment.schedules.remove(position);
+                                                        notifyDataSetChanged();*/
+                                                    }
+                                                });
+                                        // Continue with delete operation
+                                    }
+                                })
 
-                        // A null listener allows the button to dismiss the dialog and take no further action.
-                        .setNegativeButton(android.R.string.no, null)
-                        .setIcon(android.R.drawable.ic_menu_delete)
-                        .show();
-                return false;
-            }
-        });
+                                // A null listener allows the button to dismiss the dialog and take no further action.
+                                .setNegativeButton(android.R.string.no, null)
+                                .setIcon(android.R.drawable.ic_menu_delete)
+                                .show();
+                }
+                    return false;
+                }
+            });
+
 
     }
 

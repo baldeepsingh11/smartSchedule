@@ -144,8 +144,8 @@ public class events {
             this.imageUrl = "";
             this.description = "";
             this.posterUrl = "";
-            this.title = "";
-            this.venu = "";
+            this.title = "Dummy Event";
+            this.venu = "MAC AUDi";
         }
 
 

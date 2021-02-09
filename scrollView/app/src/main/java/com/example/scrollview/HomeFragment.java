@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.scrollview.model.Subject;
 import com.example.scrollview.model.Tasks;
 import com.example.scrollview.model.User;
 import com.example.scrollview.model.events;
@@ -32,16 +33,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
+import static com.example.scrollview.model.events.setCategories;
+import static com.example.scrollview.splash_screen.subjects;
 import static com.example.scrollview.splash_screen.user;
 import static com.example.scrollview.model.events.getCategories;
 import static com.example.scrollview.splash_screen.user;
@@ -144,10 +149,29 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        final CollectionReference eventColRef = fStore.collection("events");
+        final Query eventColRef = fStore.collection("events").orderBy("date_time");
         eventColRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+                    Log.i("TAG", "listen:error", e);
+                    return;
+                }
+
+                List<events.event> temp = new ArrayList<>();
+                for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments())
+                {
+                    temp.add(doc.toObject(events.event.class));
+                }
+                if(user.getAdmin())
+                {
+                    temp.add(0,new events.event());
+                }
+                getCategories().clear();
+                getCategories().addAll(temp);
+                adapter.notifyDataSetChanged();
+
 
 
             }
