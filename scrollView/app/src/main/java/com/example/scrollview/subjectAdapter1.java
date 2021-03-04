@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +38,7 @@ import java.util.List;
 import at.grabner.circleprogress.CircleProgressView;
 import me.itangqi.waveloadingview.WaveLoadingView;
 
-class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
+class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> implements ExampleDialog.ExampleDialogListener {
     private Context context;
     private List<Attendence> subjects;
     SharedPreferences mPrefs;
@@ -84,23 +85,59 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                         switch (item.getItemId()) {
                             case R.id.navigation_drawer_item1:
                                 //handle menu1 click
-                                Toast.makeText(context, "menu 1", Toast.LENGTH_SHORT).show();
+                                if (subject.getPrevRecord().size()>0)
+                                {
+                                    if (subject.getPrevRecord().get(subject.getPrevRecord().size()-1)==true) {
+
+                                        subject.setPresent(subject.getPresent() - 1);
+                                        subject.setTotal(subject.getTotal()-1);
+                                        holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
+                                        saveSubject(position,subject);
+
+
+                                    }
+                                    else {
+
+                                        subject.setTotal(subject.getTotal()-1);
+                                        holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
+                                        saveSubject(position,subject);
+                                    }
+                                    subject.undoPrevRecord();
+                                    saveSubject(position,subject);
+                                    Toast.makeText(context, "undo", Toast.LENGTH_SHORT).show();
+
+
+                                }
+                                else {
+                                    Toast.makeText(context, "cannot undo", Toast.LENGTH_SHORT).show();
+                                }
                                 return true;
                             case R.id.navigation_drawer_item2:
                                 //handle menu2 click
-                                Toast.makeText(context, "menu 2", Toast.LENGTH_SHORT).show();
+                                subject.setPresent(0);
+                                subject.setStatus("");
+                                subject.setPercentage(0);
+                                subject.setTotal(0);
+                                subject.resetPrevRecord();
+                                holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
+                                Toast.makeText(context, "reset", Toast.LENGTH_SHORT).show();
+                                saveSubject(position,subject);
                                 return true;
                             case R.id.navigation_drawer_item3:
                                 //handle menu3 click
-                                Toast.makeText(context, "menu 3", Toast.LENGTH_SHORT).show();
+                                openDialog();
+                                Toast.makeText(context, "edit", Toast.LENGTH_SHORT).show();
+                                saveSubject(position,subject);
                                 return true;
                             default:
                                 return false;
                         }
 
+
                     }
                 });
                 popupMenu.show();
+
             }
         });
 
@@ -124,6 +161,8 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
 
                 subject.setPresent(subject.getPresent()+1);
                 subject.setTotal(subject.getTotal()+1);
+                subject.setPrevRecord(subject.getPrevRecord(),true);
+
 
              //   Log.i("msg", String.valueOf(a[position]));
            //     Log.i("position", String.valueOf(position));
@@ -173,7 +212,7 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                         total+=1;
                         count++;
                     }
-                    if (count==1){holder.status.setText("Status: You should attend your next class to get back on track");
+                    if (count==1)   {holder.status.setText("Status: You should attend your next class to get back on track");
                     subject.setStatus("Status: You should attend your next class to get back on track");}
                     else{
                     holder.status.setText("Status: You should attend your next " +Integer.toString(count)+" classes to get back on track");
@@ -203,9 +242,11 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
                 holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
             //    Log.i("msg", String.valueOf(c));
                // holder.progressBar.setProgress((int) subject.getPercentage(),true);
-                holder.mWaveLoadingView.setValue((int) subject.getPercentage());
+                holder.mWaveLoadingView.setValue((float) subject.getPercentage());
+                subject.setPrevRecord(subject.getPrevRecord(),false);
                // holder.percentage.setText(subject.getPercentage()+"%");
                 subjects.set(position,subject);
+
 
                  if(subject.getPercentage()>75){
                      double percentage=  subject.getPercentage();
@@ -272,13 +313,37 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> {
 
 
         final CardView view = holder.cardView;
+        @Override
+        public void applyTexts(String username, String password) {
+
+            holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
+
+        }
+
 
     }
+
+    void saveSubject(int position, Attendence subject){
+        mPrefs =context. getSharedPreferences("com.example.scrollview",Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        subjects.set(position,subject) ;
+        Gson gson = new Gson();
+        String json = gson.toJson(subjects);
+        prefsEditor.putString("attendence", json);
+        prefsEditor.apply();}
+
+
 
     @Override
     public int getItemCount() {
         return subjects.size();
     }
+    public void openDialog() {
+        ExampleDialog exampleDialog = new ExampleDialog();
+        exampleDialog.show(((AppCompatActivity) context).getSupportFragmentManager(), "example dialog");
+    }
+
+
     static class ViewHolder extends RecyclerView.ViewHolder
     {
         private TextView name;
