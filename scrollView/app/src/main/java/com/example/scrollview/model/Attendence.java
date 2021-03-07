@@ -1,5 +1,7 @@
 package com.example.scrollview.model;
 
+import java.util.ArrayList;
+
 public class Attendence {
     private String code;
     private String name;
@@ -12,6 +14,26 @@ public class Attendence {
     private double total;
     private double percentage;
     private int ID;
+    private ArrayList<Boolean> prevRecord= new ArrayList<>();
+
+
+    public ArrayList<Boolean> getPrevRecord() {
+        return prevRecord;
+    }
+
+    public ArrayList<Boolean> undoPrevRecord() {
+        prevRecord.remove(prevRecord.size()-1);
+        return prevRecord;
+    }
+    public ArrayList<Boolean> resetPrevRecord() {
+        prevRecord.clear();
+        return prevRecord;
+    }
+
+    public void setPrevRecord(ArrayList<Boolean> prevRecord,boolean prev) {
+        prevRecord.add(prev);
+        this.prevRecord = prevRecord;
+    }
 
     public int getID() {
         return ID;

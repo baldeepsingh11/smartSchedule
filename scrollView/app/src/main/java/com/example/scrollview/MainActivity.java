@@ -27,7 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ExampleDialog.ExampleDialogListener {
     private static final String TAG = "MainActivity";
 
 
@@ -133,4 +133,10 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    public void applyTexts(String present, String total) {
+
+
+
+    }
 }

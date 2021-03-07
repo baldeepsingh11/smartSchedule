@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="7dp"
-            android:text="ATTENDENCE"
+            android:text="ATTENDANCE"
             android:textColor="#000000"
             android:textSize="30sp"
             android:textStyle="bold"

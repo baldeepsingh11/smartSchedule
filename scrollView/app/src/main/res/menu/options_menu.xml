@@ -5,14 +5,14 @@
     <item
         android:id="@+id/navigation_drawer_item1"
         android:icon="@android:drawable/ic_dialog_map"
-        android:title="Item 1" />
+        android:title="Undo" />
     <item
         android:id="@+id/navigation_drawer_item2"
         android:icon="@android:drawable/ic_dialog_info"
-        android:title="Item 2" />
+        android:title="Reset" />
 
     <item
         android:id="@+id/navigation_drawer_item3"
         android:icon="@android:drawable/ic_menu_share"
-        android:title="Item 3"/>
+        android:title="Edit"/>
 </menu>
