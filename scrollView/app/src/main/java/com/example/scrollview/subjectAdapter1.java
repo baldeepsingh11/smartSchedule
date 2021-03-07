@@ -313,12 +313,12 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> i
 
 
         final CardView view = holder.cardView;
-        @Override
+        /*@Override
         public void applyTexts(String username, String password) {
 
-            holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
 
-        }
+
+        }*/
 
 
     }
@@ -341,6 +341,11 @@ class subjectAdapter1 extends RecyclerView.Adapter<subjectAdapter1.ViewHolder> i
     public void openDialog() {
         ExampleDialog exampleDialog = new ExampleDialog();
         exampleDialog.show(((AppCompatActivity) context).getSupportFragmentManager(), "example dialog");
+    }
+
+    @Override
+    public void applyTexts(String username, String password) {
+      //  holder.percent.setText(subject.getPresent()+"/"+subject.getTotal());
     }
 
 
