@@ -263,9 +263,5 @@ public class EventsActivity extends AppCompatActivity {
 
     }
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> attendanceUi
 }
